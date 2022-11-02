@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/exportSuppliersAllExcel', [SupplierController::class, 'exportExcel'])->name('exportExcel.suppliersAll');
 
 	Route::resource('products', ProductController::class);
+    Route::get('/detail/{id}',[ProductController::class,'detail'])->name('detail.products');
 	Route::get('/apiProducts', [ProductController::class, 'apiProducts'])->name('api.products');
 
 	Route::resource('productsOut', ProductKeluarController::class);

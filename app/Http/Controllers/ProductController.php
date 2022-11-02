@@ -32,6 +32,18 @@ class ProductController extends Controller
         return view('products.index', compact('category'));
     }
 
+
+    public function detail($id)
+    {
+        $category = Category::find($id)->first();
+
+        $producs = Product::find($id)->first();
+        //dd($producs);
+        return view('products.detail')
+        ->with('category',$category)
+        ->with('producs', $producs);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -241,7 +253,7 @@ class ProductController extends Controller
                 return '<span class="badge badge-warning">'.$message.'</span>';
             })
             ->addColumn('action', function($product){
-                return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
+                return '<a href="detail/'.$product->id .'" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
                     '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                     '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
             })
