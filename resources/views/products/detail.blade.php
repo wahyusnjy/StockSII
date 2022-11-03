@@ -26,7 +26,7 @@
                 </tr>
                 <tr>
                     <td>Harga</td>
-                    <td>{{ $producs->harga }}</td>
+                    <td>{{ number_format($producs->harga) }}</td>
                 </tr>
                 <tr>
                     <td>QTY</td>
