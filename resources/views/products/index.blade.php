@@ -47,6 +47,8 @@
 
     @include('products.form')
 
+    @include('products.form_import')
+
 @endsection
 
 @section('bot')
@@ -85,7 +87,7 @@
                 render: $.fn.dataTable.render.number('.')},
                 {data: 'qty', name: 'qty'},
                 {data: 'show_photo', name: 'show_photo'},
-                {data: 'category_name', name: 'category_name'},
+                {data: 'category_name', name: 'category_name'}, 
                 // {data: 'link', name: 'link'},
                 // {data: 'desc_product', name: 'desc_product'},
                 {data: 'activity_status', name: 'activity_status'},

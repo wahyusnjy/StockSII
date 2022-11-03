@@ -1,8 +1,9 @@
 <div class="modal fade" id="modal-form" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form  id="form-item" method="post" class="form-horizontal" data-toggle="validator" enctype="multipart/form-data" >
-                {{ csrf_field() }} {{ method_field('POST') }}
+            <form  id="modal-form modal" method="POST" class="form-horizontal" data-toggle="validator" enctype="multipart/form-data" >
+                @csrf
+                @method('POST')
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -18,13 +19,7 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label >Name</label>
-                            <input type="text" class="form-control" id="nama" name="nama"  autofocus required>
-                            <span class="help-block with-errors"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label >Address</label>
-                            <input type="text" class="form-control" id="alamat" name="alamat"   required>
+                            <input type="text" class="form-control" id="name" name="name"  autofocus required>
                             <span class="help-block with-errors"></span>
                         </div>
 
@@ -35,8 +30,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label >Phone</label>
-                            <input type="text" class="form-control" id="telepon" name="telepon"   required>
+                            <label >Password</label>
+                            <input type="password" class="form-control" id="password" name="password"   required>
+                            <span class="help-block with-errors"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control"
+                            placeholder="Role" name="role" id="role" required>
+                            <option selected="" disabled="" value="">Role
+                            </option>
+                            <option value="admin">Admin</option>
+                            <option value="staff">Staff</option>
+                            </select>
                             <span class="help-block with-errors"></span>
                         </div>
 

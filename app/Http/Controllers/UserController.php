@@ -8,6 +8,7 @@ use App\Models\Supplier;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -30,8 +31,9 @@ class UserController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create() {
-		//
+	public function create(Request $request)
+    {
+        //
 	}
 
 	/**
@@ -42,15 +44,20 @@ class UserController extends Controller {
 	 */
 	public function store(Request $request) {
 		$this->validate($request, [
-			'name' => 'required',
-			'email' => 'required|unique:suppliers',
+			'name' => 'required|string|max:255',
+			'email' => 'required|string|email|max:255|unique:users',
 		]);
 
-		User::create($request->all());
+		User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password'=> bcrypt($request->password),
+            'role'=> $request->role,
+        ]);
 
 		return response()->json([
 			'success' => true,
-			'message' => 'Suppliers Created',
+			'message' => 'Users Created',
 		]);
 
 	}
@@ -89,13 +96,16 @@ class UserController extends Controller {
 			'email' => 'required|string|email|max:255|unique:suppliers',
 		]);
 
-		$users = User::findOrFail($id);
-
-		$users->update($request->all());
+		User::where('id',$id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password'=> bcrypt($request->password),
+            'role'=> $request->role,
+        ]);
 
 		return response()->json([
 			'success' => true,
-			'message' => 'users Updated',
+			'message' => 'Users Updated',
 		]);
 	}
 

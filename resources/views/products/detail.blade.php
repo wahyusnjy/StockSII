@@ -18,7 +18,7 @@
             <tbody>
                 <tr>
                     <td>Product Code</td>
-                    <td>{{ $producs->product_code }}</td>
+                    <td>{{ DNS1D::getBarcodeHTML($producs->product_code , 'C128', true)}}</td>
                 </tr>
                 <tr>
                     <td>Nama</td>

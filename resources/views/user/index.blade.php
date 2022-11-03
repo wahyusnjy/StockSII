@@ -10,11 +10,11 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Suppliers</h3>
+            <h3 class="box-title">Data Users</h3>
         </div>
 
         <div class="box-header">
-            <a href="/register" class="btn btn-primary" >Add User</a>
+            <a onclick="addForm()" class="btn btn-primary" >Add User</a>
         </div>
 
 
@@ -36,7 +36,7 @@
         <!-- /.box-body -->
     </div>
 
-    @include('suppliers.form')
+    @include('user.form')
 @endsection
 
 @section('bot')
@@ -66,6 +66,7 @@
         var table = $('#user-table').DataTable({
             processing: true,
             serverSide: true,
+            pagingType: 'full_numbers',
             ajax: "{{ route('api.users') }}",
             columns: [
                 {data: 'id', name: 'id'},
@@ -75,21 +76,32 @@
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
+
+        function addForm() {
+            save_method = "add";
+            $('input[name=_method]').val('POST');
+            $('#modal-form').modal('show');
+            $('#modal-form form')[0].reset();
+            $('.modal-title').text('Add User');
+        }
+
         function editForm(id) {
             save_method = 'edit';
             $('input[name=_method]').val('PATCH');
             $('#modal-form form')[0].reset();
             $.ajax({
-                url: "{{ url('users') }}" + '/' + id + "/edit",
+                url: "{{ url('user') }}" + '/' + id + "/edit",
                 type: "GET",
                 dataType: "JSON",
                 success: function(data) {
                     $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Suppliers');
+                    $('.modal-title').text('Edit Users');
 
                     $('#id').val(data.id);
                     $('#name').val(data.name);
                     $('#email').val(data.email);
+                    $('#password').val(data.password);
+                    $('#role').val(data.role);
                 },
                 error : function() {
                     alert("Nothing Data");
@@ -109,7 +121,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then(function () {
                 $.ajax({
-                    url : "{{ url('users') }}" + '/' + id,
+                    url : "{{ url('user') }}" + '/' + id,
                     type : "POST",
                     data : {'_method' : 'DELETE', '_token' : csrf_token},
                     success : function(data) {
@@ -137,8 +149,8 @@
             $('#modal-form form').validator().on('submit', function (e) {
                 if (!e.isDefaultPrevented()){
                     var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('suppliers') }}";
-                    else url = "{{ url('suppliers') . '/' }}" + id;
+                    if (save_method == 'add') url = "{{ url('user') }}";
+                    else url = "{{ url('user') . '/' }}" + id;
 
                     $.ajax({
                         url : url,

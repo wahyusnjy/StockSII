@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/exportSuppliersAllExcel', [SupplierController::class, 'exportExcel'])->name('exportExcel.suppliersAll');
 
 	Route::resource('products', ProductController::class);
+    Route::post('/importProducts', [ProductController::class, 'ImportExcel'])->name('import.products');
     Route::get('/detail/{id}',[ProductController::class,'detail'])->name('detail.products');
 	Route::get('/apiProducts', [ProductController::class, 'apiProducts'])->name('api.products');
 
@@ -121,6 +122,22 @@ Route::group(['middleware' => 'auth'], function () {
 
         //
 		return view('products.barcode')->with('product', $product);
+	});
+
+    Route::get('print/barcode/{id}', function(Request $request, $id){
+		// set_time_limit(3000);
+		ini_set("memory_limit", "999M");
+		ini_set("max_execution_time", "999");
+		$product1 = Product::where('id',$id)->get();
+		$pdf = Pdf::loadView('products.barcode_id', ['product1' => $product1])->setOptions(['defaultFont' => 'sans-serif']);
+		//dd($pdf);
+		if($request->download){
+			//return view('products.barcode')->with('product', $product);
+			return $pdf->download('product_'.date('Y-m-dHis').'.pdf');
+		}
+
+        //
+		return view('products.barcode_id')->with('product1', $product1);
 	});
 
 

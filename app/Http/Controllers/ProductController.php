@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ProductsImport;
 use App\Models\ActivityLog;
 use App\Models\Category;
 use App\Models\Product;
@@ -9,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Milon\Barcode\DNS1D;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -72,6 +74,7 @@ class ProductController extends Controller
             // 'description'   => 'required',
         ]);
 
+
         $input = $request->all();
         $get_category = Category::orderBy('name','ASC')
         ->where('id', $input["category_id"])->first();
@@ -81,6 +84,7 @@ class ProductController extends Controller
             $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('/upload/products/'), $input['image']);
         }
+        $input['harga'] = str_replace(",", "", $input['harga']);
 
         $product_eks = Product::create($input);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 1, 'product_id'=> $product_eks->id]);
@@ -205,7 +209,7 @@ class ProductController extends Controller
                 return DNS1D::getBarcodeHTML($product->product_code, 'C128', true)."<br>"."<p align='justify'>($product->product_code)</p>";
             })->escapeColumns([])
             ->addColumn('show_photo', function($product){
-                if ($product->image == NULL){
+                if (empty($product->image)){
                     return 'No Image';
                 }
                 return '<img class="rounded-square" width="50" height="50" src="'. url($product->image) .'" alt="">';
@@ -253,11 +257,30 @@ class ProductController extends Controller
                 return '<span class="badge badge-warning">'.$message.'</span>';
             })
             ->addColumn('action', function($product){
-                return '<a href="detail/'.$product->id .'" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
+                return '<a href="/print/barcode/'.$product->id .' ?download=Y" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Export</a> ' .
+                    '<a href="detail/'.$product->id .'" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
                     '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                     '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
             })
             ->rawColumns(['category_name','show_photo','action'])->make(true);
 
+    }
+
+    public function ImportExcel(Request $request)
+    {
+        //Validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        if ($request->hasFile('file')) {
+            //UPLOAD FILE
+            $file = $request->file('file'); //GET FILE
+            //dd($file);
+            Excel::import(new ProductsImport, $file); //IMPORT FILE
+            return redirect()->back()->with(['success' => 'Upload file data Products !']);
+        }
+
+        return redirect()->back()->with(['error' => 'Please choose file before!']);
     }
 }
