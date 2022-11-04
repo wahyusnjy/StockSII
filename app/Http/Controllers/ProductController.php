@@ -37,9 +37,9 @@ class ProductController extends Controller
 
     public function detail($id)
     {
-        $category = Category::find($id)->first();
-
-        $producs = Product::find($id)->first();
+        $category = Category::where('id',$id)->get(['name']);
+        //dd($category);
+        $producs = Product::find($id);
         //dd($producs);
         return view('products.detail')
         ->with('category',$category)

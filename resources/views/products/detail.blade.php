@@ -18,7 +18,7 @@
             <tbody>
                 <tr>
                     <td>Product Code</td>
-                    <td>{{ DNS1D::getBarcodeHTML($producs->product_code , 'C128', true)}}</td>
+                    <td>{!! DNS1D::getBarcodeHTML($producs->product_code , 'C128', true)!!} <br> {{ $producs->product_code }} </td>
                 </tr>
                 <tr>
                     <td>Nama</td>
@@ -34,11 +34,17 @@
                 </tr>
                 <tr>
                     <td>Image</td>
-                    <td><img src="{{ $producs->image }}" width="150"></td>
+                    <td>
+                        @if($producs->image == NULL)
+                        <p>No Image</p>
+                        @else
+                        <img src="{{ $producs->image }}" width="150">
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <td>Category</td>
-                    <td>{{ $category->name }}</td>
+                    <td>{{ $producs->category->name }}</td>
                 </tr>
             </tbody>
         </table>
