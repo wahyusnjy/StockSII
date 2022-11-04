@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
 
             $table->string('nama');
             $table->integer('harga');
-            $table->string('image')->default(null);
+            $table->string('image')->nullable()->default(null);
             $table->integer('qty');
             $table->timestamps();
 

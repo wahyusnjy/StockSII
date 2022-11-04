@@ -18,9 +18,10 @@ class ProductsImport implements ToModel, WithHeadingRow
     {
 
         $input = $row['no'];
+        $code = $row['nama'];
         $get_category = Category::orderBy('name','ASC')->first();
         //dd($get_category);
-        $input = strtoupper(substr($get_category->name, 0, 3)).strtoupper(substr($input, 0)).date('Y').date('m').date('d').strtotime("now");
+        $input = strtoupper(substr($get_category->name, 0, 3)).strtoupper(substr($code, 0,2)).strtoupper(substr($input, 0)).date('Y').date('m').date('d').strtotime("now");
 
         return new Product([
             'id'            => $row['no'],
