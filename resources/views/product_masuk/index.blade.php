@@ -93,6 +93,8 @@
 
     @include('product_masuk.form')
 
+    @include('product_masuk.form_import')
+
 @endsection
 
 @section('bot')

@@ -84,12 +84,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/exportProductKeluarAll', [ProductKeluarController::class, 'apiProductsOut'])->name('exportPDF.productKeluarAll');
 	Route::get('/exportProductKeluarAllExcel', [ProductKeluarController::class, 'apiProductsOut'])->name('exportExcel.productKeluarAll');
 	Route::get('/exportProductKeluar/{id}', [ProductKeluarController::class, 'apiProductsOut'])->name('exportPDF.productKeluar');
+    Route::post('/importProductsKeluar', [ProductKeluarController::class, 'ImportExcel'])->name('import.productsKeluar');
 
 	Route::resource('productsIn', ProductMasukController::class);
 	Route::get('/apiProductsIn', [ProductMasukController::class, 'apiProductsIn'])->name('api.productsIn');
 	Route::get('/exportProductMasukAll', [ProductMasukController::class, 'exportProductMasukAll'])->name('exportPDF.productMasukAll');
 	Route::get('/exportProductMasukAllExcel', [ProductMasukController::class, 'exportExcel'])->name('exportExcel.productMasukAll');
 	Route::get('/exportProductMasuk/{id}', [ProductMasukController::class, 'exportProductMasuk'])->name('exportPDF.productMasuk');
+    Route::post('/importProductsMasuk', [ProductMasukController::class, 'ImportExcel'])->name('import.productsMasuk');
 
 	Route::resource('user', UserController::class);
 	Route::get('/apiUser', [UserController::class, 'apiUsers'])->name('api.users');

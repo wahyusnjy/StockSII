@@ -90,6 +90,8 @@
 
     @include('product_keluar.form')
 
+    @include('product_keluar.form_import')
+
 @endsection
 
 @section('bot')

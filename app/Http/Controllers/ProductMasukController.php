@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Exports\ExportProdukMasuk;
+use App\Imports\ProductsImportIn;
 use App\Models\ActivityLog;
 use App\Models\Product;
 use App\Models\Product_Masuk;
@@ -11,6 +12,7 @@ use App\Models\Supplier;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductMasukController extends Controller
@@ -187,5 +189,23 @@ class ProductMasukController extends Controller
     public function exportExcel()
     {
         return (new ExportProdukMasuk)->download('product_masuk.xlsx');
+    }
+
+    public function ImportExcel(Request $request)
+    {
+        //Validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        if ($request->hasFile('file')) {
+            //UPLOAD FILE
+            $file = $request->file('file'); //GET FILE
+            //dd($file);
+            Excel::import(new ProductsImportIn, $file); //IMPORT FILE
+            return redirect()->back()->with(['success' => 'Upload file data Products Masuk !']);
+        }
+
+        return redirect()->back()->with(['error' => 'Please choose file before!']);
     }
 }
