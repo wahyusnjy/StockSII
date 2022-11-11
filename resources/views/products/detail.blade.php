@@ -46,6 +46,14 @@
                     <td>Category</td>
                     <td>{{ $producs->category->name }}</td>
                 </tr>
+                <tr>
+                    <td>Lokasi</td>
+                    <td>{{ $producs->lokasi->name }}</td>
+                </tr>
+                <tr>
+                    <td>Assets/Inventory</td>
+                    <td>{{ $producs->assets->name }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
