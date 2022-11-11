@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductKeluarController;
 use App\Http\Controllers\ProductMasukController;
@@ -95,6 +97,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('user', UserController::class);
 	Route::get('/apiUser', [UserController::class, 'apiUsers'])->name('api.users');
+
+    Route::resource('lokasi', LokasiController::class);
+	Route::get('/apiLokasi', [LokasiController::class, 'apiLokasi'])->name('api.lokasi');
+
+    Route::resource('assetinventory', AssetsController::class);
+	Route::get('/apiAssetInventory', [AssetsController::class, 'apiAssetInventory'])->name('api.assetinventory');
 
 	Route::get('api/print/barcode', function(Request $request){
 

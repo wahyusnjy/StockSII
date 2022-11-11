@@ -42,6 +42,10 @@
 
             <li class="active"><a href="{{ route('productsIn.index') }}"><i class="fa fa-plus"></i> <span>Product Masuk</span></a></li>
 
+            <li class="active"><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a></li>
+
+            <li class="active"><a href="{{ route('assetinventory.index') }}"><i class="fa fa-inbox"></i> <span>Assets / Inventory</span></a></li>
+
 
 
 

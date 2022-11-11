@@ -1,10 +1,5 @@
 @extends('layouts.master')
-<style>
-    #products-table{
-        max-width: 500px;
-    }
-    td.dt-nowrap { white-space: nowrap }
-</style>
+
 
 @section('top')
     <!-- DataTables -->
@@ -15,27 +10,21 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Products</h3>
-            <a href="{{ url('/print/barcode?download=Y') }}" class="btn btn-warning pull-right" style="margin-top: -8px;">Print Barcode</a>
-            <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Products</a>
+            <h3 class="box-title">Data Lokasi</h3>
+        </div>
+
+        <div class="box-header">
+            <a onclick="addForm()" class="btn btn-primary" >Add Lokasi</a>
         </div>
 
 
         <!-- /.box-header -->
-        <div class="box-body table-responsive">
-            <table id="products-table" class="table table-striped">
+        <div class="box-body">
+            <table id="lokasi-table" class="table table-striped">
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>QR_CODE</th>
-                    <th>Nama</th>
-                    <th>Harga</th>
-                    <th>QTY</th>
-                    <th>Image</th>
-                    <th>Category</th>
-                    {{-- <th>Link</th>
-                    <th>Description</th> --}}
-                    <th>Activity</th>
+                    <th>Lokasi</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -45,10 +34,7 @@
         <!-- /.box-body -->
     </div>
 
-    @include('products.form')
-
-    @include('products.form_import')
-
+    @include('lokasi.form')
 @endsection
 
 @section('bot')
@@ -75,22 +61,14 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        var table = $('#products-table').DataTable({
+        var table = $('#lokasi-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('api.products') }}",
+            pagingType: 'full_numbers',
+            ajax: "{{ route('api.lokasi') }}",
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'product_code', name: 'product_code'},
-                {data: 'nama', name: 'nama'},
-                {data: 'harga', name: 'harga',
-                render: $.fn.dataTable.render.number('.')},
-                {data: 'qty', name: 'qty'},
-                {data: 'show_photo', name: 'show_photo'},
-                {data: 'category_name', name: 'category_name'},
-                {data: 'lokasi_name', name: 'lokasi_name'},
-                {data: 'assets', name: 'assets'},
-                {data: 'activity_status', name: 'activity_status'},
+                {data: 'name', name: 'name'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
@@ -100,7 +78,7 @@
             $('input[name=_method]').val('POST');
             $('#modal-form').modal('show');
             $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Products');
+            $('.modal-title').text('Add lokasi');
         }
 
         function editForm(id) {
@@ -108,21 +86,15 @@
             $('input[name=_method]').val('PATCH');
             $('#modal-form form')[0].reset();
             $.ajax({
-                url: "{{ url('products') }}" + '/' + id + "/edit",
+                url: "{{ url('lokasi') }}" + '/' + id + "/edit",
                 type: "GET",
                 dataType: "JSON",
                 success: function(data) {
                     $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Products');
+                    $('.modal-title').text('Edit lokasi');
 
                     $('#id').val(data.id);
-                    $('#product_code').val(data.product_code);
-                    $('#nama').val(data.nama);
-                    $('#harga').val(data.harga);
-                    $('#qty').val(data.qty);
-                    // $('#link').val(data.link);
-                    // $('#description').val(data.description);
-                    $('#category_id').val(data.category_id);
+                    $('#name').val(data.name);
                 },
                 error : function() {
                     alert("Nothing Data");
@@ -142,7 +114,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then(function () {
                 $.ajax({
-                    url : "{{ url('products') }}" + '/' + id,
+                    url : "{{ url('lokasi') }}" + '/' + id,
                     type : "POST",
                     data : {'_method' : 'DELETE', '_token' : csrf_token},
                     success : function(data) {
@@ -168,11 +140,10 @@
 
         $(function(){
             $('#modal-form form').validator().on('submit', function (e) {
-                console.log(e);
                 if (!e.isDefaultPrevented()){
                     var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('products') }}";
-                    else url = "{{ url('products') . '/' }}" + id;
+                    if (save_method == 'add') url = "{{ url('lokasi') }}";
+                    else url = "{{ url('lokasi') . '/' }}" + id;
 
                     $.ajax({
                         url : url,
@@ -183,10 +154,8 @@
                         contentType: false,
                         processData: false,
                         success : function(data) {
-                            console.log(data);
                             $('#modal-form').modal('hide');
                             table.ajax.reload();
-                            window.location.reload();
                             swal({
                                 title: 'Success!',
                                 text: data.message,
@@ -195,7 +164,6 @@
                             })
                         },
                         error : function(data){
-                            console.log(data);
                             swal({
                                 title: 'Oops...',
                                 text: data.message,

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Imports\ProductsImport;
 use App\Models\ActivityLog;
+use App\Models\Assets;
 use App\Models\Category;
+use App\Models\Lokasi;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,6 +33,8 @@ class ProductController extends Controller
             ->get(['name','id']);
 
         $producs = Product::all();
+        $lokasi  = Lokasi::all();
+        $asset   = Assets::all();
         return view('products.index', compact('category'));
     }
 
@@ -41,8 +45,12 @@ class ProductController extends Controller
         //dd($category);
         $producs = Product::find($id);
         //dd($producs);
+        $lokasi  = Lokasi::all();
+        $asset   = Assets::all();
         return view('products.detail')
         ->with('category',$category)
+        ->with('lokasi',$lokasi)
+        ->with('asset',$asset)
         ->with('producs', $producs);
     }
 
@@ -68,7 +76,7 @@ class ProductController extends Controller
             'nama'          => 'required|string',
             'harga'         => 'required',
             'qty'           => 'required',
-            // 'image'         => 'required',
+            'category_'         => 'required',
             // 'link'         => 'required',
             'category_id'   => 'required',
             // 'description'   => 'required',

@@ -54,6 +54,18 @@
 
                             <span class="help-block with-errors"></span>
                         </div>
+
+                        <div class="form-group">
+                            <label >Lokasi</label>
+                            <select class="form-control select" name="lokasi_id" id="lokasi_id" required>
+                                <option selected="selected" value="" disabled>-- Choose Lokasi --</option>
+                                @foreach ($category as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+
+                            <span class="help-block with-errors"></span>
+                        </div>
                         {{-- <div class="form-group">
                             <label >Link</label>
                             <input type="text" class="form-control" id="link" name="link">
