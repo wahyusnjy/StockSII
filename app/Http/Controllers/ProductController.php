@@ -35,7 +35,7 @@ class ProductController extends Controller
         $producs = Product::all();
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
-        return view('products.index', compact('category'));
+        return view('products.index', compact('category','lokasi','asset'));
     }
 
 
@@ -76,9 +76,9 @@ class ProductController extends Controller
             'nama'          => 'required|string',
             'harga'         => 'required',
             'qty'           => 'required',
-            'category_'         => 'required',
-            // 'link'         => 'required',
             'category_id'   => 'required',
+            'lokasi_id'     => 'required',
+            'assets_id'     => 'required',
             // 'description'   => 'required',
         ]);
 
@@ -146,9 +146,9 @@ class ProductController extends Controller
             'nama'          => 'required|string',
             'harga'         => 'required',
             'qty'           => 'required',
-            // 'link'           => 'required',
-//            'image'         => 'required',
             'category_id'   => 'required',
+            'lokasi_id'     => 'required',
+            'assets_id'     => 'required',
         ]);
 
         $input = $request->all();
@@ -212,6 +212,12 @@ class ProductController extends Controller
         return DataTables::of($product)
             ->addColumn('category_name', function ($product){
                 return $product->category->name;
+            })
+            ->addColumn('lokasi_name', function ($product){
+                return $product->lokasi->name;
+            })
+            ->addColumn('assets_name', function ($product){
+                return $product->assets->name;
             })
             ->addColumn('product_code', function ($product){
                 return DNS1D::getBarcodeHTML($product->product_code, 'C128', true)."<br>"."<p align='justify'>($product->product_code)</p>";

@@ -33,6 +33,8 @@
                     <th>QTY</th>
                     <th>Image</th>
                     <th>Category</th>
+                    <th>Lokasi</th>
+                    <th>Asset/Inventory</th>
                     {{-- <th>Link</th>
                     <th>Description</th> --}}
                     <th>Activity</th>
@@ -89,7 +91,7 @@
                 {data: 'show_photo', name: 'show_photo'},
                 {data: 'category_name', name: 'category_name'},
                 {data: 'lokasi_name', name: 'lokasi_name'},
-                {data: 'assets', name: 'assets'},
+                {data: 'assets_name', name: 'assets_name'},
                 {data: 'activity_status', name: 'activity_status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]

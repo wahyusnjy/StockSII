@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->belongsTo(Lokasi::class);
     }
+
+    public function assets()
+    {
+        return $this->belongsTo(Assets::class);
+    }
 }

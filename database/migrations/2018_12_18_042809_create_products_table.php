@@ -16,6 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id')->unsigned();
+            $table->integer('lokasi_id')->unsigned();
+            $table->integer('assets_id')->unsigned();
 
             $table->string('nama');
             $table->integer('harga');
@@ -24,6 +26,8 @@ class CreateProductsTable extends Migration
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('lokasi_id')->references('id')->on('lokasi')->onDelete('cascade');
+            $table->foreign('assets_id')->references('id')->on('assets')->onDelete('cascade');
 
 
         });

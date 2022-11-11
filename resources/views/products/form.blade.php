@@ -59,7 +59,19 @@
                             <label >Lokasi</label>
                             <select class="form-control select" name="lokasi_id" id="lokasi_id" required>
                                 <option selected="selected" value="" disabled>-- Choose Lokasi --</option>
-                                @foreach ($category as $item)
+                                @foreach ($lokasi as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+
+                            <span class="help-block with-errors"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label >Assets/Inventory</label>
+                            <select class="form-control select" name="assets_id" id="assets_id" required>
+                                <option selected="selected" value="" disabled>-- Choose Assets / Inventory --</option>
+                                @foreach ($asset as $item)
                                     <option value="{{$item->id}}">{{$item->name}}</option>
                                 @endforeach
                             </select>
