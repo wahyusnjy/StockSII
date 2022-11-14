@@ -72,6 +72,7 @@
         var table = $('#sales-table').DataTable({
             processing: true,
             serverSide: true,
+            deferRender: true,
             ajax: "{{ route('api.suppliers') }}",
             columns: [
                 {data: 'id', name: 'id'},

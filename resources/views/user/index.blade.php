@@ -67,6 +67,7 @@
             processing: true,
             serverSide: true,
             pagingType: 'full_numbers',
+            deferRender: true,  
             ajax: "{{ route('api.users') }}",
             columns: [
                 {data: 'id', name: 'id'},

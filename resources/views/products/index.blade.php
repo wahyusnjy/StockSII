@@ -80,6 +80,7 @@
         var table = $('#products-table').DataTable({
             processing: true,
             serverSide: true,
+            deferRender: true,
             ajax: "{{ route('api.products') }}",
             columns: [
                 {data: 'id', name: 'id'},

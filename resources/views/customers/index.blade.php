@@ -76,6 +76,7 @@
         var table = $('#customer-table').DataTable({
             processing: true,
             serverSide: true,
+            deferRender: true,
             ajax: "{{ route('api.customers') }}",
             columns: [
                 {data: 'id', name: 'id'},

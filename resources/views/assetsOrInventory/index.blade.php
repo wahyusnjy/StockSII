@@ -64,6 +64,7 @@
         var table = $('#assets-table').DataTable({
             processing: true,
             serverSide: true,
+            deferRender: true,
             pagingType: 'full_numbers',
             ajax: "{{ route('api.assetinventory') }}",
             columns: [

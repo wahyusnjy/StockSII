@@ -65,6 +65,7 @@
             processing: true,
             serverSide: true,
             pagingType: 'full_numbers',
+            deferRender: true,
             ajax: "{{ route('api.lokasi') }}",
             columns: [
                 {data: 'id', name: 'id'},
