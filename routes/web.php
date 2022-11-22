@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('lokasi', LokasiController::class);
 	Route::get('/apiLokasi', [LokasiController::class, 'apiLokasi'])->name('api.lokasi');
+	Route::get('/exportLokasiMasukAllExcel', [LokasiController::class, 'exportExcel'])->name('exportExcel.lokasiMasukAll');
 
     Route::resource('assetinventory', AssetsController::class);
 	Route::get('/apiAssetInventory', [AssetsController::class, 'apiAssetInventory'])->name('api.assetinventory');

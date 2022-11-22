@@ -15,6 +15,7 @@
 
         <div class="box-header">
             <a onclick="addForm()" class="btn btn-primary" >Add Lokasi</a>
+            <a href="{{ route('exportExcel.lokasiMasukAll') }}" class="btn btn-success">Export Excel</a>
         </div>
 
 
@@ -64,7 +65,6 @@
         var table = $('#lokasi-table').DataTable({
             processing: true,
             serverSide: true,
-            pagingType: 'full_numbers',
             deferRender: true,
             ajax: "{{ route('api.lokasi') }}",
             columns: [

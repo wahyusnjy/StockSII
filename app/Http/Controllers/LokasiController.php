@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportLokasi;
 use App\Models\Lokasi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -124,4 +125,9 @@ class LokasiController extends Controller
 			})
 			->rawColumns(['action'])->make(true);
 	}
+
+    public function exportExcel()
+    {
+        return (new ExportLokasi)->download('lokasi.xlsx');
+    }
 }
