@@ -19,6 +19,7 @@ class CreateProductMasukTable extends Migration
             $table->integer('supplier_id')->unsigned();
             $table->integer('qty');
             $table->date('tanggal');
+            $table->string('keterangan');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

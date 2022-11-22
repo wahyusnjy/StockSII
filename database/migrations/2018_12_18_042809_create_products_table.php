@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->integer('harga');
             $table->string('image')->nullable()->default(null);
             $table->integer('qty');
+            $table->string('user');
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

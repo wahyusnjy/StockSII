@@ -59,7 +59,8 @@ class ProductKeluarController extends Controller
            'product_id'     => 'required',
            'customer_id'    => 'required',
            'qty'            => 'required',
-           'tanggal'           => 'required'
+           'tanggal'        => 'required',
+           'keterangan'     => 'required',
         ]);
 
         Product_Keluar::create($request->all());
@@ -111,7 +112,8 @@ class ProductKeluarController extends Controller
             'product_id'     => 'required',
             'customer_id'    => 'required',
             'qty'            => 'required',
-            'tanggal'           => 'required'
+            'tanggal'        => 'required',
+            'keterangan'     => 'required'
         ]);
 
         $product_keluar = Product_Keluar::findOrFail($id);
@@ -160,6 +162,12 @@ class ProductKeluarController extends Controller
             })
             ->addColumn('customer_name', function ($product){
                 return $product->customer->nama;
+            })
+            ->addColumn('keterangan', function ($product){
+                return $product->keterangan;
+            })
+            ->addColumn('tanggal', function ($product){
+                return $product->tanggal;
             })
             ->addColumn('action', function($product){
                 return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .

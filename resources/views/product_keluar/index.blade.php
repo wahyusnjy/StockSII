@@ -33,8 +33,9 @@
                     <th>Products</th>
                     <th>Customer</th>
                     <th>QTY</th>
-                    <th>Tanggal Pembelian</th>
-                    <th></th>
+                    <th>Tanggal Keluar</th>
+                    <th>Keterangan</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -66,7 +67,8 @@
                     <th>Products</th>
                     <th>Customer</th>
                     <th>QTY</th>
-                    <th>Tanggal Pembelian</th>
+                    <th>Tanggal Keluar</th>
+                    <th>Keterangan</th>
                     <th>Export Invoice</th>
                 </tr>
                 </thead>
@@ -78,6 +80,7 @@
                         <td>{{ $i->customer->nama }}</td>
                         <td>{{ $i->qty }}</td>
                         <td>{{ $i->tanggal }}</td>
+                        <td>{{ $i->keterangan }}</td>
                         <td>
                             <a href="{{ route('exportPDF.productKeluar', [ 'id' => $i->id ]) }}" class="btn btn-sm btn-danger">Export PDF</a>
                         </td>
@@ -166,6 +169,7 @@
                 {data: 'customer_name', name: 'customer_name'},
                 {data: 'qty', name: 'qty'},
                 {data: 'tanggal', name: 'tanggal'},
+                {data: 'keterangan', name: 'keterangan'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
@@ -195,6 +199,7 @@
                     $('#customer_id').val(data.customer_id);
                     $('#qty').val(data.qty);
                     $('#tanggal').val(data.tanggal);
+                    $('#keterangan').val(data.keterangan);
                 },
                 error : function() {
                     alert("Nothing Data");

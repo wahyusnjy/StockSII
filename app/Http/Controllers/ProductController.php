@@ -79,7 +79,7 @@ class ProductController extends Controller
             'category_id'   => 'required',
             'lokasi_id'     => 'required',
             'assets_id'     => 'required',
-            // 'description'   => 'required',
+            'user'          => 'required',
         ]);
 
 
@@ -149,6 +149,7 @@ class ProductController extends Controller
             'category_id'   => 'required',
             'lokasi_id'     => 'required',
             'assets_id'     => 'required',
+            'user'          => 'required',
         ]);
 
         $input = $request->all();
@@ -228,9 +229,9 @@ class ProductController extends Controller
                 }
                 return '<img class="rounded-square" width="50" height="50" src="'. url($product->image) .'" alt="">';
             })
-            // ->addColumn('desc_product', function($product){
-            //     return '<span style="width: 70px;position: relative;word-break: break-all;">'.$product->description.'</span>';
-            // })
+            ->addColumn('user_show', function($product){
+                return $product->user;
+            })
             // ->addColumn('link', function($product){
             //     if(!empty($product->link)){
             //     return '<a target="_blank" href="'.$product->link.'">Online Shop Link</a>';

@@ -60,8 +60,10 @@ class ProductMasukController extends Controller
             'product_id'     => 'required',
             'supplier_id'    => 'required',
             'qty'            => 'required',
-            'tanggal'        => 'required'
+            'tanggal'        => 'required',
+            'keterangan'     => 'required'
         ]);
+
 
         Product_Masuk::create($request->all());
 
@@ -112,7 +114,8 @@ class ProductMasukController extends Controller
             'product_id'     => 'required',
             'supplier_id'    => 'required',
             'qty'            => 'required',
-            'tanggal'        => 'required'
+            'tanggal'        => 'required',
+            'keterangan'     => 'required',
         ]);
 
         $product_masuk = Product_Masuk::findOrFail($id);
@@ -160,6 +163,12 @@ class ProductMasukController extends Controller
             })
             ->addColumn('supplier_name', function ($product){
                 return $product->supplier->nama;
+            })
+            ->addColumn('keterangan', function ($product){
+                return $product->keterangan;
+            })
+            ->addColumn('tanggal', function ($product){
+                return $product->tanggal;
             })
             ->addColumn('action', function($product){
                 return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .

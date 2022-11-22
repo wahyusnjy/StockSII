@@ -31,6 +31,7 @@ class ProductsImport implements ToModel, WithHeadingRow
             'category_id'   => $row['category'],
             'lokasi_id'     => $row['lokasi'],
             'assets_id'     => $row['assets'],
+            'user'          => $row['user'],
             'product_code'  => $input
         ]);
 

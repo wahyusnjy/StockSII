@@ -35,8 +35,7 @@
                     <th>Category</th>
                     <th>Lokasi</th>
                     <th>Asset/Inventory</th>
-                    {{-- <th>Link</th>
-                    <th>Description</th> --}}
+                    <th>User</th>
                     <th>Activity</th>
                     <th></th>
                 </tr>
@@ -93,6 +92,7 @@
                 {data: 'category_name', name: 'category_name'},
                 {data: 'lokasi_name', name: 'lokasi_name'},
                 {data: 'assets_name', name: 'assets_name'},
+                {data: 'user_show', name: 'user_show'},
                 {data: 'activity_status', name: 'activity_status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
@@ -123,8 +123,7 @@
                     $('#nama').val(data.nama);
                     $('#harga').val(data.harga);
                     $('#qty').val(data.qty);
-                    // $('#link').val(data.link);
-                    // $('#description').val(data.description);
+                    $('#user').val(data.user);
                     $('#category_id').val(data.category_id);
                 },
                 error : function() {

@@ -83,9 +83,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('productsOut', ProductKeluarController::class);
 	Route::get('/apiProductsOut', [ProductKeluarController::class, 'apiProductsOut'])->name('api.productsOut');
-	Route::get('/exportProductKeluarAll', [ProductKeluarController::class, 'apiProductsOut'])->name('exportPDF.productKeluarAll');
-	Route::get('/exportProductKeluarAllExcel', [ProductKeluarController::class, 'apiProductsOut'])->name('exportExcel.productKeluarAll');
-	Route::get('/exportProductKeluar/{id}', [ProductKeluarController::class, 'apiProductsOut'])->name('exportPDF.productKeluar');
+	Route::get('/exportProductKeluarAll', [ProductKeluarController::class, 'exportProductKeluarAll'])->name('exportPDF.productKeluarAll');
+	Route::get('/exportProductKeluarAllExcel', [ProductKeluarController::class, 'exportExcel'])->name('exportExcel.productKeluarAll');
+	Route::get('/exportProductKeluar/{id}', [ProductKeluarController::class, 'exportProductKeluar'])->name('exportPDF.productKeluar');
     Route::post('/importProductsKeluar', [ProductKeluarController::class, 'ImportExcel'])->name('import.productsKeluar');
 
 	Route::resource('productsIn', ProductMasukController::class);
@@ -100,7 +100,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('lokasi', LokasiController::class);
 	Route::get('/apiLokasi', [LokasiController::class, 'apiLokasi'])->name('api.lokasi');
-	Route::get('/exportLokasiMasukAllExcel', [LokasiController::class, 'exportExcel'])->name('exportExcel.lokasiMasukAll');
+	Route::get('/exportLokasiMasukAllExcel', [LokasiController::class, 'exportExcel'])->name('exportExcel.lokasiAll');
+    Route::post('/importLokasiMasuk', [LokasiController::class, 'ImportExcel'])->name('import.lokasi');
 
     Route::resource('assetinventory', AssetsController::class);
 	Route::get('/apiAssetInventory', [AssetsController::class, 'apiAssetInventory'])->name('api.assetinventory');

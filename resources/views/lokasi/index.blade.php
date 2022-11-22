@@ -15,7 +15,7 @@
 
         <div class="box-header">
             <a onclick="addForm()" class="btn btn-primary" >Add Lokasi</a>
-            <a href="{{ route('exportExcel.lokasiMasukAll') }}" class="btn btn-success">Export Excel</a>
+            <a href="{{ route('exportExcel.lokasiAll') }}" class="btn btn-success">Export Excel</a>
         </div>
 
 
@@ -36,6 +36,8 @@
     </div>
 
     @include('lokasi.form')
+    @include('lokasi.form_import')
+
 @endsection
 
 @section('bot')

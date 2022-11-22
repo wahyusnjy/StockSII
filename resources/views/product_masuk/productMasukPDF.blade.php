@@ -63,6 +63,12 @@
             <td>Quantity</td>
             <td >: {{ $product_masuk->qty }}</td>
         </tr>
+        <tr>
+            <td>Keterangan</td>
+            <td>: {{ $product_masuk->keterangan }}</td>
+            <td></td>
+            <td></td>
+        </tr>
 
     </table>
 

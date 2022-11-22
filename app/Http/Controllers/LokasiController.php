@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportLokasi;
+use App\Imports\LokasiImport;
 use App\Models\Lokasi;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class LokasiController extends Controller
@@ -129,5 +131,23 @@ class LokasiController extends Controller
     public function exportExcel()
     {
         return (new ExportLokasi)->download('lokasi.xlsx');
+    }
+
+    public function ImportExcel(Request $request)
+    {
+        //Validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        if ($request->hasFile('file')) {
+            //UPLOAD FILE
+            $file = $request->file('file'); //GET FILE
+            //dd($file);
+            Excel::import(new LokasiImport, $file); //IMPORT FILE
+            return redirect()->back()->with(['success' => 'Upload file data Products Masuk !']);
+        }
+
+        return redirect()->back()->with(['error' => 'Please choose file before!']);
     }
 }

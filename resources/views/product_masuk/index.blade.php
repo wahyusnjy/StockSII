@@ -39,7 +39,8 @@
                     <th>Supplier</th>
                     <th>QTY</th>
                     <th>Tanggal Masuk</th>
-                    <th></th>
+                    <th>Keterangan</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -69,7 +70,8 @@
                     <th>Products</th>
                     <th>Supplier</th>
                     <th>QTY</th>
-                    <th>Tanggal Pembelian</th>
+                    <th>Tanggal Masuk</th>
+                    <th>Keterangan</th>
                     <th>Export Invoice</th>
                 </tr>
                 </thead>
@@ -81,6 +83,7 @@
                     <td>{{ $i->supplier->nama }}</td>
                     <td>{{ $i->qty }}</td>
                     <td>{{ $i->tanggal }}</td>
+                    <td>{{ $i->keterangan }}</td>
                     <td>
                         <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-sm btn-danger">Export PDF</a>
                     </td>
@@ -167,6 +170,7 @@
                 {data: 'supplier_name', name: 'supplier_name'},
                 {data: 'qty', name: 'qty'},
                 {data: 'tanggal', name: 'tanggal'},
+                {data: 'keterangan', name: 'keterangan'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
@@ -196,6 +200,7 @@
                     $('#supplier_id').val(data.supplier_id);
                     $('#qty').val(data.qty);
                     $('#tanggal').val(data.tanggal);
+                    $('#keterangan').val(data.keterangan);
                 },
                 error : function() {
                     alert("Nothing Data");

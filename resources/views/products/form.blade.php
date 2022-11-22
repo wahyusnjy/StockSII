@@ -78,17 +78,11 @@
 
                             <span class="help-block with-errors"></span>
                         </div>
-                        {{-- <div class="form-group">
-                            <label >Link</label>
-                            <input type="text" class="form-control" id="link" name="link">
+                        <div class="form-group">
+                            <label >User</label>
+                            <input type="text" class="form-control" id="user" name="user" required>
                             <span class="help-block with-errors"></span>
-                        </div> --}}
-                        {{-- <div class="form-group">
-                            <label >Product Code</label> --}}
-                            {{-- <textarea class="form-control" id="description" name="description"></textarea> --}}
-                            {{-- <input type="text" class="form-control" id="product_code" name="product_code"  autofocus required>
-                            <span class="help-block with-errors"></span>
-                        </div> --}}
+                        </div>
 
                     </div>
                     <!-- /.box-body -->
