@@ -18,7 +18,7 @@
             <tbody>
                 <tr>
                     <td>Product Code</td>
-                    <td>{!! DNS1D::getBarcodeHTML($producs->product_code , 'C128', true)!!} <br> {{ $producs->product_code }} </td>
+                    <td>{!! DNS2D::getBarcodeHTML($producs->product_code , 'QRCODE',3,3)!!} <br> {{ $producs->qrcode }} </td>
                 </tr>
                 <tr>
                     <td>Nama</td>
