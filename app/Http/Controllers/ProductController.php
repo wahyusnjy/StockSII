@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Milon\Barcode\DNS1D;
+use Milon\Barcode\Facades\DNS2DFacade;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -84,10 +85,14 @@ class ProductController extends Controller
 
 
         $input = $request->all();
+        $product = Product::first();
         $get_category = Category::orderBy('name','ASC')
         ->where('id', $input["category_id"])->first();
+        $lokasi = Lokasi::orderBy('name','ASC')
+        ->where('id',$input["lokasi_id"])->first();
         $input['image'] = null;
-        $input['product_code'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 1, 2)).date('Y').date('m').date('d').strtotime("now");
+        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$lokasi->name)."\n".strtoupper("Category : ".$get_category->name);
+        $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper(substr($request->nama, 0, 2)).date('y').date('m').date('d');
         if ($request->hasFile('image')){
             $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('/upload/products/'), $input['image']);
@@ -221,7 +226,8 @@ class ProductController extends Controller
                 return $product->assets->name;
             })
             ->addColumn('product_code', function ($product){
-                return DNS1D::getBarcodeHTML($product->product_code, 'C128', true)."<br>"."<p align='justify'>($product->product_code)</p>";
+                $qr = DNS2DFacade::getBarcodeHTML($product->product_code, 'QRCODE', 3,3 )."<br>"."<p>($product->qrcode)</p>";
+                return $qr;
             })->escapeColumns([])
             ->addColumn('show_photo', function($product){
                 if (empty($product->image)){

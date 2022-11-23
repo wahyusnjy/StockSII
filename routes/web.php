@@ -129,7 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
 		//dd($pdf);
 		if($request->download){
 			//return view('products.barcode')->with('product', $product);
-			return $pdf->download('product_'.date('Y-m-dHis').'.pdf');
+			return $pdf->stream('product_'.date('Y-m-dHis').'.pdf');
 		}
 
         //

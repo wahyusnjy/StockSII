@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Sistem Inventory</title>
     <!-- Tell the browser to be responsive to screen width -->
-   
+
     <style>
         .page-break {
             page-break-after: always;
@@ -19,25 +19,25 @@
         }
 
         .badge {
-            
+
             display: inline-block;
             margin-left: 1.3cm;
-            
+
             width: 6cm; /* 1.9 */
             height: 1cm;
             /* width: 0.2cm; */
         }
     </style>
     <body>
-    
+
     <div class="container">
-        @php 
+        @php
         $a=1;
         @endphp
         @foreach($product as $pr)
             <div class="badge">
-                {!! DNS1D::getBarcodeHTML($pr->product_code, 'C128', true) !!}
-                <p class="text" style="margin-top: 2px">( {{$pr->product_code}} )</p>
+                {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE',3,3) !!}
+                <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
             </div>
             @if($a%2 == 0)
             <br>
@@ -46,17 +46,17 @@
             <br style="margin-top: 1cm;">
             @endif
 
-            @php 
+            @php
             $a++;
-           
+
             @endphp
             @if($a%16 == 1)
             <!-- <p>OK</p> -->
             <div class="page-break"></div>
             @endif
-            
+
         @endforeach
-    
+
     </div>
     </body>
 </html

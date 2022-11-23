@@ -36,8 +36,8 @@
         @endphp
         @foreach($product1 as $pr)
             <div class="badge">
-                {!! DNS1D::getBarcodeHTML($pr->product_code, 'C128', true) !!}
-                <p class="text" style="margin-top: 2px">( {{$pr->product_code}} )</p>
+                {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE', 3,3) !!}
+                <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
             </div>
             @if($a%2 == 0)
             <br>
