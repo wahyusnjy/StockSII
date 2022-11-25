@@ -11,11 +11,14 @@
             page-break-after: always;
         }
         .container {
-            width: 16.5cm; /* 7in */
-            margin-right: 4cm;
-            /* width: 6.5cm; */
-            /* margin-right: 2in; */
-            /* margin-top: 0.3cm; */
+            width: 210mm;
+        min-height: 297mm;
+        padding: 20mm;
+        margin: 10mm auto;
+        border: 1px #D3D3D3 solid;
+        border-radius: 5px;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .badge {
@@ -27,9 +30,14 @@
             height: 1cm;
             /* width: 0.2cm; */
         }
+        @media print {
+        #printPageButton {
+        display: none;
+            }
+        }
     </style>
     <body>
-
+    <button id="printPageButton" onclick="window.print()"> PRINT </button>
     <div class="container">
         @php
         $a=1;

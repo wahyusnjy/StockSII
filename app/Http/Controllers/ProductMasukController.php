@@ -34,6 +34,7 @@ class ProductMasukController extends Controller
         $suppliers = Supplier::orderBy('nama','ASC')
         ->get(['nama','id']);
 
+
         $invoice_data = Product_Masuk::all();
         return view('product_masuk.index', compact('products','suppliers','invoice_data'));
     }
@@ -191,6 +192,7 @@ class ProductMasukController extends Controller
     public function exportProductMasuk($id)
     {
         $product_masuk = Product_Masuk::findOrFail($id);
+        //dd($product_masuk);
         $pdf = Pdf::loadView('product_masuk.productMasukPDF', compact('product_masuk'));
         return $pdf->download($product_masuk->id.'_product_masuk.pdf');
     }

@@ -2,9 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>A simple, clean, and responsive HTML invoice template</title>
-
-
+    <title>Bukti Product Masuk</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <style>
@@ -20,68 +19,55 @@
 
 <body>
 <div class="invoice-box">
-    <table cellpadding="0" cellspacing="0">
-        <tr class="top">
-            <td colspan="2">
-                <table>
-                    <tr>
-                        <td class="title">
-                            <img src="https://www.sparksuite.com/images/logo.png" style="width:100%; max-width:300px;">
-                        </td>
-                    </tr>
-                </table>
+    <table width="120%">
+        <tr>
+            <td valign="top" style="padding-right: 2px;"><img src="{{ public_path('assets/LogoSII.png') }}" alt="" width="90"> </td>
+            <td valign="top"> <h5>PT.SOLUSI INTEK INDONESIA</h5>
+             <p>Head Office : Emerald Commercial Blok UB No. 50 Summarecon Bekasi <br> Telp. 021-89454790 <br>
+            Mkt Office &nbsp;&nbsp; : Jl Tebet Barat dalam raya No. 31 Tebet Barat, Jakarta Selatan, <br>Telp 021-21383852</p>
             </td>
         </tr>
+   </table>
+
+   <h5 class="text-center mt-4">BUKTI PEMASUKAN BARANG</h5>
+   <p style="font-weight:bold">Tanggal : {{  $product_masuk->tanggal }}</p>
+
+    <table border="0" id="table-data" width="100%" class="mt-4">
+        <thead>
+        <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Nama Barang</th>
+            <th class="text-center">Keterangan</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center"> {{ $product_masuk->id }}</td>
+            <td class="text-center"> {{ $product_masuk->qty }}</td>
+            <td class="text-center"> {{ $product_masuk->product->nama }}</td>
+            <td class="text-center"> {{ $product_masuk->keterangan }}</td>
+        </tr>
+    </tbody>
     </table>
 
 
-    <table border="0" id="table-data" width="80%">
+    <table border="0" id="table-data" width="100%" class="mt-4">
         <tr>
-            <td width="70px">Invoice ID</td>
-            <td width="">: {{ $product_masuk->id }}</td>
-            <td width="30px">Created</td>
-            <td>: {{ $product_masuk->tanggal }}</td>
-        </tr>
-
-        <tr>
-            <td>Telepon</td>
-            <td>: {{ $product_masuk->supplier->telepon }}</td>
-            <td>Alamat</td>
-            <td>: {{ $product_masuk->supplier->alamat }}</td>
-        </tr>
-
-        <tr>
-            <td>Nama</td>
-            <td>: {{ $product_masuk->supplier->nama }}</td>
-            <td>Email</td>
-            <td>: {{ $product_masuk->supplier->email }}</td>
-        </tr>
-
-        <tr>
-            <td>Product</td>
-            <td >: {{ $product_masuk->product->nama }}</td>
-            <td>Quantity</td>
-            <td >: {{ $product_masuk->qty }}</td>
+            <td class="text-center" style="font-weight:600;">Yang Memasukan,</td>
+            <td class="text-center" style="font-weight:600;">Mengetahui</td>
         </tr>
         <tr>
-            <td>Keterangan</td>
-            <td>: {{ $product_masuk->keterangan }}</td>
             <td></td>
-            <td></td>
+            <td class="text-center"></td>
         </tr>
-
-    </table>
-
-    {{--<hr  size="2px" color="black" align="left" width="45%">--}}
-
-
-    <table border="0" width="80%">
-        <tr align="right">
-            <td>Hormat Kami</td>
+        <tr>
+            <td class="text-center">{{ $product_masuk->supplier->nama }}</td>
+            <td class="text-center">Sindu Irawan</td>
         </tr>
     </table>
 
-    <table border="0" width="80%">
+    {{-- <table border="0" width="80%">
         <tr align="right">
             <td><img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Timothy_Spall_Signature.png" width="100px" height="100px"></td>
         </tr>
@@ -91,5 +77,5 @@
         <tr align="right">
             <td>Sheptian Bagja Utama</td>
         </tr>
-    </table>
+    </table> --}}
 </div>
