@@ -23,11 +23,12 @@ class ProductsImport implements ToModel, WithHeadingRow
         $code = $row['nama'];
         $get_category = Category::orderBy('name','ASC')
         ->where('id', $row["category"])->first();
+        //dd($get_category);
         $lokasi       = Lokasi::orderBy('name','ASC')
         ->where('id',$row["lokasi"])->first();
 
         $input = strtoupper("Product :".$row['nama'])."\n".strtoupper("Lokasi : ". $row['lokasi_name'])."\n".strtoupper("Category : ".$row['category_name']);
-        $qrcode = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper(substr($row['nama'], 0, 2)).date('y').date('m').date('d');
+        $qrcode = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper("0000".$row['no']);
 
        return  $new = new Product([
             'id'            => $row['no'],
