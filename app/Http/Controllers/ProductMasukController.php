@@ -28,8 +28,8 @@ class ProductMasukController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('nama','ASC')
-        ->get(['nama','id']);
+        $products = Product::orderBy('id','ASC')
+        ->get(['nama','id','qrcode']);
 
         $suppliers = Supplier::orderBy('nama','ASC')
         ->get(['nama','id']);
@@ -160,7 +160,7 @@ class ProductMasukController extends Controller
 
         return DataTables::of($product)
             ->addColumn('products_name', function ($product){
-                return $product->product->nama;
+                return $product->product->qrcode;
             })
             ->addColumn('supplier_name', function ($product){
                 return $product->supplier->nama;

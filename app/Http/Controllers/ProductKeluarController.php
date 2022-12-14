@@ -27,8 +27,8 @@ class ProductKeluarController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('nama','ASC')
-        ->get(['nama','id']);
+        $products = Product::orderBy('id','ASC')
+        ->get(['nama','id', 'qrcode']);
 
         $customers = Customer::orderBy('nama','ASC')
         ->get(['nama','id']);
@@ -158,7 +158,7 @@ class ProductKeluarController extends Controller
 
         return DataTables::of($product)
             ->addColumn('products_name', function ($product){
-                return $product->product->nama;
+                return $product->product->qrcode;
             })
             ->addColumn('customer_name', function ($product){
                 return $product->customer->nama;

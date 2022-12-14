@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+    <!-- Latest compiled and minified CSS -->
+<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
 @endsection
 
 @section('content')
@@ -79,7 +82,7 @@
                 @foreach($invoice_data as $i)
                     <tbody>
                     <td>{{ $i->id }}</td>
-                    <td>{{ $i->product->nama }}</td>
+                    <td>{{ $i->product->qrcode }}</td>
                     <td>{{ $i->supplier->nama }}</td>
                     <td>{{ $i->qty }}</td>
                     <td>{{ $i->tanggal }}</td>
@@ -122,6 +125,9 @@
     <script src="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
     {{-- Validator --}}
     <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
 
     {{--<script>--}}
     {{--$(function () {--}}

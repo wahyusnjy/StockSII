@@ -56,9 +56,9 @@
             <td class="text-center" style="font-weight:600;">Yang Memasukan,</td>
             <td class="text-center" style="font-weight:600;">Mengetahui</td>
         </tr>
-        <tr>
-            <td rowspan="6" colspan="2"></td>
-            <td rowspan="6" colspan="2"></td>
+        <tr aria-rowspan="2">
+            <td></td>
+            <td></td>
         </tr>
         <tr>
             <td class="text-center">{{ $product_keluar->customer->nama }}</td>

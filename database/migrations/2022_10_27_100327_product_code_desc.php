@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('link')->nullable();
             $table->string('qrcode')->nullable();
+            $table->string('id_code')->nullable();
         });
     }
 

@@ -20,10 +20,10 @@
                             <label >Products</label>
                             {{-- {!! Form::select('product_id', $products, null, ['class' => 'form-control select', 'placeholder' => '-- Choose Product --', 'id' => 'product_id', 'required']) !!} --}}
 
-                            <select class="form-control select" name="product_id" id="product_id" required>
+                            <select class="form-control select selectpicker" name="product_id" id="product_id" required data-live-search="true">
                                 <option selected="selected" value="">-- Choose Product --</option>
                                 @foreach ($products as $item)
-                                    <option value="{{$item->id}}">{{$item->nama}}</option>
+                                    <option value="{{$item->id}}">{{$item->qrcode}}</option>
                                 @endforeach
                             </select>
                             <span class="help-block with-errors"></span>
@@ -31,7 +31,7 @@
 
                         <div class="form-group">
                             <label >Customer</label>
-                            <select class="form-control select" name="customer_id" id="customer_id" required>
+                            <select class="form-control select selectpicker" name="customer_id" id="customer_id" required data-live-search="true">
                                 <option selected="selected" value="">-- Choose Customer --</option>
                                 @foreach ($customers as $item)
                                     <option value="{{$item->id}}">{{$item->nama}}</option>

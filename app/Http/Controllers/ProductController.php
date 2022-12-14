@@ -83,7 +83,7 @@ class ProductController extends Controller
             'user'          => 'required',
         ]);
 
-
+        
         $input = $request->all();
         $product = Product::first();
         $get_category = Category::orderBy('name','ASC')

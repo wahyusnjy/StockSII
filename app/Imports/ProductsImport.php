@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Category;
 use App\Models\Lokasi;
 use App\Models\Product;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\Blade;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -28,10 +29,14 @@ class ProductsImport implements ToModel, WithHeadingRow
         ->where('id',$row["lokasi"])->first();
 
         $input = strtoupper("Product :".$row['nama'])."\n".strtoupper("Lokasi : ". $row['lokasi_name'])."\n".strtoupper("Category : ".$row['category_name']);
-        $qrcode = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper("0000".$row['no']);
+        $prefix = '.';
+        $id = $row['no'];
+        $test = str_pad($id,5,'0', STR_PAD_LEFT);
+        $qrcode = strtoupper(substr($get_category->name, 0, 1).substr($get_category->name, 6, 1)).$test;
 
        return  $new = new Product([
             'id'            => $row['no'],
+            'id_code'       => $row['no'],
             'nama'          => $row['nama'],
             'harga'         => $row['harga'],
             'qty'           => $row['qty'],

@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="modal-form" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -5,7 +6,7 @@
                 @csrf
                 @method('POST')
 
-                <div class="modal-header">
+                    <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     <h3 class="modal-title"></h3>
@@ -20,10 +21,10 @@
                         <div class="form-group">
                             <label >Products</label>
                             {{-- {!! Form::select('product_id', $products, null, ['class' => 'form-control select', 'placeholder' => '-- Choose Product --', 'id' => 'product_id', 'required']) !!} --}}
-                            <select class="form-control select" name="product_id" id="product_id" required>
+                            <select  class="form-control select selectpicker" name="product_id" id="product_id" required  data-live-search="true">
                                 <option selected="selected" value="">-- Choose Product --</option>
                                 @foreach ($products as $item)
-                                    <option value="{{$item->id}}">{{$item->nama}}</option>
+                                    <option value="{{$item->id}}">{{$item->qrcode}}</option>
                                 @endforeach
                             </select>
                             <span class="help-block with-errors"></span>
@@ -31,7 +32,7 @@
 
                         <div class="form-group">
                             <label >Supplier</label>
-                            <select class="form-control select" name="supplier_id" id="supplier_id" required>
+                            <select class="form-control select selectpicker" name="supplier_id" id="supplier_id" required  data-live-search="true">
                                 <option selected="selected" value="">-- Choose Supplier --</option>
                                 @foreach ($suppliers as $item)
                                     <option value="{{$item->id}}">{{$item->nama}}</option>
@@ -71,8 +72,17 @@
 
             </form>
         </div>
+
+        <script>
+
+        </script>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+
+
+
+
