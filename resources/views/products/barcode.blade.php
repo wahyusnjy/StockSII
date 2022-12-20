@@ -24,10 +24,12 @@
         .badge {
 
             display: inline-block;
-            margin-left: 1.3cm;
+            margin-left: 2cm;
+            padding:10px;
 
-            width: 6cm; /* 1.9 */
-            height: 1cm;
+
+            width: 4cm; /* 1.9 */
+            height: 5.7cm;
             /* width: 0.2cm; */
         }
         @media print {
@@ -47,12 +49,7 @@
                 {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE',3,3) !!}
                 <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
             </div>
-            @if($a%2 == 0)
-            <br>
-            <br>
-            <br>
-            <br style="margin-top: 1cm;">
-            @endif
+
 
             @php
             $a++;

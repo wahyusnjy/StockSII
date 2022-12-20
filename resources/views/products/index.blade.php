@@ -17,6 +17,8 @@
         <div class="box-header">
             <h3 class="box-title">Data Products</h3>
             <a href="{{ url('/print/barcode?download=Y') }}" class="btn btn-warning pull-right" style="margin-top: -8px;">Print Barcode</a>
+            <button type="button" id="button-export-selected" disabled class="btn btn-danger pull-right" style="margin-top: -8px;"
+            onclick="exportDataTerpilih()">Print Selected Barcode</button>
             <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Products</a>
         </div>
 
@@ -26,6 +28,8 @@
             <table id="products-table" class="table table-striped">
                 <thead>
                 <tr>
+                    <th><input type="checkbox" id="head-cb">
+                    </th>
                     <th>ID</th>
                     <th>QR_CODE</th>
                     <th>Nama</th>
@@ -49,6 +53,12 @@
     @include('products.form')
 
     @include('products.form_import')
+
+    <form action="{{ route('barcodeSelected.products') }}" method="get" id="form-export-terpilih" class="hidden">
+        <input type="hidden" name="ids">
+        <button class="hidden" style="display: none;" type="submit">S</button>
+    </form>
+
 
 @endsection
 
@@ -76,12 +86,14 @@
     {{--</script>--}}
 
     <script type="text/javascript">
+    let yangDiCheck = 0;
         var table = $('#products-table').DataTable({
             processing: true,
             serverSide: true,
             deferRender: true,
             ajax: "{{ route('api.products') }}",
             columns: [
+                {data: 'checkbox', name: 'checkbox'},
                 {data: 'id', name: 'id'},
                 {data: 'product_code', name: 'product_code'},
                 {data: 'nama', name: 'nama'},
@@ -210,6 +222,44 @@
                 }
             });
         });
+
+            //Checkbox Cek All
+            $("#head-cb").on('click', function(){
+                var isChecked = $('#head-cb').prop('checked')
+            $(".child-cb").prop('checked',isChecked)
+            $("#button-export-selected").prop('disabled',!isChecked)
+            })
+
+            $("#products-table").on('click', '.child-cb',function(){
+                if($(this).prop('checked')!=true){
+                    $("#head-cb").prop('checked',false)
+                }
+                let semua_checkbox = $("#products-table .child-cb:checked")
+                let button_export_selected = (semua_checkbox.length>0)
+
+                $("#button-export-selected").prop('disabled',!button_export_selected)
+            })
+
+            function exportDataTerpilih(){
+                let checkbox_terpilih = $("#products-table .child-cb:checked")
+                let semua_id = []
+                $.each(checkbox_terpilih,function(index,elm){
+                    semua_id.push(elm.value)
+                })
+                let ids = semua_id.join(',')
+                $("#button-export-selected").prop('disabled',true)
+                $("#form-export-terpilih [name='ids']").val(ids)
+                $("#form-export-terpilih").submit()
+                // $.ajax({
+                //     url: "{{ url('products') }}" + '/barcodeSelected'+ '/'+ id,
+                //     method:'GET',
+                //     success:function(res){
+                //         console.log(res)
+                //         $("#button-export-selected").prop('disabled',true)
+                //     }
+                // })
+            }
+
     </script>
 
 @endsection

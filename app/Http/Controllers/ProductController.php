@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportProduk;
 use App\Imports\ProductsImport;
 use App\Models\ActivityLog;
 use App\Models\Assets;
@@ -9,12 +10,14 @@ use App\Models\Category;
 use App\Models\Lokasi;
 use App\Models\Product;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Milon\Barcode\DNS1D;
 use Milon\Barcode\Facades\DNS2DFacade;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -94,10 +97,17 @@ class ProductController extends Controller
         $input['image'] = null;
         $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$lokasi->name)."\n".strtoupper("Category : ".$get_category->name);
 
-        $id = $product->id;
-        $id++;
-        $test = str_pad($id,5,'0', STR_PAD_LEFT);
-        $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+        if(empty($product->id)){
+            $id = 0;
+            $test = str_pad($id++,5,'0', STR_PAD_LEFT);
+            $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+        }else{
+            $id = $product->id;
+            $id++;
+            $test = str_pad($id,5,'0', STR_PAD_LEFT);
+            $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+        }
+
 
         if ($request->hasFile('image')){
             $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
@@ -222,6 +232,9 @@ class ProductController extends Controller
         //dd($product);
         // dd(DNS1D::getBarcodeHTML("1982924", 'PHARMA'));
         return DataTables::of($product)
+            ->addColumn('checkbox', function($product){
+            return '<input type="checkbox" class="child-cb" value="'.$product->id.'">';
+            })
             ->addColumn('category_name', function ($product){
                 return $product->category->name;
             })
@@ -309,5 +322,27 @@ class ProductController extends Controller
         }
 
         return redirect()->back()->with(['error' => 'Please choose file before!']);
+    }
+
+    public function BarcodeSelected(Request $request)
+    {
+        // $ids = explode(',', $request->ids);
+        // return (new ExportProduk($ids))->download('produck.pdf', \Maatwebsite\Excel\Excel::TCPDF);
+        // return Excel::download(new ExportProduk($ids), 'karyawan.xlsx');
+
+        set_time_limit(3000);
+		ini_set("memory_limit", "999M");
+		ini_set("max_execution_time", "999");
+        $ids = explode(',', $request->ids);
+		$product1 = Product::findOrFail($ids);
+		$pdf = Pdf::loadView('products.barcode_pdf', ['product1' => $product1])->setOptions(['defaultFont' => 'sans-serif'])->setpaper('A4', 'potrait');
+		return $pdf->stream('Product.pdf');
+		if($request->download){
+			//return view('products.barcode')->with('product', $product);
+			return $pdf->download('product_'.date('Y-m-dHis').'.pdf');
+		}
+
+
+		// return view('products.barcode_pdf')->with('product1', $product1);
     }
 }

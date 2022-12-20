@@ -77,9 +77,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/exportSuppliersAllExcel', [SupplierController::class, 'exportExcel'])->name('exportExcel.suppliersAll');
 
 	Route::resource('products', ProductController::class);
+    Route::get('/barcodeSelected',[ProductController::class, 'BarcodeSelected'])->name('barcodeSelected.products');
     Route::post('/importProducts', [ProductController::class, 'ImportExcel'])->name('import.products');
     Route::get('/detail/{id}',[ProductController::class,'detail'])->name('detail.products');
 	Route::get('/apiProducts', [ProductController::class, 'apiProducts'])->name('api.products');
+
 
 	Route::resource('productsOut', ProductKeluarController::class);
 	Route::get('/apiProductsOut', [ProductKeluarController::class, 'apiProductsOut'])->name('api.productsOut');
@@ -127,7 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
 		$product = Product::get();
 		$pdf = Pdf::loadView('products.barcode', ['product' => $product])->setOptions(['defaultFont' => 'sans-serif']);
 		//dd($pdf);
-        
+
         //
 		return view('products.barcode')->with('product', $product);
 	});
@@ -172,5 +174,7 @@ Route::get('barcode/allfireman', function(Request $request){
 	//
 	//return view('products.bardcode_fireman')->with('product', $product);
 });
+
+
 
 require __DIR__.'/auth.php';
