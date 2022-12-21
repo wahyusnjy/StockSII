@@ -20,5 +20,15 @@ class AdSd extends Seeder
             'email' => "admin@mail.com",
             'password' => bcrypt("#kuadmiDI"),
         ]);
+        User::updateOrCreate(['id' => 2], [
+            'name' => "Tri Minarsih",
+            'email' => "triminarsih@intek.co.id",
+            'password' => bcrypt("tebetinventorysii2022;"),
+        ]);
+        User::updateOrCreate(['id' => 3], [
+            'name' => "Danang",
+            'email' => "danang@intek.co.id",
+            'password' => bcrypt("cikunirinventorysii2022;"),
+        ]);
     }
 }
