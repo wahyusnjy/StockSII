@@ -10,7 +10,16 @@
         .page-break {
             page-break-after: always;
         }
+        .app {
+            display: inline-flex;
+        }
+        .header {
+            font-size: 10px;
+            font-weight: bold;
+            font-family: 'poppins',sans-serif;
+        }
         .container {
+
         width: 100%;
         padding: 5px;
         margin-top: 60px;
@@ -19,8 +28,7 @@
         }
 
         .badge {
-            margin-top: 20px;
-            display: inline-flex;
+            margin-top: 5px;
             margin-left: 20px;
 
 
@@ -35,11 +43,15 @@
         $a=1;
         @endphp
         @foreach($product1 as $pr)
+        <div class="app">
+        <div class="header">
+            <p>PT Solusi Intek Indonesia </p>
+        </div>
             <div class="badge">
                 {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE', 2,2) !!}
                 <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
             </div>
-
+        </div>
 
             @php
             $a++;
