@@ -18,6 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Milon\Barcode\DNS1D;
 use Milon\Barcode\Facades\DNS2DFacade;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
+use PhpParser\Node\Expr\Empty_;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -31,17 +32,136 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $category = Category::orderBy('name','ASC')
             ->get(['name','id']);
 
-        $producs = Product::all();
+
+        $type         = $request->type;
+        $search       = $request->search;
+        $producs      = Product::paginate(9);
+        $product      = Product::all();
+        foreach($product as $p){
+        $activ        = ActivityLog::where('product_id', $p->id)->orderBy('id_activity', 'desc')->first();
+        }
+
+
+        if($type)
+            $producs = $producs->where('type', $type);
+        if($search)
+            $producs = $producs->search($search);
+
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
-        return view('products.index', compact('category','lokasi','asset'));
+        return view('products.index', compact('category','lokasi','asset','producs','activ'));
     }
+    public function getProducts(Request $request)
+    {
+        // read value
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $rowperpage = $request->get('length'); //Rows Display per page
 
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr  = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column'];//column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // column name
+        $columnSortOrder = $order_arr[0]['dir']; //asc or desc
+        $searchValue = $search_arr['value'];//Search vaue
+
+        //custom search filter
+        $searchCategory = $request->get('searchCategory');
+        $searchQR       = $request->get('searchQR');
+        $searchName     = $request->get('searchName');
+
+        //total records
+        $records = Product::select('count(*) as allcount');
+
+        //Add Custom Filter Conditions
+        if(!empty($searchCategory)){
+            $records->where('category', $searchCategory);
+        }
+        if(!empty($searchQR)){
+            $records->where('qrcode',$searchQR);
+        }
+        if(!empty($searchName)){
+            $records->where('nama','like','%'.$searchName.'%');
+        }
+        $totalRecords = $records->count();
+
+        //total record with filter
+        $records = Product::select('count(*) as allcount')->where('nama','like','%'.$searchValue.'%');
+
+        ##Add Custom filter conditions
+         //Add Custom Filter Conditions
+         if(!empty($searchCategory)){
+            $records->where('category', $searchCategory);
+        }
+        if(!empty($searchQR)){
+            $records->where('qrcode',$searchQR);
+        }
+        if(!empty($searchName)){
+            $records->where('nama','like','%'.$searchName.'%');
+        }
+        $totalRecordswithFilter = $records->count();
+
+        //Fetch Records
+        $records = product::orderBy($columnName, $columnSortOrder)->select('nama')->where('nama','like','%'.$searchValue.'%');
+        ##add Custom filter condition
+        if(!empty($searchCategory)){
+            $records->where('category', $searchCategory);
+        }
+        if(!empty($searchQR)){
+            $records->where('qrcode',$searchQR);
+        }
+        if(!empty($searchName)){
+            $records->where('nama','like','%'.$searchName.'%');
+        }
+        $products = $records->skip($start)->take($rowperpage)->get();
+
+        $data_arr = array();
+        foreach($products as $product){
+            $id   = $product->id;
+            $nama = $product->nama;
+            $harga = $product->harga;
+            $qty   = $product->qty;
+            $category = $product->category->name;
+            $lokasi = $product->lokasi->name;
+            $Ai     = $product->assets->name;
+            $user   = $product->user;
+            $action = '<a href="/print/barcode/'.$product->id .' ?download=Y" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Export</a> ' .
+            '<a href="detail/'.$product->id .'" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
+            '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+            '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+
+            $qr = DNS2DFacade::getBarcodeHTML($product->product_code, 'QRCODE', 3,3 )."<br>"."<p>($product->qrcode)</p>";
+
+            $data_arr[] = array(
+            "id"        => $id,
+            "nama"      => $nama,
+            "harga"     => $harga,
+            "qty"       => $qty,
+            "category"  => $category,
+            "lokasi"    => $lokasi,
+            "assets"    => $Ai,
+            "user"      => $user,
+            "action"    => $action,
+            "qr"        => $qr,
+            );
+        }
+
+        $response = array(
+            "draw" =>intval($draw),
+            "iTotalRecords"=> $totalRecords,
+            "iTotalDisplayRecords"=> $totalRecordswithFilter,
+            "aaData"=> $data_arr
+        );
+        return response()->json($response);
+    }
 
     public function detail($id)
     {

@@ -10,53 +10,57 @@
         .page-break {
             page-break-after: always;
         }
+        .app {
+            display: inline-flex;
+        }
+        .header {
+            font-size: 10px;
+            font-weight: bold;
+            font-family: 'poppins',sans-serif;
+        }
         .container {
-            width: 16.5cm; /* 7in */
-            margin-right: 4cm;
-            /* width: 6.5cm; */
-            /* margin-right: 2in; */
-            /* margin-top: 0.3cm; */
+
+        width: 100%;
+        padding: 5px;
+        margin-top: 60px;
+        margin-left: 40px;
+        max-height: 2pt;
         }
 
         .badge {
+            margin-top: 5px;
+            margin-left: 20px;
 
-            display: inline-block;
-            margin-left: 1.3cm;
 
-            width: 6cm; /* 1.9 */
-            height: 1cm;
-            /* width: 0.2cm; */
+            width: 5.6cm;
+            height: 4cm;
         }
     </style>
     <body>
 
-    <div class="container">
-        @php
-        $a=1;
-        @endphp
-        @foreach($product1 as $pr)
-            <div class="badge">
-                {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE', 3,3) !!}
-                <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
-            </div>
-            @if($a%2 == 0)
-            <br>
-            <br>
-            <br>
-            <br style="margin-top: 1cm;">
-            @endif
-
+        <div class="container">
             @php
-            $a++;
-
+            $a=1;
             @endphp
-            @if($a%16 == 1)
-            <!-- <p>OK</p> -->
-            <div class="page-break"></div>
-            @endif
+            @foreach($product1 as $pr)
+            <div class="app">
+            <div class="header">
+                <p>PT Solusi Intek Indonesia </p>
+            </div>
+                <div class="badge">
+                    {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE', 2,2) !!}
+                    <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
+                </div>
+            </div>
 
-        @endforeach
+                @php
+                $a++;
 
-    </div>
+                @endphp
+
+
+            @endforeach
+
+        </div>
     </body>
 </html
