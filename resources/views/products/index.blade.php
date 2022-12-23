@@ -62,7 +62,7 @@
                         @if(empty($p->image))
                         <td>No Image</td>
                         @else
-                        <td><a href="{{  url($p->image)  }}"><img class="rounded-square" width="50" height="50" src="{{ url($p->image) }}" alt=""></a></td>
+                        <td><a href="{{  url($p->image)  }}" target="_blank" ><img class="rounded-square" width="50" height="50" src="{{ url($p->image) }}" alt=""></a></td>
                         @endif
                         <td>{{ $p->category->name }}</td>
                         <td>{{ $p->lokasi->name }}</td>
