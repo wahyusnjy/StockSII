@@ -19,14 +19,14 @@
             <a href="{{ url('/print/barcode?download=Y') }}" class="btn btn-warning pull-right" style="margin-top: -8px;">Print Barcode</a>
             <button type="button" id="button-export-selected" disabled class="btn btn-danger pull-right" style="margin-top: -8px;"
             onclick="exportDataTerpilih()">Print Selected Barcode</button>
-            <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Products</a>
+            <a href="{{ url('/products/create') }}" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Products</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
             <div>
                 <div style="text-align: right;">
                 <form action="{{ url('/cari') }}" method="get">
-                    <input type="text" name="cari" placeholder="Cari Product" value="{{ old('cari') }}">
+                    <input type="text" class="form-control form-control-sm" name="cari" placeholder="Cari Product" value="{{ old('cari') }}">
                     <input type="submit" value="CARI">
                 </form>
                 </div>
@@ -105,7 +105,7 @@
                         <td>
                             <a href="/print/barcode/{{ $p->id }} ?download=Y" class="btn btn-warning btn-xs "><i class="glyphicon glyphicon-eye-open"></i> Export</a>
                             <a href="detail/{{ $p->id }}" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
-                            <a onclick="editForm({{ $p->id }})" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                            <a href="{{ url('products/'.$p->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                             <a onclick="deleteData({{ $p->id }})" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>
                         </td>
                     </tr>
@@ -118,7 +118,7 @@
         <!-- /.box-body -->
     </div>
 
-    @include('products.form')
+    {{-- @include('products.form') --}}
     @include('products.form_import')
 
     <form action="{{ route('barcodeSelected.products') }}" method="get" id="form-export-terpilih" class="hidden">
@@ -185,33 +185,33 @@
             $('.modal-title').text('Add Products');
         }
 
-        function editForm(id) {
-            save_method = 'edit';
-            $('input[name=_method]').val('PATCH');
-            $('#modal-form form')[0].reset();
-            $.ajax({
-                url: "{{ url('products') }}" + '/' + id + "/edit",
-                type: "GET",
-                dataType: "JSON",
-                success: function(data) {
-                    $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Products');
+        // function editForm(id) {
+        //     save_method = 'edit';
+        //     $('input[name=_method]').val('PATCH');
+        //     $('#modal-form form')[0].reset();
+        //     $.ajax({
+        //         url: "{{ url('products') }}" + '/' + id + "/edit",
+        //         type: "GET",
+        //         dataType: "JSON",
+        //         success: function(data) {
+        //             $('#modal-form').modal('show');
+        //             $('.modal-title').text('Edit Products');
 
-                    $('#id').val(data.id);
-                    $('#product_code').val(data.product_code);
-                    $('#nama').val(data.nama);
-                    $('#harga').val(data.harga);
-                    $('#qty').val(data.qty);
-                    $('#user').val(data.user);
-                    $('#category_id').val(data.category_id);
-                    $('#lokasi_id').val(data.lokasi_id);
-                    $('#assets_id').val(data.assets_id);
-                },
-                error : function() {
-                    alert("Nothing Data");
-                }
-            });
-        }
+        //             $('#id').val(data.id);
+        //             $('#product_code').val(data.product_code);
+        //             $('#nama').val(data.nama);
+        //             $('#harga').val(data.harga);
+        //             $('#qty').val(data.qty);
+        //             $('#user').val(data.user);
+        //             $('#category_id').val(data.category_id);
+        //             $('#lokasi_id').val(data.lokasi_id);
+        //             $('#assets_id').val(data.assets_id);
+        //         },
+        //         error : function() {
+        //             alert("Nothing Data");
+        //         }
+        //     });
+        // }
 
         function deleteData(id){
             var csrf_token = $('meta[name="csrf-token"]').attr('content');

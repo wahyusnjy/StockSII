@@ -104,7 +104,17 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $category = Category::all();
+        //dd($category);
+        $producs = Product::all();
+        //dd($producs);
+        $lokasi  = Lokasi::all();
+        $asset   = Assets::all();
+        return view('products.create')
+        ->with('category',$category)
+        ->with('lokasi',$lokasi)
+        ->with('asset',$asset)
+        ->with('producs', $producs);
     }
 
     /**
@@ -156,10 +166,7 @@ class ProductController extends Controller
 
         $product_eks = Product::create($input);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 1, 'product_id'=> $product_eks->id]);
-        return response()->json([
-            'success' => true,
-            'message' => 'Products Created'
-        ]);
+        return redirect()->route('products.index');
 
     }
 
@@ -171,7 +178,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -182,11 +189,17 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::orderBy('name','ASC')
-            ->get()
-            ->pluck('name','id');
-        $product = Product::find($id);
-        return $product;
+        $category = Category::all();
+        //dd($category);
+        $producs = Product::find($id);
+        //dd($producs);
+        $lokasi  = Lokasi::all();
+        $asset   = Assets::all();
+        return view('products.edit')
+        ->with('category',$category)
+        ->with('lokasi',$lokasi)
+        ->with('asset',$asset)
+        ->with('producs', $producs);
     }
 
     /**
@@ -198,9 +211,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::orderBy('name','ASC')
-            ->get()
-            ->pluck('name','id');
+
 
         $this->validate($request , [
             'nama'          => 'required|string',
@@ -212,10 +223,11 @@ class ProductController extends Controller
             'user'          => 'required',
         ]);
 
-        $input = $request->all();
+        $input = $request->except('_token');
         $produk = Product::findOrFail($id);
 
         $input['image'] = $produk->image;
+        $input['harga'] = str_replace(",", "", $input['harga']);
 
         if ($request->hasFile('image')){
             if (!$produk->image == NULL){
@@ -232,12 +244,10 @@ class ProductController extends Controller
         }else{
             ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 2, 'product_id'=> $id]);
         }
+
         $produk->update($input);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Products Update'
-        ]);
+       return redirect()->route('products.index');
     }
 
     /**
