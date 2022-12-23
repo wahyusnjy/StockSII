@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('products', ProductController::class);
     Route::get('/barcodeSelected',[ProductController::class, 'BarcodeSelected'])->name('barcodeSelected.products');
+    Route::get('/cari',[ProductController::class, 'Cari'])->name('cari.products');
     Route::post('/importProducts', [ProductController::class, 'ImportExcel'])->name('import.products');
     Route::get('/getProducts',[ProductController::class, 'getProducts'])->name('getProducts.products');
     Route::get('/detail/{id}',[ProductController::class,'detail'])->name('detail.products');

@@ -21,23 +21,13 @@
             onclick="exportDataTerpilih()">Print Selected Barcode</button>
             <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Products</a>
         </div>
-        {{-- <x-form method="GET" class="ms-auto d-none d-md-flex">
-            <x-input name="search" placeholder="Search..." value="{{ request()->search ?? '' }}" class="me-2"/>
-            <x-button outline type="submit" value="Search" />
-        </x-form>
-
-
-
-        <x-table.instant
-            style="min-height: 400px"
-            :data="$producs->items()"
-            hidden="status|type|updated_at|"
-        />
-        {{ $producs->links() }} --}}
-
+       <form action="{{ url('/cari') }}" method="get">
+            <input type="text" name="cari" placeholder="Cari Product" value="{{ old('cari') }}">
+            <input type="submit" value="CARI">
+        </form>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
-            <table class="table table-striped data-table" id="products-table">
+            <table class="table table-responsive data-table" id="products-table">
                 <thead>
                 <tr>
                     <th><input type="checkbox" id="head-cb">
@@ -57,9 +47,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @forelse ($producs as $p)
+                    @foreach ($producs as $p)
                     @php
-                        $activ = App\Models\ActivityLog::where('product_id', $p->id)->orderBy('id_activity', 'desc')->first();
+                    $activ = App\Models\ActivityLog::where('product_id', $p->id)->orderBy('id_activity', 'desc')->first();
+                    $date = Carbon\Carbon::parse($p->created_at)->format('d-m-Y');
                     @endphp
                     <tr>
                         <td><input type="checkbox" class="child-cb" value="{{ $p->id }}"></td>
@@ -71,7 +62,7 @@
                         @if(empty($p->image))
                         <td>No Image</td>
                         @else
-                        <td><img class="rounded-square" width="50" height="50" src="{{ url($p->image) }}" alt=""></td>
+                        <td><a href="{{  url($p->image)  }}"><img class="rounded-square" width="50" height="50" src="{{ url($p->image) }}" alt=""></a></td>
                         @endif
                         <td>{{ $p->category->name }}</td>
                         <td>{{ $p->lokasi->name }}</td>
@@ -79,31 +70,31 @@
                         <td>{{ $p->user }}</td>
                         <td>
                         @if(empty($activ->activity_status))
-                        <span class="badge badge-warning">Nothing</span>
+                        <span class="badge badge-warning">Nothing <br>{{ $date }}</span>
                         @elseif($activ->activity_status == 1)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 2)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 3)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 4)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 5)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 6)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 7)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 8)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 9)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 10)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 11)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @elseif($activ->activity_status == 12)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}</span>
+                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
                         @endif
                         </td>
                         <td>
@@ -113,10 +104,7 @@
                             <a onclick="deleteData({{ $p->id }})" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>
                         </td>
                     </tr>
-
-                    @empty
-
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
             {!! $producs->withQueryString()->links('pagination::bootstrap-5') !!}
