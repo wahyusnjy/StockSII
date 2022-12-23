@@ -21,14 +21,18 @@
             onclick="exportDataTerpilih()">Print Selected Barcode</button>
             <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Products</a>
         </div>
-       <form action="{{ url('/cari') }}" method="get">
-            <input type="text" name="cari" placeholder="Cari Product" value="{{ old('cari') }}">
-            <input type="submit" value="CARI">
-        </form>
         <!-- /.box-header -->
         <div class="box-body">
+            <div>
+                <div style="text-align: right;">
+                <form action="{{ url('/cari') }}" method="get">
+                    <input type="text" name="cari" placeholder="Cari Product" value="{{ old('cari') }}">
+                    <input type="submit" value="CARI">
+                </form>
+                </div>
+            </div>
           <div class="table-responsive" >
-            <table class="table table-bordered data-table" style="width: 100%;" id="products-table" >
+            <table class="table table-bordered data-table products-table" style="width: 100%;">
                 <thead>
                 <tr>
                     <th><input type="checkbox" id="head-cb">
@@ -293,18 +297,18 @@
             $("#button-export-selected").prop('disabled',!isChecked)
             })
 
-            $("#products-table ").on('click', '.child-cb',function(){
+            $(".products-table ").on('click', '.child-cb',function(){
                 if($(this).prop('checked')!=true){
                     $("#head-cb").prop('checked',false)
                 }
-                let semua_checkbox = $("#products-table  .child-cb:checked")
+                let semua_checkbox = $(".products-table  .child-cb:checked")
                 let button_export_selected = (semua_checkbox.length>0)
 
                 $("#button-export-selected").prop('disabled',!button_export_selected)
             })
 
             function exportDataTerpilih(){
-                let checkbox_terpilih = $("#products-table .child-cb:checked")
+                let checkbox_terpilih = $(".products-table .child-cb:checked")
                 let semua_id = []
                 $.each(checkbox_terpilih,function(index,elm){
                     semua_id.push(elm.value)
