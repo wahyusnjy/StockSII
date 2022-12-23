@@ -64,7 +64,20 @@ class ProductController extends Controller
             ->get(['name','id']);
     $lokasi  = Lokasi::all();
     $asset   = Assets::all();
-    $producs = Product::where('nama','like',"%".$cari."%")->orWhere('qrcode','like',"%".$cari."%")->orWhere('user','like',"%".$cari."%")->orWhere('id','like',"%".$cari."%")->paginate();
+    $producs = Product::where('nama','like',"%".$cari."%")
+    ->orWhere('qrcode','like',"%".$cari."%")
+    ->orWhere('user','like',"%".$cari."%")
+    ->orWhere('id','like',"%".$cari."%")
+    ->orWhereHas('assets',function($q) use ($cari){
+        return $q->where('name','like',"%".$cari."%");
+    })
+    ->orWhereHas('lokasi',function($q) use ($cari){
+        return $q->where('name','like',"%".$cari."%");
+    })
+    ->orWhereHas('category',function($q) use ($cari){
+        return $q->where('name','like',"%".$cari."%");
+    })
+    ->paginate();
 
     return view('products.index',compact('producs','category','lokasi','asset'));
    }

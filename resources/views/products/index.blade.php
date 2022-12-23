@@ -26,8 +26,9 @@
             <input type="submit" value="CARI">
         </form>
         <!-- /.box-header -->
-        <div class="box-body table-responsive">
-            <table class="table table-responsive data-table" id="products-table">
+        <div class="box-body">
+          <div class="table-responsive" >
+            <table class="table table-bordered data-table" style="width: 100%;" id="products-table" >
                 <thead>
                 <tr>
                     <th><input type="checkbox" id="head-cb">
@@ -109,6 +110,7 @@
             </table>
             {!! $producs->withQueryString()->links('pagination::bootstrap-5') !!}
         </div>
+    </div>
         <!-- /.box-body -->
     </div>
 
