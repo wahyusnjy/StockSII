@@ -204,6 +204,8 @@
                     $('#qty').val(data.qty);
                     $('#user').val(data.user);
                     $('#category_id').val(data.category_id);
+                    $('#lokasi_id').val(data.lokasi_id);
+                    $('#assets_id').val(data.assets_id);
                 },
                 error : function() {
                     alert("Nothing Data");
