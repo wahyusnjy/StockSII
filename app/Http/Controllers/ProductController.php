@@ -64,7 +64,7 @@ class ProductController extends Controller
             ->get(['name','id']);
     $lokasi  = Lokasi::all();
     $asset   = Assets::all();
-    $producs = Product::where('nama','like',"%".$cari."%")->paginate();
+    $producs = Product::where('qrcode','like',"%".$cari."%")->paginate();
 
     return view('products.index',compact('producs','category','lokasi','asset'));
    }
