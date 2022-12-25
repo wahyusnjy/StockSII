@@ -10,7 +10,7 @@
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
     <!-- Latest compiled and minified CSS -->
-<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
 @endsection
 
 @section('content')
@@ -21,9 +21,18 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add Products Out</a>
+            <a href="{{ route('productsOut.create') }}" class="btn btn-primary" >Add Products Out</a>
             <a href="{{ route('exportPDF.productKeluarAll') }}" class="btn btn-danger">Export PDF</a>
             <a href="{{ route('exportExcel.productKeluarAll') }}" class="btn btn-success">Export Excel</a>
+        </div>
+
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/productsOut') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
         </div>
 
         <!-- /.box-header -->
@@ -40,8 +49,28 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach ($invoice_data as $i)
+                    <tr>
+                        <td>{{ $i->id }}</td>
+                        <td>{{ $i->product->nama }}</td>
+                        <td>{{ $i->customer->nama }}</td>
+                        <td>{{ $i->qty }}</td>
+                        <td>{{ $i->tanggal }}</td>
+                        <td>{{ $i->keterangan }}</td>
+                        <td>
+                            <a href="{{ url('productsOut/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form action="{{ route('productsOut.destroy', $i->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
+            {{ $invoice_data->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -54,11 +83,14 @@
             <h3 class="box-title">Export Invoice</h3>
         </div>
 
-        {{--<div class="box-header">--}}
-            {{--<a onclick="addForm()" class="btn btn-primary" >Add Products Out</a>--}}
-            {{--<a href="{{ route('exportPDF.productKeluarAll') }}" class="btn btn-danger">Export PDF</a>--}}
-            {{--<a href="{{ route('exportExcel.productKeluarAll') }}" class="btn btn-success">Export Excel</a>--}}
-        {{--</div>--}}
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/productsOut') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
+        </div>
 
         <!-- /.box-header -->
         <div class="box-body">
@@ -89,6 +121,7 @@
                     </tbody>
                 @endforeach
             </table>
+            {{ $invoice_data->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -122,23 +155,23 @@
     {{-- Validator --}}
     <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
     <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
 
     <script>
-    $(function () {
-    // $('#items-table').DataTable()
-    $('#invoice').DataTable({
-    'paging'      : true,
-    'lengthChange': false,
-    'searching'   : false,
-    'ordering'    : true,
-    'info'        : true,
-    'autoWidth'   : false,
-    'processing'  : true,
-    // 'serverSide'  : true
-    })
-    })
-    </script>
+    // $(function () {
+    // // $('#items-table').DataTable()
+    // $('#invoice').DataTable({
+    // 'paging'      : true,
+    // 'lengthChange': false,
+    // 'searching'   : false,
+    // 'ordering'    : true,
+    // 'info'        : true,
+    // 'autoWidth'   : false,
+    // 'processing'  : true,
+    // // 'serverSide'  : true
+    // })
+    // })
+    // </script>
 
     <script>
         $(function () {
@@ -162,21 +195,21 @@
     </script>
 
     <script type="text/javascript">
-        var table = $('#products-out-table').DataTable({
-            processing: true,
-            serverSide: true,
-            deferRender: true,
-            ajax: "{{ route('api.productsOut') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'products_name', name: 'products_name'},
-                {data: 'customer_name', name: 'customer_name'},
-                {data: 'qty', name: 'qty'},
-                {data: 'tanggal', name: 'tanggal'},
-                {data: 'keterangan', name: 'keterangan'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#products-out-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     deferRender: true,
+        //     ajax: "{{ route('api.productsOut') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'products_name', name: 'products_name'},
+        //         {data: 'customer_name', name: 'customer_name'},
+        //         {data: 'qty', name: 'qty'},
+        //         {data: 'tanggal', name: 'tanggal'},
+        //         {data: 'keterangan', name: 'keterangan'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

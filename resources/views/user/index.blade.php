@@ -14,13 +14,23 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add User</a>
+            <a href="{{ route('user.create') }}" class="btn btn-primary" >Add User</a>
         </div>
 
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/user') }}" method="get">
+                <input type="text" class="form-control form-control-sm" name="cari" placeholder="Cari Users" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
+        </div>
 
         <!-- /.box-header -->
         <div class="box-body">
-            <table id="user-table" class="table table-striped">
+            {{-- id="user-table" --}}
+            <div class="table-responsive" >
+            <table class="table table-striped user-table data-table">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -30,8 +40,27 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach ($users as $user)
+                    <tr>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->role }}</td>
+                    <td><a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
+                        <a href="{{ url('user/'.$user->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                    @endforeach
+                </tbody>
             </table>
+            {{ $users->withQueryString()->links('pagination::bootstrap-5') }}
+        </div>
         </div>
         <!-- /.box-body -->
     </div>
@@ -63,20 +92,20 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        var table = $('#user-table').DataTable({
-            processing: true,
-            serverSide: true,
-            pagingType: 'full_numbers',
-            deferRender: true,  
-            ajax: "{{ route('api.users') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data: 'role', name: 'role'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#user-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     pagingType: 'full_numbers',
+        //     deferRender: true,
+        //     ajax: "{{ route('api.users') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'name', name: 'name'},
+        //         {data: 'email', name: 'email'},
+        //         {data: 'role', name: 'role'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

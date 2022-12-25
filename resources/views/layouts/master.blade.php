@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.min.css')}} ">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/Ionicons/css/ionicons.min.css')}} ">
-    
+
     {{-- SweetAlert2 --}}
     <script src="{{ asset('assets/sweetalert2/sweetalert2.min.js') }}"></script>
     <link href="{{ asset('assets/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
@@ -142,6 +142,7 @@
 <script src="{{  asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') }} "></script>
 <!-- AdminLTE App -->
 <script src="{{  asset('assets/dist/js/adminlte.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 @yield('bot')
 </body>

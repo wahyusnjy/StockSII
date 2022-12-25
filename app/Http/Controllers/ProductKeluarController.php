@@ -33,9 +33,34 @@ class ProductKeluarController extends Controller
         $customers = Customer::orderBy('nama','ASC')
         ->get(['nama','id']);
 
-        $invoice_data = Product_Keluar::all();
+        $invoice_data = Product_Keluar::paginate(5);
         return view('product_keluar.index', compact('products','customers', 'invoice_data'));
     }
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+
+    $products = Product::orderBy('id','ASC')
+    ->get(['nama','id', 'qrcode']);
+
+    $customers = Customer::orderBy('nama','ASC')
+    ->get(['nama','id']);
+
+    $invoice_data = Product_Keluar::where('qty','like',"%".$cari."%")
+    ->orWhere('tanggal','like',"%".$cari."%")
+    ->orWhere('keterangan','like',"%".$cari."%")
+    ->orWhere('id','like',"%".$cari."%")
+    ->orWhereHas('product',function($q) use ($cari){
+        return $q->where('name','like',"%".$cari."%");
+    })
+    ->orWhereHas('customer',function($q) use ($cari){
+        return $q->where('name','like',"%".$cari."%");
+    })
+    ->paginate();
+
+    return view('product_keluar.index',compact('users'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -44,7 +69,12 @@ class ProductKeluarController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::orderBy('id','ASC')
+        ->get(['nama','id', 'qrcode']);
+
+        $customers = Customer::orderBy('nama','ASC')
+        ->get(['nama','id']);
+        return view('product_keluar.create',compact('products','customers'));
     }
 
     /**
@@ -69,10 +99,7 @@ class ProductKeluarController extends Controller
         $product->qty -= $request->qty;
         $product->save();
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 7, 'product_id'=> $product->id]);
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Products Out Created'
-        ]);
+        return redirect()->route('productsOut.index');
 
     }
 
@@ -95,8 +122,12 @@ class ProductKeluarController extends Controller
      */
     public function edit($id)
     {
+    $products = Product::orderBy('id','ASC')
+    ->get(['nama','id', 'qrcode']);
+    $customers = Customer::orderBy('nama','ASC')
+    ->get(['nama','id']);
         $product_keluar = Product_Keluar::find($id);
-        return $product_keluar;
+        return view('product_keluar.edit', compact('product_keluar', 'products', 'customers'));
     }
 
     /**
@@ -129,10 +160,7 @@ class ProductKeluarController extends Controller
         }
 
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Product Out Updated'
-        ]);
+        return redirect()->route('productsOut.index');
     }
 
     /**
@@ -145,10 +173,7 @@ class ProductKeluarController extends Controller
     {
         Product_Keluar::destroy($id);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 4, 'product_id'=> $id]);
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Products Delete Deleted'
-        ]);
+        return redirect()->route('productsOut.index');
     }
 
 

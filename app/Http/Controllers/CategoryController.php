@@ -21,9 +21,19 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // $categories = Category::all();
-        return view('categories.index');
+        $categories = Category::paginate(2);
+        return view('categories.index',compact('categories'));
     }
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+    $categories = Category::where('name','like',"%".$cari."%")
+    ->orWhere('id','like',"%".$cari."%")
+    ->paginate();
+
+    return view('categories.index',compact('categories'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -32,7 +42,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -49,10 +59,7 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return response()->json([
-           'success'    => true,
-           'message'    => 'Categories Created'
-        ]);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -75,7 +82,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        return $category;
+        return view('categories.edit',compact('category'));
     }
 
     /**
@@ -95,10 +102,7 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Categories Update'
-        ]);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -111,10 +115,7 @@ class CategoryController extends Controller
     {
         Category::destroy($id);
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Categories Delete'
-        ]);
+        return redirect()->route('categories.index');
     }
 
     public function apiCategories()

@@ -35,9 +35,35 @@ class ProductMasukController extends Controller
         ->get(['nama','id']);
 
 
-        $invoice_data = Product_Masuk::all();
+        $invoice_data = Product_Masuk::paginate(5);
         return view('product_masuk.index', compact('products','suppliers','invoice_data'));
     }
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+    $cari = $request->cari;
+
+    $products = Product::orderBy('id','ASC')
+    ->get(['nama','id', 'qrcode']);
+
+    $suppliers = Supplier::orderBy('nama','ASC')
+    ->get(['nama','id']);
+
+    $invoice_data = Product_Masuk::where('qty','like',"%".$cari."%")
+    ->orWhere('tanggal','like',"%".$cari."%")
+    ->orWhere('keterangan','like',"%".$cari."%")
+    ->orWhere('id','like',"%".$cari."%")
+    ->orWhereHas('product',function($q) use ($cari){
+        return $q->where('name','like',"%".$cari."%");
+    })
+    ->orWhereHas('supplier',function($q) use ($cari){
+        return $q->where('name','like',"%".$cari."%");
+    })
+    ->paginate();
+
+    return view('product_masuk.index',compact('users'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -46,7 +72,13 @@ class ProductMasukController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::orderBy('id','ASC')
+        ->get(['nama','id','qrcode']);
+
+        $suppliers = Supplier::orderBy('nama','ASC')
+        ->get(['nama','id']);
+
+        return view('product_masuk.create',compact('products', 'suppliers'));
     }
 
     /**
@@ -72,10 +104,7 @@ class ProductMasukController extends Controller
         $product->qty += $request->qty;
         $product->save();
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 8, 'product_id'=> $product->id]);
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Products In Created'
-        ]);
+        return redirect()->route('productsIn.index');
 
     }
 
@@ -98,8 +127,13 @@ class ProductMasukController extends Controller
      */
     public function edit($id)
     {
+        $products = Product::orderBy('id','ASC')
+        ->get(['nama','id','qrcode']);
+
+        $suppliers = Supplier::orderBy('nama','ASC')
+        ->get(['nama','id']);
         $product_masuk = Product_Masuk::find($id);
-        return $product_masuk;
+        return view('product_masuk.edit',compact('product_masuk','products','suppliers'));
     }
 
     /**
@@ -131,10 +165,7 @@ class ProductMasukController extends Controller
             ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 10, 'product_id'=> $product->id]);
         }
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Product In Updated'
-        ]);
+        return redirect()->route('productsIn.index');
     }
 
     /**
@@ -147,10 +178,7 @@ class ProductMasukController extends Controller
     {
         Product_Masuk::destroy($id);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 5, 'product_id'=> $id]);
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Products In Deleted'
-        ]);
+        return redirect()->route('productsIn.index');
     }
 
 

@@ -14,9 +14,17 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add Assets / Inventory</a>
+            <a href="{{ route('assetinventory.create') }}" class="btn btn-primary" >Add Assets / Inventory</a>
         </div>
 
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/assets') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
+        </div>
 
         <!-- /.box-header -->
         <div class="box-body">
@@ -25,11 +33,27 @@
                 <tr>
                     <th>ID</th>
                     <th>Assets/Invetory</th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach ($assets as $a)
+                    <tr>
+                        <td>{{ $a->id }}</td>
+                        <td>{{ $a->name }}</td>
+                        <td>
+                            <a href="{{ url('assetinventory/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                            <form action="{{ route('assetinventory.destroy', $a->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
+            {{ $assets->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -61,18 +85,18 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        var table = $('#assets-table').DataTable({
-            processing: true,
-            serverSide: true,
-            deferRender: true,
-            pagingType: 'full_numbers',
-            ajax: "{{ route('api.assetinventory') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#assets-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     deferRender: true,
+        //     pagingType: 'full_numbers',
+        //     ajax: "{{ route('api.assetinventory') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'name', name: 'name'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

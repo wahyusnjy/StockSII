@@ -20,9 +20,22 @@ class SupplierController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		// $suppliers = Supplier::all();
-		return view('suppliers.index');
+		$suppliers = Supplier::paginate(5);
+		return view('suppliers.index',compact('suppliers'));
 	}
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+    $suppliers = Supplier::where('nama','like',"%".$cari."%")
+    ->orWhere('alamat','like',"%".$cari."%")
+    ->orWhere('email','like',"%".$cari."%")
+    ->orWhere('telepon','like',"%".$cari."%")
+    ->orWhere('id','like',"%".$cari."%")
+    ->paginate();
+
+    return view('user.index',compact('users'));
+   }
 
 	/**
 	 * Show the form for creating a new resource.
@@ -30,7 +43,7 @@ class SupplierController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		//
+		return view('suppliers.create');
 	}
 
 	/**
@@ -49,10 +62,7 @@ class SupplierController extends Controller {
 
 		Supplier::create($request->all());
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Suppliers Created',
-		]);
+		return redirect()->route('suppliers.index');
 
 	}
 
@@ -74,7 +84,7 @@ class SupplierController extends Controller {
 	 */
 	public function edit($id) {
 		$supplier = Supplier::find($id);
-		return $supplier;
+		return view('suppliers.edit', compact('supplier'));
 	}
 
 	/**
@@ -88,7 +98,7 @@ class SupplierController extends Controller {
 		$this->validate($request, [
 			'nama' => 'required|string|min:2',
 			'alamat' => 'required|string|min:2',
-			'email' => 'required|string|email|max:255|unique:suppliers',
+			'email' => 'required|string|email',
 			'telepon' => 'required|string|min:2',
 		]);
 
@@ -96,10 +106,7 @@ class SupplierController extends Controller {
 
 		$supplier->update($request->all());
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Supplier Updated',
-		]);
+		return redirect()->route('suppliers.index');
 	}
 
 	/**

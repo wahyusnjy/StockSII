@@ -15,8 +15,18 @@ class AssetsController extends Controller
      */
     public function index()
     {
-        return view('assetsOrInventory.index');
+        $assets = Assets::paginate(2);
+        return view('assetsOrInventory.index', compact('assets'));
     }
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+    $assets = Assets::where('name','like',"%".$cari."%")
+    ->paginate();
+
+    return view('assetsOrInventory.index',compact('assets'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +35,7 @@ class AssetsController extends Controller
      */
     public function create()
     {
-        //
+        return view('assetsOrInventory.create');
     }
 
     /**
@@ -44,10 +54,7 @@ class AssetsController extends Controller
             'name' => $request->name,
         ]);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Assets/Inventory Created',
-		]);
+		return redirect()->route('assetinventory.index');
     }
 
     /**
@@ -69,8 +76,8 @@ class AssetsController extends Controller
      */
     public function edit(Assets $assets,$id)
     {
-        $assetsorinventory = Assets::find($id);
-		return $assetsorinventory;
+        $assets = Assets::find($id);
+		return view('assetsOrInventory.edit', compact('assets'));
     }
 
     /**
@@ -90,10 +97,7 @@ class AssetsController extends Controller
             'name' => $request->name,
         ]);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Assets/Inventory Updated',
-		]);
+		return redirect()->route('assetinventory.index');
     }
 
     /**
@@ -106,10 +110,7 @@ class AssetsController extends Controller
     {
         Assets::destroy($id);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Assets/Inventory Delete',
-		]);
+		return redirect()->route('assetinventory.index');
     }
 
     public function apiAssetInventory() {

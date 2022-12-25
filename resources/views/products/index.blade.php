@@ -25,7 +25,7 @@
         <div class="box-body">
             <div>
                 <div style="text-align: right;">
-                <form action="{{ url('/cari') }}" method="get">
+                <form action="{{ url('/cari/product') }}" method="get">
                     <input type="text" class="form-control form-control-sm" name="cari" placeholder="Cari Product" value="{{ old('cari') }}">
                     <input type="submit" value="CARI">
                 </form>

@@ -18,8 +18,18 @@ class LokasiController extends Controller
      */
     public function index()
     {
-        return view('lokasi.index');
+        $lokasi = Lokasi::paginate(10);
+        return view('lokasi.index', compact('lokasi'));
     }
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+    $lokasi = Lokasi::where('name','like',"%".$cari."%")
+    ->paginate();
+
+    return view('lokasi.index',compact('lokasi'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -28,7 +38,7 @@ class LokasiController extends Controller
      */
     public function create()
     {
-        //
+        return view('lokasi.create');
     }
 
     /**
@@ -47,10 +57,7 @@ class LokasiController extends Controller
             'name' => $request->name,
         ]);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Lokasi Created',
-		]);
+		return redirect()->route('lokasi.index');
 
     }
 
@@ -74,7 +81,7 @@ class LokasiController extends Controller
     public function edit($id)
     {
         $lokasi = Lokasi::find($id);
-		return $lokasi;
+		return view('lokasi.edit', compact('lokasi'));
     }
 
     /**
@@ -94,10 +101,7 @@ class LokasiController extends Controller
             'name' => $request->name,
         ]);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Lokasi Updated',
-		]);
+		return redirect()->route('lokasi.index');
     }
 
     /**
@@ -110,10 +114,7 @@ class LokasiController extends Controller
     {
         Lokasi::destroy($id);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Lokasi Delete',
-		]);
+		return redirect()->route('lokasi.index');
     }
 
     public function apiLokasi() {

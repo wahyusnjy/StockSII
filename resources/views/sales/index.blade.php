@@ -14,9 +14,18 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add Customers</a>
+            <a href="{{ route('sales.create') }}" class="btn btn-primary" >Add Sales</a>
             <a href="{{ route('exportPDF.salesAll') }}" class="btn btn-danger">Export PDF</a>
             <a href="{{ route('exportExcel.salesAll') }}" class="btn btn-success">Export Excel</a>
+        </div>
+
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/sales') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari Sales" value="{{ old('cari') }}">
+                <input type="submit" value="Cari" class="btn btn-primary">
+            </form>
+            </div>
         </div>
 
 
@@ -33,8 +42,27 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach ($sales as $sale)
+                    <tr>
+                        <td>{{ $sale->id }}</td>
+                        <td>{{ $sale->nama }}</td>
+                        <td>{{ $sale->alamat }}</td>
+                        <td>{{ $sale->email }}</td>
+                        <td>{{ $sale->telepon }}</td>
+                        <td>
+                            <a href="{{ url('sales/'.$sale->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form action="{{ route('sales.destroy', $sale->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
+            {{ $sales->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -69,20 +97,20 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        var table = $('#sales-table').DataTable({
-            processing: true,
-            serverSide: true,
-            deferRender: true,
-            ajax: "{{ route('api.sales') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'nama', name: 'nama'},
-                {data: 'alamat', name: 'alamat'},
-                {data: 'email', name: 'email'},
-                {data: 'telepon', name: 'telepon'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#sales-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     deferRender: true,
+        //     ajax: "{{ route('api.sales') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'nama', name: 'nama'},
+        //         {data: 'alamat', name: 'alamat'},
+        //         {data: 'email', name: 'email'},
+        //         {data: 'telepon', name: 'telepon'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

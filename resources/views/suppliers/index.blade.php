@@ -14,11 +14,19 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add Customers</a>
+            <a href="{{ route('suppliers.create') }}" class="btn btn-primary" >Add Supplier</a>
             <a href="{{ route('exportPDF.suppliersAll') }}" class="btn btn-danger">Export PDF</a>
             <a href="{{ route('exportExcel.suppliersAll') }}" class="btn btn-success">Export Excel</a>
         </div>
 
+        <div>
+            <div style="text-align: right;">
+                <form action="{{ url('/cari/suppliers') }}" method="get">
+                    <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari Suppliers" value="{{ old('cari') }}">
+                    <input type="submit"  value="CARI" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
 
         <!-- /.box-header -->
         <div class="box-body">
@@ -33,8 +41,27 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach ($suppliers as $s)
+                        <tr>
+                            <td>{{ $s->id }}</td>
+                            <td>{{ $s->nama }}</td>
+                            <td>{{ $s->alamat }}</td>
+                            <td>{{ $s->email }}</td>
+                            <td>{{ $s->telepon }}</td>
+                            <td>
+                        <a href="{{ url('suppliers/'.$s->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form action="{{ route('suppliers.destroy', $s->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
+            {{ $suppliers->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -69,20 +96,20 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        var table = $('#sales-table').DataTable({
-            processing: true,
-            serverSide: true,
-            deferRender: true,
-            ajax: "{{ route('api.suppliers') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'nama', name: 'nama'},
-                {data: 'alamat', name: 'alamat'},
-                {data: 'email', name: 'email'},
-                {data: 'telepon', name: 'telepon'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#sales-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     deferRender: true,
+        //     ajax: "{{ route('api.suppliers') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'nama', name: 'nama'},
+        //         {data: 'alamat', name: 'alamat'},
+        //         {data: 'email', name: 'email'},
+        //         {data: 'telepon', name: 'telepon'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

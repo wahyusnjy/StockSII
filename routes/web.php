@@ -54,23 +54,27 @@ Route::get('/home', [HomeController::class, 'index'])->name('homes');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('categories', CategoryController::class);
+    Route::get('/cari/categories',[CategoryController::class, 'Cari'])->name('cari.categories');
 	Route::get('/apiCategories', [CategoryController::class, 'apiCategories'])->name('api.categories');
 	Route::get('/exportCategoriesAll', [CategoryController::class, 'exportCategoriesAll'])->name('exportPDF.categoriesAll');
 	Route::get('/exportCategoriesAllExcel', [CategoryController::class, 'exportExcel'])->name('exportExcel.categoriesAll');
 
 	Route::resource('customers', CustomerController::class);
+    Route::get('/cari/customers',[CustomerController::class, 'Cari'])->name('cari.customers');
 	Route::get('/apiCustomers', [CustomerController::class, 'apiCustomers'])->name('api.customers');
 	Route::post('/importCustomers', [CustomerController::class, 'ImportExcel'])->name('import.customers');
 	Route::get('/exportCustomersAll', [CustomerController::class, 'exportCustomersAll'])->name('exportPDF.customersAll');
 	Route::get('/exportCustomersAllExcel', [CustomerController::class, 'exportExcel'])->name('exportExcel.customersAll');
 
 	Route::resource('sales', SaleController::class);
+    Route::get('/cari/sales',[SaleController::class, 'Cari'])->name('cari.sales');
 	Route::get('/apiSales', [SaleController::class, 'apiSales'])->name('api.sales');
 	Route::post('/importSales', [SaleController::class, 'ImportExcel'])->name('import.sales');
 	Route::get('/exportSalesAll', [SaleController::class, 'exportSalesAll'])->name('exportPDF.salesAll');
 	Route::get('/exportSalesAllExcel', [SaleController::class, 'exportExcel'])->name('exportExcel.salesAll');
 
 	Route::resource('suppliers', SupplierController::class);
+    Route::get('/cari/suppliers',[SupplierController::class, 'Cari'])->name('cari.suppliers');
 	Route::get('/apiSuppliers', [SupplierController::class, 'apiSuppliers'])->name('api.suppliers');
 	Route::post('/importSuppliers', [SupplierController::class, 'ImportExcel'])->name('import.suppliers');
 	Route::get('/exportSupplierssAll', [SupplierController::class, 'exportSuppliersAll'])->name('exportPDF.suppliersAll');
@@ -78,7 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('products', ProductController::class);
     Route::get('/barcodeSelected',[ProductController::class, 'BarcodeSelected'])->name('barcodeSelected.products');
-    Route::get('/cari',[ProductController::class, 'Cari'])->name('cari.products');
+    Route::get('/cari/product',[ProductController::class, 'CariProduct'])->name('cariproduct.products');
     Route::post('/importProducts', [ProductController::class, 'ImportExcel'])->name('import.products');
     Route::get('/getProducts',[ProductController::class, 'getProducts'])->name('getProducts.products');
     Route::get('/detail/{id}',[ProductController::class,'detail'])->name('detail.products');
@@ -86,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::resource('productsOut', ProductKeluarController::class);
+    Route::get('/cari/productsOut',[ProductKeluarController::class, 'Cari'])->name('cari.productsOut');
 	Route::get('/apiProductsOut', [ProductKeluarController::class, 'apiProductsOut'])->name('api.productsOut');
 	Route::get('/exportProductKeluarAll', [ProductKeluarController::class, 'exportProductKeluarAll'])->name('exportPDF.productKeluarAll');
 	Route::get('/exportProductKeluarAllExcel', [ProductKeluarController::class, 'exportExcel'])->name('exportExcel.productKeluarAll');
@@ -93,6 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/importProductsKeluar', [ProductKeluarController::class, 'ImportExcel'])->name('import.productsKeluar');
 
 	Route::resource('productsIn', ProductMasukController::class);
+    Route::get('/cari/productsIn',[ProductMasukController::class, 'Cari'])->name('cari.productsIn');
 	Route::get('/apiProductsIn', [ProductMasukController::class, 'apiProductsIn'])->name('api.productsIn');
 	Route::get('/exportProductMasukAll', [ProductMasukController::class, 'exportProductMasukAll'])->name('exportPDF.productMasukAll');
 	Route::get('/exportProductMasukAllExcel', [ProductMasukController::class, 'exportExcel'])->name('exportExcel.productMasukAll');
@@ -100,14 +106,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/importProductsMasuk', [ProductMasukController::class, 'ImportExcel'])->name('import.productsMasuk');
 
 	Route::resource('user', UserController::class);
+    Route::get('/cari/user',[UserController::class, 'Cari'])->name('cari.users');
 	Route::get('/apiUser', [UserController::class, 'apiUsers'])->name('api.users');
 
     Route::resource('lokasi', LokasiController::class);
+    Route::get('/cari/lokasi',[LokasiController::class, 'Cari'])->name('cari.lokasi');
 	Route::get('/apiLokasi', [LokasiController::class, 'apiLokasi'])->name('api.lokasi');
 	Route::get('/exportLokasiMasukAllExcel', [LokasiController::class, 'exportExcel'])->name('exportExcel.lokasiAll');
     Route::post('/importLokasiMasuk', [LokasiController::class, 'ImportExcel'])->name('import.lokasi');
 
     Route::resource('assetinventory', AssetsController::class);
+    Route::get('/cari/assets',[AssetsController::class, 'Cari'])->name('cari.asset');
 	Route::get('/apiAssetInventory', [AssetsController::class, 'apiAssetInventory'])->name('api.assetinventory');
 
 	Route::get('api/print/barcode', function(Request $request){

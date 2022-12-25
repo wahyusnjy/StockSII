@@ -14,8 +14,17 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add Lokasi</a>
+            <a href="{{ route('lokasi.create') }}" class="btn btn-primary" >Add Lokasi</a>
             <a href="{{ route('exportExcel.lokasiAll') }}" class="btn btn-success">Export Excel</a>
+        </div>
+
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/lokasi') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari Lokasi" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
         </div>
 
 
@@ -26,11 +35,28 @@
                 <tr>
                     <th>ID</th>
                     <th>Lokasi</th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach ($lokasi as $l)
+                    <tr>
+                        <td>{{ $l->id }}</td>
+                        <td>{{ $l->name }}</td>
+                        <td>
+                         <a href="{{ url('lokasi/'.$l->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form action="{{ route('lokasi.destroy', $l->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </form>
+
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
+            {{ $lokasi->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -64,17 +90,17 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        var table = $('#lokasi-table').DataTable({
-            processing: true,
-            serverSide: true,
-            deferRender: true,
-            ajax: "{{ route('api.lokasi') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#lokasi-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     deferRender: true,
+        //     ajax: "{{ route('api.lokasi') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'name', name: 'name'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

@@ -57,7 +57,7 @@ class ProductController extends Controller
         $asset   = Assets::all();
         return view('products.index', compact('category','lokasi','asset','producs','activ'));
     }
-   public function Cari(Request $request)
+   public function CariProduct(Request $request)
    {
     $cari = $request->cari;
     $category = Category::orderBy('name','ASC')

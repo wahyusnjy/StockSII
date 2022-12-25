@@ -24,13 +24,19 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add Products In</a>
+            <a href="{{ route('productsIn.create') }}" class="btn btn-primary" >Add Products In</a>
             <a href="{{ route('exportPDF.productMasukAll') }}" class="btn btn-danger">Export PDF</a>
             <a href="{{ route('exportExcel.productMasukAll') }}" class="btn btn-success">Export Excel</a>
         </div>
 
-
-
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/productsIn') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
+        </div>
 
         <!-- /.box-header -->
         <div class="box-body">
@@ -46,8 +52,28 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach($invoice_data as $i)
+                <tr>
+                    <td>{{ $i->id }}</td>
+                    <td>{{ $i->product->nama }}</td>
+                    <td>{{ $i->supplier->nama }}</td>
+                    <td>{{ $i->qty }}</td>
+                    <td>{{ $i->tanggal }}</td>
+                    <td>{{ $i->keterangan }}</td>
+                    <td>
+                        <a href="{{ url('productsIn/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form action="{{ route('productsIn.destroy', $i->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>
             </table>
+            {{ $invoice_data->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -58,11 +84,14 @@
             <h3 class="box-title">Export Invoice</h3>
         </div>
 
-    {{--<div class="box-header">--}}
-    {{--<a onclick="addForm()" class="btn btn-primary" >Add Products Out</a>--}}
-    {{--<a href="{{ route('exportPDF.productKeluarAll') }}" class="btn btn-danger">Export PDF</a>--}}
-    {{--<a href="{{ route('exportExcel.productKeluarAll') }}" class="btn btn-success">Export Excel</a>--}}
-    {{--</div>--}}
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/productsIn') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
+        </div>
 
     <!-- /.box-header -->
         <div class="box-body">
@@ -82,7 +111,7 @@
                 @foreach($invoice_data as $i)
                     <tbody>
                     <td>{{ $i->id }}</td>
-                    <td>{{ $i->product->qrcode }}</td>
+                    <td>{{ $i->product->nama }}</td>
                     <td>{{ $i->supplier->nama }}</td>
                     <td>{{ $i->qty }}</td>
                     <td>{{ $i->tanggal }}</td>
@@ -93,6 +122,7 @@
                     </tbody>
                 @endforeach
             </table>
+            {{ $invoice_data->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -165,21 +195,21 @@
     </script>
 
     <script type="text/javascript">
-        var table = $('#products-in-table').DataTable({
-            processing: true,
-            serverSide: true,
-            deferRender: true,
-            ajax: "{{ route('api.productsIn') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'products_name', name: 'products_name'},
-                {data: 'supplier_name', name: 'supplier_name'},
-                {data: 'qty', name: 'qty'},
-                {data: 'tanggal', name: 'tanggal'},
-                {data: 'keterangan', name: 'keterangan'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#products-in-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     deferRender: true,
+        //     ajax: "{{ route('api.productsIn') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'products_name', name: 'products_name'},
+        //         {data: 'supplier_name', name: 'supplier_name'},
+        //         {data: 'qty', name: 'qty'},
+        //         {data: 'tanggal', name: 'tanggal'},
+        //         {data: 'keterangan', name: 'keterangan'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

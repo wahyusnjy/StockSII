@@ -22,9 +22,22 @@ class UserController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		// $users = User::all();
-		return view('user.index');
+		$users = User::paginate(10);
+
+		return view('user.index', compact('users'));
 	}
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+    $users = User::where('name','like',"%".$cari."%")
+    ->orWhere('email','like',"%".$cari."%")
+    ->orWhere('role','like',"%".$cari."%")
+    ->orWhere('id','like',"%".$cari."%")
+    ->paginate();
+
+    return view('user.index',compact('users'));
+   }
 
 	/**
 	 * Show the form for creating a new resource.
@@ -33,7 +46,7 @@ class UserController extends Controller {
 	 */
 	public function create(Request $request)
     {
-        //
+        return view('user.create');
 	}
 
 	/**
@@ -55,10 +68,7 @@ class UserController extends Controller {
             'role'=> $request->role,
         ]);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Users Created',
-		]);
+		return redirect()->route('user.index');
 
 	}
 
@@ -80,7 +90,7 @@ class UserController extends Controller {
 	 */
 	public function edit($id) {
 		$users = User::find($id);
-		return $users;
+		return view('user.edit',compact('users'));
 	}
 
 	/**
@@ -103,10 +113,7 @@ class UserController extends Controller {
             'role'=> $request->role,
         ]);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'Users Updated',
-		]);
+		return redirect()->route('user.index');
 	}
 
 	/**
@@ -118,10 +125,7 @@ class UserController extends Controller {
 	public function destroy($id) {
 		User::destroy($id);
 
-		return response()->json([
-			'success' => true,
-			'message' => 'User Delete',
-		]);
+        return redirect()->back()->with(['success' => 'Delete data Users Success !']);
 	}
 
 	public function apiUsers() {

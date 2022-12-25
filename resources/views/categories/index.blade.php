@@ -14,12 +14,18 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add Categories</a>
+            <a href="{{ route('categories.create') }}" class="btn btn-primary" >Add Categories</a>
             <a href="{{ route('exportPDF.categoriesAll') }}" class="btn btn-danger">Export PDF</a>
             <a href="{{ route('exportExcel.categoriesAll') }}" class="btn btn-success">Export Excel</a>
         </div>
-
-
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/categories') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari Users" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
+        </div>
         <!-- /.box-header -->
         <div class="box-body">
             <table id="categories-table" class="table table-striped">
@@ -30,8 +36,26 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach ($categories as $c)
+                    <tr>
+                        <td>{{ $c->id }}</td>
+                        <td>{{ $c->name }}</td>
+                        <td>
+                            {{-- <a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> --}}
+                        <a href="{{ url('categories/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form action="{{ route('categories.destroy', $c->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
+            {{ $categories->withQueryString()->links('pagination::bootstrap-5') }}
+        </div>
         </div>
         <!-- /.box-body -->
     </div>
@@ -64,17 +88,17 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        var table = $('#categories-table').DataTable({
-            processing: true,
-            serverSide: true,
-            deferRender: true,
-            ajax: "{{ route('api.categories') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#categories-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     deferRender: true,
+        //     ajax: "{{ route('api.categories') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'name', name: 'name'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

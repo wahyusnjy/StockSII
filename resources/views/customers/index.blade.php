@@ -16,11 +16,19 @@
         </div>
 
         <div class="box-header">
-            <a onclick="addForm()" class="btn btn-primary" >Add Customers</a>
+            <a href="{{ route('customers.create') }}" class="btn btn-primary" >Add Customers</a>
             <a href="{{ route('exportPDF.customersAll') }}" class="btn btn-danger">Export PDF</a>
             <a href="{{ route('exportExcel.customersAll') }}" class="btn btn-success">Export Excel</a>
         </div>
 
+        <div>
+            <div style="text-align: right;">
+            <form action="{{ url('/cari/customers') }}" method="get">
+                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari Customers" value="{{ old('cari') }}">
+                <input type="submit" value="CARI">
+            </form>
+            </div>
+        </div>
 
         <!-- /.box-header -->
         <div class="box-body">
@@ -32,11 +40,30 @@
                     <th>Address</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    @foreach ($customers as $c)
+                    <tr>
+                        <td>{{ $c->id }}</td>
+                        <td>{{ $c->nama }}</td>
+                        <td>{{ $c->alamat }}</td>
+                        <td>{{ $c->email }}</td>
+                        <td>{{ $c->telepon }}</td>
+                        <td>
+                        <a href="{{ url('customers/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form action="{{ route('customers.destroy', $c->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
+            {{ $customers->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
@@ -73,20 +100,20 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        var table = $('#customer-table').DataTable({
-            processing: true,
-            serverSide: true,
-            deferRender: true,
-            ajax: "{{ route('api.customers') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'nama', name: 'nama'},
-                {data: 'alamat', name: 'alamat'},
-                {data: 'email', name: 'email'},
-                {data: 'telepon', name: 'telepon'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+        // var table = $('#customer-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     deferRender: true,
+        //     ajax: "{{ route('api.customers') }}",
+        //     columns: [
+        //         {data: 'id', name: 'id'},
+        //         {data: 'nama', name: 'nama'},
+        //         {data: 'alamat', name: 'alamat'},
+        //         {data: 'email', name: 'email'},
+        //         {data: 'telepon', name: 'telepon'},
+        //         {data: 'action', name: 'action', orderable: false, searchable: false}
+        //     ]
+        // });
 
         function addForm() {
             save_method = "add";

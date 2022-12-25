@@ -23,9 +23,22 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        // $customers = Customer::all();
-        return view('customers.index');
+        $customers = Customer::paginate(5);
+
+        return view('customers.index',compact('customers'));
     }
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+    $customers = Customer::where('nama','like',"%".$cari."%")
+    ->orWhere('alamat','like',"%".$cari."%")
+    ->orWhere('email','like',"%".$cari."%")
+    ->orWhere('telepon','like',"%".$cari."%")
+    ->paginate();
+
+    return view('customers.index',compact('customers'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -34,7 +47,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -54,10 +67,7 @@ class CustomerController extends Controller
 
         Customer::create($request->all());
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Customer Created'
-        ]);
+        return redirect()->route('customers.index');
 
     }
 
@@ -81,7 +91,7 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customer::find($id);
-        return $customer;
+        return view('customers.edit', compact('customer'));
     }
 
     /**
@@ -96,7 +106,7 @@ class CustomerController extends Controller
         $this->validate($request, [
             'nama'      => 'required|string|min:2',
             'alamat'    => 'required|string|min:2',
-            'email'     => 'required|string|email|max:255|unique:customers',
+            'email'     => 'required|string|email|max:255',
             'telepon'   => 'required|string|min:2',
         ]);
 
@@ -104,10 +114,7 @@ class CustomerController extends Controller
 
         $customer->update($request->all());
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Customer Updated'
-        ]);
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -120,10 +127,7 @@ class CustomerController extends Controller
     {
         Customer::destroy($id);
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Customer Delete'
-        ]);
+        return redirect()->route('customers.index');
     }
 
     public function apiCustomers()

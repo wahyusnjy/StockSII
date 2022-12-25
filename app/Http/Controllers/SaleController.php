@@ -24,9 +24,22 @@ class SaleController extends Controller
      */
     public function index()
     {
-        // $sales = Sale::all();
-        return view('sales.index');
+        $sales = Sale::paginate(1);
+        return view('sales.index', compact('sales'));
     }
+
+    public function Cari(Request $request)
+   {
+    $cari = $request->cari;
+    $sales = Sale::where('nama','like',"%".$cari."%")
+    ->orWhere('email','like',"%".$cari."%")
+    ->orWhere('alamat','like',"%".$cari."%")
+    ->orWhere('telepon','like',"%".$cari."%")
+    ->orWhere('id','like',"%".$cari."%")
+    ->paginate();
+
+    return view('sales.index',compact('sales'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +48,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-        //
+        return view('sales.create');
     }
 
     /**
@@ -55,11 +68,7 @@ class SaleController extends Controller
 
         Sale::create($request->all());
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Sales Created'
-        ]);
-
+        return redirect()->route('sales.index');
     }
 
     /**
@@ -82,7 +91,7 @@ class SaleController extends Controller
     public function edit($id)
     {
         $sale = Sale::find($id);
-        return $sale;
+        return view('sales.edit',compact('sale'));
     }
 
     /**
@@ -97,7 +106,7 @@ class SaleController extends Controller
         $this->validate($request, [
             'nama'      => 'required|string|min:2',
             'alamat'    => 'required|string|min:2',
-            'email'     => 'required|string|email|max:255|unique:sales',
+            'email'     => 'required|string|email|max:255',
             'telepon'   => 'required|string|min:2',
         ]);
 
@@ -105,10 +114,7 @@ class SaleController extends Controller
 
         $sale->update($request->all());
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Sale Updated'
-        ]);
+        return redirect()->route('sales.index');
     }
 
     /**
@@ -121,10 +127,7 @@ class SaleController extends Controller
     {
         Sale::destroy($id);
 
-        return response()->json([
-            'success'    => true,
-            'message'    => 'Sales Delete'
-        ]);
+        return redirect()->route('sales.index');
     }
 
     public function apiSales()
