@@ -31,8 +31,9 @@
 
                     <div class="form-group">
                         <label>Image</label>
-                        <input type="file" class="form-control" id="image" name="image">
+                        <input type="file" class="form-control" id="image" name="image" onchange="loadFile(event)">
                         <span class="help-block with-errors"></span>
+                        <img id="output" style="width: 200px;" />
                     </div>
 
                     <div class="form-group">
@@ -118,4 +119,17 @@
             }
         });
     </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+
+        if (output === null) {
+            output.src = "Image Not Found";
+        } else {
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+</script>
 @endsection
