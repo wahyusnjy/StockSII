@@ -38,7 +38,7 @@
         <!-- /.box-header -->
         <div class="box-body">
             <div class="table-responsive">
-                <table class="table table-bordered data-table products-table" style="width: 100%;">
+                <table class="table table-bordered products-table" style="width: 100%;">
                     <thead>
                         <tr>
                             <th><input type="checkbox" id="head-cb">
@@ -141,8 +141,11 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $producs->withQueryString()->links() }}
+
             </div>
+        </div>
+        <div class="mt-4">
+            {{ $producs->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
         <!-- /.box-body -->
     </div>
