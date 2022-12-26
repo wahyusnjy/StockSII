@@ -65,7 +65,7 @@
                         <a href="{{ url('productsIn/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                         <form action="{{ route('productsIn.destroy', $i->id) }}" method="post">
                             @csrf
-                            @method('DELETE')
+                            @method('DELETE')`
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
                     </td>

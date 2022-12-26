@@ -1,47 +1,46 @@
 @extends('layouts.master')
 @section('content')
-
-<div class="box">
-    <div class="box-header">
-        <h3 class="box-title">Add Products</h3>
-    </div>
-    <div class="box-body">
-        <form method="post"class="form-horizontal" enctype="multipart/form-data" action="{{ route('products.store') }}">
-            @csrf
-            <input type="hidden" name="id">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Add Products</h3>
+        </div>
+        <div class="box-body">
+            <form method="post"class="form-horizontal" enctype="multipart/form-data" action="{{ route('products.store') }}">
+                @csrf
+                <input type="hidden" name="id">
                 <div class="box-body">
 
                     <div class="form-group">
-                        <label >Name</label>
-                        <input type="text" class="form-control" id="nama" name="nama"  autofocus required>
+                        <label>Name</label>
+                        <input type="text" class="form-control" id="nama" name="nama" autofocus required>
                         <span class="help-block with-errors"></span>
                     </div>
 
                     <div class="form-group">
-                        <label >Price</label>
-                        <input type="text" class="form-control rupiah" id="harga" name="harga"   required>
+                        <label>Price</label>
+                        <input type="text" class="form-control rupiah" id="harga" name="harga" required>
                         <span class="help-block with-errors"></span>
                     </div>
 
                     <div class="form-group">
-                        <label >Quantity</label>
-                        <input type="text" class="form-control" id="qty" name="qty"   required>
+                        <label>Quantity</label>
+                        <input type="number" class="form-control" id="qty" name="qty" required>
                         <span class="help-block with-errors"></span>
                     </div>
 
 
                     <div class="form-group">
-                        <label >Image</label>
-                        <input type="file" class="form-control" id="image" name="image" >
+                        <label>Image</label>
+                        <input type="file" class="form-control" id="image" name="image">
                         <span class="help-block with-errors"></span>
                     </div>
 
                     <div class="form-group">
-                        <label >Category</label>
+                        <label>Category</label>
                         <select class="form-control select" name="category_id" id="category_id" required>
                             <option selected="selected" value="" disabled>-- Choose Category --</option>
                             @foreach ($category as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
 
@@ -49,11 +48,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label >Lokasi</label>
+                        <label>Lokasi</label>
                         <select class="form-control select" name="lokasi_id" id="lokasi_id" required>
                             <option selected="selected" value="" disabled>-- Choose Lokasi --</option>
                             @foreach ($lokasi as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
 
@@ -61,18 +60,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label >Assets/Inventory</label>
+                        <label>Assets/Inventory</label>
                         <select class="form-control select" name="assets_id" id="assets_id" required>
                             <option selected="selected" value="" disabled>-- Choose Assets / Inventory --</option>
                             @foreach ($asset as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
 
                         <span class="help-block with-errors"></span>
                     </div>
                     <div class="form-group">
-                        <label >User</label>
+                        <label>User</label>
                         <input type="text" class="form-control" id="user" name="user" required>
                         <span class="help-block with-errors"></span>
                     </div>
@@ -80,42 +79,43 @@
                 </div>
                 <!-- /.box-body -->
 
-            </div>
+        </div>
 
-            <div class="modal-footer">
-                <a href="{{ route('products.index') }}"  type="button" class="btn btn-default pull-left" >Cancel</a>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+        <div class="modal-footer">
+            <a href="{{ route('products.index') }}" type="button" class="btn btn-default pull-left">Cancel</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
 
         </form>
     </div>
-</div>
+    </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-$(function(){
-  $(".rupiah").keyup(function(e){
-    $(this).val(format($(this).val()));
-  });
-});
-var format = function(num){
-  var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
-  if(str.indexOf(".") > 0) {
-    parts = str.split(".");
-    str = parts[0];
-  }
-  str = str.split("").reverse();
-  for(var j = 0, len = str.length; j < len; j++) {
-    if(str[j] != ",") {
-      output.push(str[j]);
-      if(i%3 == 0 && j < (len - 1)) {
-        output.push(",");
-      }
-      i++;
-    }
-  }
-  formatted = output.reverse().join("");
-  return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
-};
-</script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var rupiah = document.querySelectorAll(".rupiah");
+            rupiah.forEach((item) => {
+                item.addEventListener('keyup', function(e) {
+                    // tambahkan 'Rp.' pada saat form di ketik
+                    // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+                    item.value = formatRupiah(this.value, "");
+                });
+            });
+            /* Fungsi formatRupiah */
+            function formatRupiah(angka, prefix) {
+                var number_string = angka.replace(/[^,\d]/g, ""),
+                    split = number_string.split(","),
+                    sisa = split[0].length % 3,
+                    rupiah = split[0].substr(0, sisa),
+                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                // tambahkan titik jika yang di input sudah menjadi angka ribuan
+                if (ribuan) {
+                    separator = sisa ? "." : "";
+                    rupiah += separator + ribuan.join(".");
+                }
+                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                return prefix == undefined ? rupiah : rupiah ? " " + rupiah : "";
+            }
+        });
+    </script>
 @endsection

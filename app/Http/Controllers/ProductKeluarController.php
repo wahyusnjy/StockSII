@@ -33,7 +33,7 @@ class ProductKeluarController extends Controller
         $customers = Customer::orderBy('nama','ASC')
         ->get(['nama','id']);
 
-        $invoice_data = Product_Keluar::paginate(5);
+        $invoice_data = Product_Keluar::paginate(1);
         return view('product_keluar.index', compact('products','customers', 'invoice_data'));
     }
 

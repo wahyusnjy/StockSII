@@ -27,7 +27,7 @@
 
                     <div class="form-group">
                         <label >Quantity</label>
-                        <input type="text" class="form-control" value="{{ $producs->qty }}" id="qty" name="qty"   required>
+                        <input type="number" class="form-control" value="{{ $producs->qty }}" id="qty" name="qty"   required>
                         <span class="help-block with-errors"></span>
                     </div>
 
@@ -93,31 +93,32 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-$(function(){
-  $(".rupiah").keyup(function(e){
-    $(this).val(format($(this).val()));
-  });
-});
-var format = function(num){
-  var str = num.toString().replace("", ""), parts = false, output = [], i = 1, formatted = null;
-  if(str.indexOf(".") > 0) {
-    parts = str.split(".");
-    str = parts[0];
-  }
-  str = str.split("").reverse();
-  for(var j = 0, len = str.length; j < len; j++) {
-    if(str[j] != ",") {
-      output.push(str[j]);
-      if(i%3 == 0 && j < (len - 1)) {
-        output.push(",");
-      }
-      i++;
-    }
-  }
-  formatted = output.reverse().join("");
-  return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
-};
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var rupiah = document.querySelectorAll(".rupiah");
+        rupiah.forEach((item) => {
+            item.addEventListener('keyup', function(e) {
+                // tambahkan 'Rp.' pada saat form di ketik
+                // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+                item.value = formatRupiah(this.value, "");
+            });
+        });
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, ""),
+                split = number_string.split(","),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? " " + rupiah : "";
+        }
+    });
 </script>
 @endsection

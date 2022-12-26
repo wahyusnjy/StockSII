@@ -162,7 +162,7 @@ class ProductController extends Controller
             $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('/upload/products/'), $input['image']);
         }
-        $input['harga'] = str_replace(",", "", $input['harga']);
+        $input['harga'] = str_replace(".", "", $input['harga']);
 
         $product_eks = Product::create($input);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 1, 'product_id'=> $product_eks->id]);
@@ -223,12 +223,11 @@ class ProductController extends Controller
             'user'          => 'required',
         ]);
 
-        try {
 
         $input = $request->except('_token');
 
         $produk = Product::findOrFail($id);
-        $input['harga'] = str_replace(",", "", $input['harga']);
+        $input['harga'] = str_replace(".", "", $input['harga']);
 
         $input['image'] = $produk->image;
         if ($request->hasFile('image')){
@@ -250,9 +249,7 @@ class ProductController extends Controller
         $produk->update($input);
 
        return redirect()->route('products.index');
-    } catch (\Exception $err) {
-        return $err->getMessage();
-    }
+
     }
 
     /**
