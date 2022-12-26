@@ -145,7 +145,7 @@
             </div>
         </div>
         <div class="mt-4">
-            {{ $producs->withQueryString()->links('pagination::bootstrap-5') }}
+            {{ $producs->withQueryString()->links() }}
         </div>
         <!-- /.box-body -->
     </div>
