@@ -17,12 +17,12 @@
             <a href="{{ route('assetinventory.create') }}" class="btn btn-primary" >Add Assets / Inventory</a>
         </div>
 
-        <div>
-            <div style="text-align: right;">
-            <form action="{{ url('/cari/assets') }}" method="get">
-                <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari" value="{{ old('cari') }}">
-                <input type="submit" value="CARI">
-            </form>
+        <div class="box-header">
+            <div style="max-width: 30%;" class="pull-right">
+                <form action="{{ url('/cari/assets') }}" method="get" class="input-group">
+                    <input type="text" name="cari" class="form-control " placeholder="Cari..." value="{{ old('cari') }}">
+                    <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
+                </form>
             </div>
         </div>
 
@@ -53,7 +53,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $assets->withQueryString()->links('pagination::bootstrap-5') }}
+            {{ $assets->withQueryString()->links() }}
         </div>
         <!-- /.box-body -->
     </div>

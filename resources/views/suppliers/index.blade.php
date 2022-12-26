@@ -19,11 +19,11 @@
             <a href="{{ route('exportExcel.suppliersAll') }}" class="btn btn-success">Export Excel</a>
         </div>
 
-        <div>
-            <div style="text-align: right;">
-                <form action="{{ url('/cari/suppliers') }}" method="get">
-                    <input type="text" style="font-size: 18px;" name="cari" placeholder="Cari Suppliers" value="{{ old('cari') }}">
-                    <input type="submit"  value="CARI" class="btn btn-primary">
+        <div class="box-header">
+            <div style="max-width: 30%;" class="pull-right">
+                <form action="{{ url('/cari/suppliers') }}" method="get" class="input-group">
+                    <input type="text" name="cari" class="form-control " placeholder="Cari..." value="{{ old('cari') }}">
+                    <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
                 </form>
             </div>
         </div>
@@ -61,7 +61,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $suppliers->withQueryString()->links('pagination::bootstrap-5') }}
+            {{ $suppliers->withQueryString()->links() }}
         </div>
         <!-- /.box-body -->
     </div>

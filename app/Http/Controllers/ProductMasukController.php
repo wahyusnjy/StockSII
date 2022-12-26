@@ -55,14 +55,14 @@ class ProductMasukController extends Controller
     ->orWhere('keterangan','like',"%".$cari."%")
     ->orWhere('id','like',"%".$cari."%")
     ->orWhereHas('product',function($q) use ($cari){
-        return $q->where('name','like',"%".$cari."%");
+        return $q->where('nama','like',"%".$cari."%");
     })
     ->orWhereHas('supplier',function($q) use ($cari){
-        return $q->where('name','like',"%".$cari."%");
+        return $q->where('nama','like',"%".$cari."%");
     })
     ->paginate();
 
-    return view('product_masuk.index',compact('users'));
+    return view('product_masuk.index',compact('products','suppliers','invoice_data'));
    }
 
     /**

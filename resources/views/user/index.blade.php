@@ -17,12 +17,12 @@
             <a href="{{ route('user.create') }}" class="btn btn-primary" >Add User</a>
         </div>
 
-        <div>
-            <div style="text-align: right;">
-            <form action="{{ url('/cari/user') }}" method="get">
-                <input type="text" class="form-control form-control-sm" name="cari" placeholder="Cari Users" value="{{ old('cari') }}">
-                <input type="submit" value="CARI">
-            </form>
+        <div class="box-header">
+            <div style="max-width: 30%;" class="pull-right">
+                <form action="{{ url('/cari/user') }}" method="get" class="input-group">
+                    <input type="text" name="cari" class="form-control " placeholder="Cari..." value="{{ old('cari') }}">
+                    <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
+                </form>
             </div>
         </div>
 
@@ -59,7 +59,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $users->withQueryString()->links('pagination::bootstrap-5') }}
+            {{ $users->withQueryString()->links() }}
         </div>
         </div>
         <!-- /.box-body -->

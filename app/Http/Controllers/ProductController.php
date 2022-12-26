@@ -223,12 +223,14 @@ class ProductController extends Controller
             'user'          => 'required',
         ]);
 
-        $input = $request->except('_token');
-        $produk = Product::findOrFail($id);
+        try {
 
-        $input['image'] = $produk->image;
+        $input = $request->except('_token');
+
+        $produk = Product::findOrFail($id);
         $input['harga'] = str_replace(",", "", $input['harga']);
 
+        $input['image'] = $produk->image;
         if ($request->hasFile('image')){
             if (!$produk->image == NULL){
                 if(file_exists(public_path($produk->image))){
@@ -248,6 +250,9 @@ class ProductController extends Controller
         $produk->update($input);
 
        return redirect()->route('products.index');
+    } catch (\Exception $err) {
+        return $err->getMessage();
+    }
     }
 
     /**

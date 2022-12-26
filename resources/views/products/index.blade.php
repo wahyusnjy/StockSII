@@ -1,9 +1,12 @@
 @extends('layouts.master')
 <style>
-    #products-table{
+    #products-table {
         max-width: 500px;
     }
-    td.dt-nowrap { white-space: nowrap }
+
+    td.dt-nowrap {
+        white-space: nowrap
+    }
 </style>
 
 @section('top')
@@ -12,109 +15,135 @@
 @endsection
 
 @section('content')
-
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Data Products</h3>
-            <a href="{{ url('/print/barcode?download=Y') }}" class="btn btn-warning pull-right" style="margin-top: -8px;">Print Barcode</a>
-            <button type="button" id="button-export-selected" disabled class="btn btn-danger pull-right" style="margin-top: -8px;"
-            onclick="exportDataTerpilih()">Print Selected Barcode</button>
-            <a href="{{ url('/products/create') }}" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Products</a>
+            <a href="{{ url('/print/barcode?download=Y') }}" class="btn btn-warning pull-right" style="margin-top: -8px;">Print
+                Barcode</a>
+            <button type="button" id="button-export-selected" disabled class="btn btn-danger pull-right"
+                style="margin-top: -8px;" onclick="exportDataTerpilih()">Print Selected Barcode</button>
+            <a href="{{ url('/products/create') }}" class="btn btn-primary pull-right" style="margin-top: -8px;">Add
+                Products</a>
         </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <div>
-                <div style="text-align: right;">
-                <form action="{{ url('/cari/product') }}" method="get">
-                    <input type="text" class="form-control form-control-sm" name="cari" placeholder="Cari Product" value="{{ old('cari') }}">
-                    <input type="submit" value="CARI">
-                </form>
-                </div>
-            </div>
-          <div class="table-responsive" >
-            <table class="table table-bordered data-table products-table" style="width: 100%;">
-                <thead>
-                <tr>
-                    <th><input type="checkbox" id="head-cb">
-                    </th>
-                    <th>ID</th>
-                    <th>QR_CODE</th>
-                    <th>Nama</th>
-                    <th>Harga</th>
-                    <th>QTY</th>
-                    <th>Image</th>
-                    <th>Category</th>
-                    <th>Lokasi</th>
-                    <th>Asset/Inventory</th>
-                    <th>User</th>
-                    <th>Activity</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach ($producs as $p)
-                    @php
-                    $activ = App\Models\ActivityLog::where('product_id', $p->id)->orderBy('id_activity', 'desc')->first();
-                    $date = Carbon\Carbon::parse($p->created_at)->format('d-m-Y');
-                    @endphp
-                    <tr>
-                        <td><input type="checkbox" class="child-cb" value="{{ $p->id }}"></td>
-                        <td>{{ $p->id }}</td>
-                        <td>{!! DNS2D::getBarcodeHTML($p->product_code, 'QRCODE', 3,3 ) !!} <br> <p>{{ $p->qrcode }}</p></td>
-                        <td>{{ $p->nama }}</td>
-                        <td>{{ $p->harga }}</td>
-                        <td>{{ $p->qty }}</td>
-                        @if(empty($p->image))
-                        <td>No Image</td>
-                        @else
-                        <td><a href="{{  url($p->image)  }}" target="_blank" ><img class="rounded-square" width="50" height="50" src="{{ url($p->image) }}" alt=""></a></td>
-                        @endif
-                        <td>{{ $p->category->name }}</td>
-                        <td>{{ $p->lokasi->name }}</td>
-                        <td>{{ $p->assets->name }}</td>
-                        <td>{{ $p->user }}</td>
-                        <td>
-                        @if(empty($activ->activity_status))
-                        <span class="badge badge-warning">Nothing <br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 1)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 2)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 3)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 4)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 5)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 6)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 7)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 8)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 9)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 10)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 11)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @elseif($activ->activity_status == 12)
-                        <span class="badge badge-warning">Last Input Product by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                        @endif
-                        </td>
-                        <td>
-                            <a href="/print/barcode/{{ $p->id }} ?download=Y" class="btn btn-warning btn-xs "><i class="glyphicon glyphicon-eye-open"></i> Export</a>
-                            <a href="detail/{{ $p->id }}" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
-                            <a href="{{ url('products/'.$p->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                            <a onclick="deleteData({{ $p->id }})" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {!! $producs->withQueryString()->links('pagination::bootstrap-5') !!}
+
+    <div class="box-header">
+        <div style="max-width: 30%;" class="pull-right">
+            <form action="{{ url('/cari/product') }}" method="get" class="input-group">
+                <input type="text" name="cari" class="form-control " placeholder="Cari Product..." value="{{ old('cari') }}">
+                <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
+            </form>
         </div>
     </div>
+
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table table-bordered data-table products-table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="head-cb">
+                            </th>
+                            <th>ID</th>
+                            <th>QR_CODE</th>
+                            <th>Nama</th>
+                            <th>Harga</th>
+                            <th>QTY</th>
+                            <th>Image</th>
+                            <th>Category</th>
+                            <th>Lokasi</th>
+                            <th>Asset/Inventory</th>
+                            <th>User</th>
+                            <th>Activity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($producs as $p)
+                            @php
+                                $activ = App\Models\ActivityLog::where('product_id', $p->id)
+                                    ->orderBy('id_activity', 'desc')
+                                    ->first();
+                                $date = Carbon\Carbon::parse($p->created_at)->format('d-m-Y');
+                            @endphp
+                            <tr>
+                                <td><input type="checkbox" class="child-cb" value="{{ $p->id }}"></td>
+                                <td>{{ $p->id }}</td>
+                                <td>{!! DNS2D::getBarcodeHTML($p->product_code, 'QRCODE', 3, 3) !!} <br>
+                                    <p>{{ $p->qrcode }}</p>
+                                </td>
+                                <td>{{ $p->nama }}</td>
+                                <td>{{ $p->harga }}</td>
+                                <td>{{ $p->qty }}</td>
+                                @if (empty($p->image))
+                                    <td>No Image</td>
+                                @else
+                                    <td><a href="{{ url($p->image) }}" target="_blank"><img class="rounded-square"
+                                                width="50" height="50" src="{{ url($p->image) }}"
+                                                alt=""></a></td>
+                                @endif
+                                <td>{{ $p->category->name }}</td>
+                                <td>{{ $p->lokasi->name }}</td>
+                                <td>{{ $p->assets->name }}</td>
+                                <td>{{ $p->user }}</td>
+                                <td>
+                                    @if (empty($activ->activity_status))
+                                        <span class="badge badge-warning">Nothing <br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 1)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 2)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 3)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 4)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 5)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 6)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 7)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 8)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 9)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 10)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 11)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @elseif($activ->activity_status == 12)
+                                        <span class="badge badge-warning">Last Input Product
+                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="/print/barcode/{{ $p->id }} ?download=Y"
+                                        class="btn btn-warning btn-xs "><i class="glyphicon glyphicon-eye-open"></i>
+                                        Export</a>
+                                    <a href="detail/{{ $p->id }}" class="btn btn-info btn-xs"><i
+                                            class="glyphicon glyphicon-eye-open"></i> Show</a>
+                                    <a href="{{ url('products/' . $p->id . '/edit') }}" class="btn btn-primary btn-xs"><i
+                                            class="glyphicon glyphicon-edit"></i> Edit</a>
+                                    <a onclick="deleteData({{ $p->id }})" class="btn btn-danger btn-xs"><i
+                                            class="glyphicon glyphicon-trash"></i> Delete</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                {{ $producs->withQueryString()->links() }}
+            </div>
+        </div>
         <!-- /.box-body -->
     </div>
 
@@ -125,12 +154,9 @@
         <input type="hidden" name="ids">
         <button class="hidden" style="display: none;" type="submit">S</button>
     </form>
-
-
 @endsection
 
 @section('bot')
-
     <!-- DataTables -->
     <script src=" {{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }} "></script>
     <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }} "></script>
@@ -138,22 +164,22 @@
     {{-- Validator --}}
     <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
 
-    {{--<script>--}}
-    {{--$(function () {--}}
-    {{--$('#items-table').DataTable()--}}
-    {{--$('#example2').DataTable({--}}
-    {{--'paging'      : true,--}}
-    {{--'lengthChange': false,--}}
-    {{--'searching'   : false,--}}
-    {{--'ordering'    : true,--}}
-    {{--'info'        : true,--}}
-    {{--'autoWidth'   : false--}}
-    {{--})--}}
-    {{--})--}}
-    {{--</script>--}}
+    {{-- <script> --}}
+    {{-- $(function () { --}}
+    {{-- $('#items-table').DataTable() --}}
+    {{-- $('#example2').DataTable({ --}}
+    {{-- 'paging'      : true, --}}
+    {{-- 'lengthChange': false, --}}
+    {{-- 'searching'   : false, --}}
+    {{-- 'ordering'    : true, --}}
+    {{-- 'info'        : true, --}}
+    {{-- 'autoWidth'   : false --}}
+    {{-- }) --}}
+    {{-- }) --}}
+    {{-- </script> --}}
 
     <script type="text/javascript">
-    let yangDiCheck = 0;
+        let yangDiCheck = 0;
         // var table = $('#products-table').DataTable({
         //     processing: true,
         //     serverSide: true,
@@ -213,7 +239,7 @@
         //     });
         // }
 
-        function deleteData(id){
+        function deleteData(id) {
             var csrf_token = $('meta[name="csrf-token"]').attr('content');
             swal({
                 title: 'Are you sure?',
@@ -223,12 +249,15 @@
                 cancelButtonColor: '#d33',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
+            }).then(function() {
                 $.ajax({
-                    url : "{{ url('products') }}" + '/' + id,
-                    type : "POST",
-                    data : {'_method' : 'DELETE', '_token' : csrf_token},
-                    success : function(data) {
+                    url: "{{ url('products') }}" + '/' + id,
+                    type: "POST",
+                    data: {
+                        '_method': 'DELETE',
+                        '_token': csrf_token
+                    },
+                    success: function(data) {
                         table.ajax.reload();
                         swal({
                             title: 'Success!',
@@ -237,7 +266,7 @@
                             timer: '1500'
                         })
                     },
-                    error : function () {
+                    error: function() {
                         swal({
                             title: 'Oops...',
                             text: data.message,
@@ -249,23 +278,23 @@
             });
         }
 
-        $(function(){
-            $('#modal-form form').validator().on('submit', function (e) {
+        $(function() {
+            $('#modal-form form').validator().on('submit', function(e) {
                 console.log(e);
-                if (!e.isDefaultPrevented()){
+                if (!e.isDefaultPrevented()) {
                     var id = $('#id').val();
                     if (save_method == 'add') url = "{{ url('products') }}";
                     else url = "{{ url('products') . '/' }}" + id;
 
                     $.ajax({
-                        url : url,
-                        type : "POST",
+                        url: url,
+                        type: "POST",
                         //hanya untuk input data tanpa dokumen
-//                      data : $('#modal-form form').serialize(),
+                        //                      data : $('#modal-form form').serialize(),
                         data: new FormData($("#modal-form form")[0]),
                         contentType: false,
                         processData: false,
-                        success : function(data) {
+                        success: function(data) {
                             console.log(data);
                             $('#modal-form').modal('hide');
                             table.ajax.reload();
@@ -277,7 +306,7 @@
                                 timer: '1500'
                             })
                         },
-                        error : function(data){
+                        error: function(data) {
                             console.log(data);
                             swal({
                                 title: 'Oops...',
@@ -292,43 +321,41 @@
             });
         });
 
-            //Checkbox Cek All
-            $("#head-cb").on('click', function(){
-                var isChecked = $('#head-cb').prop('checked')
-            $(".child-cb").prop('checked',isChecked)
-            $("#button-export-selected").prop('disabled',!isChecked)
-            })
+        //Checkbox Cek All
+        $("#head-cb").on('click', function() {
+            var isChecked = $('#head-cb').prop('checked')
+            $(".child-cb").prop('checked', isChecked)
+            $("#button-export-selected").prop('disabled', !isChecked)
+        })
 
-            $(".products-table ").on('click', '.child-cb',function(){
-                if($(this).prop('checked')!=true){
-                    $("#head-cb").prop('checked',false)
-                }
-                let semua_checkbox = $(".products-table  .child-cb:checked")
-                let button_export_selected = (semua_checkbox.length>0)
-
-                $("#button-export-selected").prop('disabled',!button_export_selected)
-            })
-
-            function exportDataTerpilih(){
-                let checkbox_terpilih = $(".products-table .child-cb:checked")
-                let semua_id = []
-                $.each(checkbox_terpilih,function(index,elm){
-                    semua_id.push(elm.value)
-                })
-                let ids = semua_id.join(',')
-                $("#button-export-selected").prop('disabled',true)
-                $("#form-export-terpilih [name='ids']").val(ids)
-                $("#form-export-terpilih").submit()
-                // $.ajax({
-                //     url: "{{ url('products') }}" + '/barcodeSelected'+ '/'+ id,
-                //     method:'GET',
-                //     success:function(res){
-                //         console.log(res)
-                //         $("#button-export-selected").prop('disabled',true)
-                //     }
-                // })
+        $(".products-table ").on('click', '.child-cb', function() {
+            if ($(this).prop('checked') != true) {
+                $("#head-cb").prop('checked', false)
             }
+            let semua_checkbox = $(".products-table  .child-cb:checked")
+            let button_export_selected = (semua_checkbox.length > 0)
 
+            $("#button-export-selected").prop('disabled', !button_export_selected)
+        })
+
+        function exportDataTerpilih() {
+            let checkbox_terpilih = $(".products-table .child-cb:checked")
+            let semua_id = []
+            $.each(checkbox_terpilih, function(index, elm) {
+                semua_id.push(elm.value)
+            })
+            let ids = semua_id.join(',')
+            $("#button-export-selected").prop('disabled', true)
+            $("#form-export-terpilih [name='ids']").val(ids)
+            $("#form-export-terpilih").submit()
+            // $.ajax({
+            //     url: "{{ url('products') }}" + '/barcodeSelected'+ '/'+ id,
+            //     method:'GET',
+            //     success:function(res){
+            //         console.log(res)
+            //         $("#button-export-selected").prop('disabled',true)
+            //     }
+            // })
+        }
     </script>
-
 @endsection

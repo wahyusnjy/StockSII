@@ -52,14 +52,14 @@ class ProductKeluarController extends Controller
     ->orWhere('keterangan','like',"%".$cari."%")
     ->orWhere('id','like',"%".$cari."%")
     ->orWhereHas('product',function($q) use ($cari){
-        return $q->where('name','like',"%".$cari."%");
+        return $q->where('nama','like',"%".$cari."%");
     })
     ->orWhereHas('customer',function($q) use ($cari){
-        return $q->where('name','like',"%".$cari."%");
+        return $q->where('nama','like',"%".$cari."%");
     })
     ->paginate();
 
-    return view('product_keluar.index',compact('users'));
+    return view('product_keluar.index',compact('products','customers', 'invoice_data'));
    }
 
     /**

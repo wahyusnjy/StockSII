@@ -26,7 +26,7 @@ class LokasiController extends Controller
    {
     $cari = $request->cari;
     $lokasi = Lokasi::where('name','like',"%".$cari."%")
-    ->paginate();
+    ->paginate(10);
 
     return view('lokasi.index',compact('lokasi'));
    }
