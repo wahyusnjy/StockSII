@@ -87,7 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/cari/product',[ProductController::class, 'CariProduct'])->name('cariproduct.products');
     Route::post('/importProducts', [ProductController::class, 'ImportExcel'])->name('import.products');
     Route::get('/getProducts',[ProductController::class, 'getProducts'])->name('getProducts.products');
-    Route::get('/detail/{id}',[ProductController::class,'detail'])->name('detail.products');
+    Route::get('products/detail/{id}',[ProductController::class,'detail'])->name('detail.products');
 	Route::get('/apiProducts', [ProductController::class, 'apiProducts'])->name('api.products');
 
 

@@ -11,6 +11,7 @@ use App\Models\Lokasi;
 use App\Models\Product;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Laravel\Breeze\BreezeServiceProvider;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -128,7 +129,7 @@ class ProductController extends Controller
         $this->validate($request , [
             'nama'          => 'required|string',
             'harga'         => 'required',
-            'qty'           => 'required',
+            'qty'           => 'required|numeric',
             'category_id'   => 'required',
             'lokasi_id'     => 'required',
             'assets_id'     => 'required',

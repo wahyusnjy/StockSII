@@ -18,7 +18,9 @@
             <tbody>
                 <tr>
                     <td>Product Code</td>
-                    <td>{!! DNS2D::getBarcodeHTML($producs->product_code , 'QRCODE',3,3)!!} <br> {{ $producs->qrcode }} </td>
+                    <td>{!! QrCode::size(100)->generate($producs->product_code)!!}
+                        <p style="margin-top: 20px;">{{ $producs->qrcode }}</p>
+                    </td>
                 </tr>
                 <tr>
                     <td>Nama</td>
@@ -38,7 +40,7 @@
                         @if($producs->image == NULL)
                         <p>No Image</p>
                         @else
-                        <img src="{{ $producs->image }}" width="150">
+                        <img src="{{ $producs->image }}" width="150" target="_blank">
                         @endif
                     </td>
                 </tr>

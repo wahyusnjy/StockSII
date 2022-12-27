@@ -135,7 +135,7 @@
                                     <a href="/print/barcode/{{ $p->id }} ?download=Y"
                                         class="btn btn-warning btn-xs "><i class="glyphicon glyphicon-eye-open"></i>
                                         Export</a>
-                                    <a href="detail/{{ $p->id }}" class="btn btn-info btn-xs"><i
+                                    <a href="{{ url('products/detail/'.$p->id) }}" class="btn btn-info btn-xs"><i
                                             class="glyphicon glyphicon-eye-open"></i> Show</a>
                                     <a href="{{ url('products/' . $p->id . '/edit') }}" class="btn btn-primary btn-xs"><i
                                             class="glyphicon glyphicon-edit"></i> Edit</a>
