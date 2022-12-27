@@ -56,7 +56,7 @@ class SupplierController extends Controller {
 		$this->validate($request, [
 			'nama' => 'required',
 			'alamat' => 'required',
-			'email' => 'required|unique:suppliers',
+			'email' => 'required',
 			'telepon' => 'required',
 		]);
 
