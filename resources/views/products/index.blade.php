@@ -67,11 +67,13 @@
                                     ->orderBy('id_activity', 'desc')
                                     ->first();
                                 $date = Carbon\Carbon::parse($p->created_at)->format('d-m-Y');
+                                // use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
+                                // $qr = FacadesQrCode::size(300)->
                             @endphp
                             <tr>
                                 <td><input type="checkbox" class="child-cb" value="{{ $p->id }}"></td>
                                 <td> {{ $i++ }}</td>
-                                <td>{!! DNS2D::getBarcodeHTML($p->product_code, 'QRCODE', 3, 3) !!} <br>
+                                <td>{!! QrCode::size(100)->generate($p->product_code) !!} <br>
                                     <p>{{ $p->qrcode }}</p>
                                 </td>
                                 <td>{{ $p->nama }}</td>

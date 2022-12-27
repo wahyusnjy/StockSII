@@ -17,9 +17,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Milon\Barcode\DNS1D;
+use SimpleSoftwareIO\QrCode;
 use Milon\Barcode\Facades\DNS2DFacade;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpParser\Node\Expr\Empty_;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -37,7 +39,7 @@ class ProductController extends Controller
     {
         $category = Category::orderBy('name','ASC')
             ->get(['name','id']);
-
+        
 
         $type         = $request->type;
         $search       = $request->search;
