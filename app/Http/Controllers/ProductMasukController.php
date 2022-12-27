@@ -35,7 +35,7 @@ class ProductMasukController extends Controller
         ->get(['nama','id']);
 
 
-        $invoice_data = Product_Masuk::paginate(5);
+        $invoice_data = Product_Masuk::paginate(10);
         return view('product_masuk.index', compact('products','suppliers','invoice_data'));
     }
 
@@ -60,7 +60,7 @@ class ProductMasukController extends Controller
     ->orWhereHas('supplier',function($q) use ($cari){
         return $q->where('nama','like',"%".$cari."%");
     })
-    ->paginate();
+    ->paginate(10);
 
     return view('product_masuk.index',compact('products','suppliers','invoice_data'));
    }

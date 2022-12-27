@@ -1,5 +1,10 @@
 @extends('layouts.master')
-
+<style>
+    #products-table{
+        max-width: 500px;
+    }
+    td.dt-nowrap { white-space: nowrap }
+</style>
 
 @section('top')
     <!-- DataTables -->
@@ -7,65 +12,28 @@
 @endsection
 
 @section('content')
+    <h2>Detail User</h2>
     <div class="box">
-
-        <div class="box-header">
-            <h3 class="box-title">Data Users</h3>
-        </div>
-
-        <div class="box-header">
-            <a href="{{ route('user.create') }}" class="btn btn-primary" >Add User</a>
-        </div>
-
-        <div class="box-header">
-            <div style="max-width: 30%;" class="pull-right">
-                <form action="{{ url('/cari/user') }}" method="get" class="input-group">
-                    <input type="text" name="cari" class="form-control " placeholder="Cari..." value="{{ old('cari') }}">
-                    <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
-                </form>
-            </div>
-        </div>
-
-        <!-- /.box-header -->
-        <div class="box-body">
-            {{-- id="user-table" --}}
-            <div class="table-responsive" >
-            <table class="table table-striped user-table data-table">
-                <thead>
+        <table class="table table-bordered mt-4">
+            <tbody>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th></th>
+                    <td>Name</td>
+                    <td>{{ $users->name }} </td>
                 </tr>
-                </thead>
-                <tbody>
-                    @foreach ($users as $user)
-                    <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->role }}</td>
-                    <td><a href="{{ route('detail.users',$user->id) }}" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
-                        <a href="{{ url('user/'.$user->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                        <form action="{{ route('user.destroy', $user->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                        </form>
-                    </td>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ $users->email }}</td>
                 </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $users->withQueryString()->links() }}
-        </div>
-        </div>
-        <!-- /.box-body -->
+                <tr>
+                    <td>Role</td>
+                    <td>{{ $users->role }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    @include('user.form')
+    <a href="{{ url('/products') }}" class="btn btn-danger">Back</a>
+
 @endsection
 
 @section('bot')
@@ -92,27 +60,31 @@
     {{--</script>--}}
 
     <script type="text/javascript">
-        // var table = $('#user-table').DataTable({
-        //     processing: true,
-        //     serverSide: true,
-        //     pagingType: 'full_numbers',
-        //     deferRender: true,
-        //     ajax: "{{ route('api.users') }}",
-        //     columns: [
-        //         {data: 'id', name: 'id'},
-        //         {data: 'name', name: 'name'},
-        //         {data: 'email', name: 'email'},
-        //         {data: 'role', name: 'role'},
-        //         {data: 'action', name: 'action', orderable: false, searchable: false}
-        //     ]
-        // });
+        var table = $('#products-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('api.products') }}",
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'product_code', name: 'product_code'},
+                {data: 'nama', name: 'nama'},
+                {data: 'harga', name: 'harga'},
+                {data: 'qty', name: 'qty'},
+                {data: 'show_photo', name: 'show_photo'},
+                {data: 'category_name', name: 'category_name'},
+                // {data: 'link', name: 'link'},
+                // {data: 'desc_product', name: 'desc_product'},
+                {data: 'activity_status', name: 'activity_status'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
+        });
 
         function addForm() {
             save_method = "add";
             $('input[name=_method]').val('POST');
             $('#modal-form').modal('show');
             $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add User');
+            $('.modal-title').text('Add Products');
         }
 
         function editForm(id) {
@@ -120,18 +92,21 @@
             $('input[name=_method]').val('PATCH');
             $('#modal-form form')[0].reset();
             $.ajax({
-                url: "{{ url('user') }}" + '/' + id + "/edit",
+                url: "{{ url('products') }}" + '/' + id + "/edit",
                 type: "GET",
                 dataType: "JSON",
                 success: function(data) {
                     $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Users');
+                    $('.modal-title').text('Edit Products');
 
                     $('#id').val(data.id);
-                    $('#name').val(data.name);
-                    $('#email').val(data.email);
-                    $('#password').val(data.password);
-                    $('#role').val(data.role);
+                    $('#product_code').val(data.product_code);
+                    $('#nama').val(data.nama);
+                    $('#harga').val(data.harga);
+                    $('#qty').val(data.qty);
+                    // $('#link').val(data.link);
+                    // $('#description').val(data.description);
+                    $('#category_id').val(data.category_id);
                 },
                 error : function() {
                     alert("Nothing Data");
@@ -151,7 +126,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then(function () {
                 $.ajax({
-                    url : "{{ url('user') }}" + '/' + id,
+                    url : "{{ url('products') }}" + '/' + id,
                     type : "POST",
                     data : {'_method' : 'DELETE', '_token' : csrf_token},
                     success : function(data) {
@@ -177,10 +152,11 @@
 
         $(function(){
             $('#modal-form form').validator().on('submit', function (e) {
+                console.log(e);
                 if (!e.isDefaultPrevented()){
                     var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('user') }}";
-                    else url = "{{ url('user') . '/' }}" + id;
+                    if (save_method == 'add') url = "{{ url('products') }}";
+                    else url = "{{ url('products') . '/' }}" + id;
 
                     $.ajax({
                         url : url,
@@ -191,8 +167,10 @@
                         contentType: false,
                         processData: false,
                         success : function(data) {
+                            console.log(data);
                             $('#modal-form').modal('hide');
                             table.ajax.reload();
+                            window.location.reload();
                             swal({
                                 title: 'Success!',
                                 text: data.message,
@@ -201,6 +179,7 @@
                             })
                         },
                         error : function(data){
+                            console.log(data);
                             swal({
                                 title: 'Oops...',
                                 text: data.message,

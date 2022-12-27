@@ -49,8 +49,8 @@
                     <th>Action</th>
                 </tr>
                 </thead>
+                @foreach ($invoice_data as $i)
                 <tbody>
-                    @foreach ($invoice_data as $i)
                     <tr>
                         <td>{{ $i->id }}</td>
                         <td>{{ $i->product->nama }}</td>
@@ -67,8 +67,8 @@
                         </form>
                         </td>
                     </tr>
-                    @endforeach
                 </tbody>
+                @endforeach
             </table>
             {{ $invoice_data->links() }}
         </div>

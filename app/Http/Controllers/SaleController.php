@@ -24,7 +24,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::paginate(1);
+        $sales = Sale::paginate(10);
         return view('sales.index', compact('sales'));
     }
 
@@ -36,7 +36,7 @@ class SaleController extends Controller
     ->orWhere('alamat','like',"%".$cari."%")
     ->orWhere('telepon','like',"%".$cari."%")
     ->orWhere('id','like',"%".$cari."%")
-    ->paginate();
+    ->paginate(10);
 
     return view('sales.index',compact('sales'));
    }

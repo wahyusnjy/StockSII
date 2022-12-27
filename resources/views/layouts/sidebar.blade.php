@@ -6,7 +6,12 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
+                @if (empty(Auth::user()->image))
                 <img src="{{ asset('user.png') }} " class="img-circle" alt="User Image">
+                @else
+                <img src="{{ asset(Auth::user()->image) }} " class="img-circle" alt="User Image">
+                @endif
+
             </div>
             <div class="pull-left info">
                 <p>{{ \Auth::user()->name  }}</p>

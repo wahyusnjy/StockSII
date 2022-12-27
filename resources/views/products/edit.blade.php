@@ -34,9 +34,9 @@
 
                     <div class="form-group">
                         <label >Image</label>
-                        <input type="file" class="form-control" value="{{ $producs->img }}" id="image" name="image" onchange="loadFile(event)">
+                        <input type="file" class="form-control" value="{{ $producs->image }}" id="image" name="image" onchange="loadFile(event)">
                         <span class="help-block with-errors"></span>
-                        <img id="output" style="width: 200px;" />
+                        <img src="{{ url($producs->image) }}" id="output" style="width: 200px;" />
                     </div>
 
                     <div class="form-group">

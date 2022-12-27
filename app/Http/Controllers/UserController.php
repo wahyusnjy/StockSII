@@ -34,10 +34,17 @@ class UserController extends Controller {
     ->orWhere('email','like',"%".$cari."%")
     ->orWhere('role','like',"%".$cari."%")
     ->orWhere('id','like',"%".$cari."%")
-    ->paginate();
+    ->paginate(10);
 
     return view('user.index',compact('users'));
    }
+
+   public function detail($id)
+    {
+        $users = User::find($id);
+        return view('user.detail')
+        ->with('users',$users);
+    }
 
 	/**
 	 * Show the form for creating a new resource.

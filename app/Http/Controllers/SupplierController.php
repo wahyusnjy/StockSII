@@ -20,7 +20,7 @@ class SupplierController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		$suppliers = Supplier::paginate(5);
+		$suppliers = Supplier::paginate(10);
 		return view('suppliers.index',compact('suppliers'));
 	}
 
@@ -32,7 +32,7 @@ class SupplierController extends Controller {
     ->orWhere('email','like',"%".$cari."%")
     ->orWhere('telepon','like',"%".$cari."%")
     ->orWhere('id','like',"%".$cari."%")
-    ->paginate();
+    ->paginate(10);
 
     return view('user.index',compact('users'));
    }

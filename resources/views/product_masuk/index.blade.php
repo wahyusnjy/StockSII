@@ -52,8 +52,8 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
-                    @foreach($invoice_data as $i)
+         @foreach($invoice_data as $i)
+            <tbody>
                 <tr>
                     <td>{{ $i->id }}</td>
                     <td>{{ $i->product->nama }}</td>
@@ -70,8 +70,8 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach
                 </tbody>
+                @endforeach
             </table>
             {{ $invoice_data->links() }}
         </div>
@@ -122,7 +122,9 @@
                     </tbody>
                 @endforeach
             </table>
+            <div class="pull-right">
             {{ $invoice_data->links() }}
+        </div>
         </div>
         <!-- /.box-body -->
     </div>

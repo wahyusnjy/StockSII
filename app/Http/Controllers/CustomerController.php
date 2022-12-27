@@ -23,7 +23,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::paginate(5);
+        $customers = Customer::paginate(10);
 
         return view('customers.index',compact('customers'));
     }
@@ -35,7 +35,7 @@ class CustomerController extends Controller
     ->orWhere('alamat','like',"%".$cari."%")
     ->orWhere('email','like',"%".$cari."%")
     ->orWhere('telepon','like',"%".$cari."%")
-    ->paginate();
+    ->paginate(10);
 
     return view('customers.index',compact('customers'));
    }

@@ -41,17 +41,11 @@ class ProductController extends Controller
 
         $type         = $request->type;
         $search       = $request->search;
-        $producs      = Product::paginate(9);
+        $producs      = Product::paginate(20);
         $product      = Product::all();
         foreach($product as $p){
         $activ        = ActivityLog::where('product_id', $p->id)->orderBy('id_activity', 'desc')->first();
         }
-
-
-        if($type)
-            $producs = $producs->where('type', $type);
-        if($search)
-            $producs = $producs->search($search);
 
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
@@ -77,7 +71,7 @@ class ProductController extends Controller
     ->orWhereHas('category',function($q) use ($cari){
         return $q->where('name','like',"%".$cari."%");
     })
-    ->paginate(9);
+    ->paginate(20);
 
     return view('products.index',compact('producs','category','lokasi','asset'));
    }

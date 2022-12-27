@@ -15,7 +15,7 @@ class AssetsController extends Controller
      */
     public function index()
     {
-        $assets = Assets::paginate(2);
+        $assets = Assets::paginate(10);
         return view('assetsOrInventory.index', compact('assets'));
     }
 
@@ -23,7 +23,7 @@ class AssetsController extends Controller
    {
     $cari = $request->cari;
     $assets = Assets::where('name','like',"%".$cari."%")
-    ->paginate();
+    ->paginate(10);
 
     return view('assetsOrInventory.index',compact('assets'));
    }

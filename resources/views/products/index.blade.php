@@ -58,6 +58,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                             $i = 1 + $producs->currentPage() * $producs->perPage() - $producs->perPage();
+                        @endphp
                         @foreach ($producs as $p)
                             @php
                                 $activ = App\Models\ActivityLog::where('product_id', $p->id)
@@ -67,7 +70,7 @@
                             @endphp
                             <tr>
                                 <td><input type="checkbox" class="child-cb" value="{{ $p->id }}"></td>
-                                <td>{{ $p->id }}</td>
+                                <td> {{ $i++ }}</td>
                                 <td>{!! DNS2D::getBarcodeHTML($p->product_code, 'QRCODE', 3, 3) !!} <br>
                                     <p>{{ $p->qrcode }}</p>
                                 </td>
@@ -141,12 +144,13 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-4 pull-right">
 
+                  {{ $producs->withQueryString()->links() }}
+                </div>
             </div>
         </div>
-        <div class="mt-4">
-            {{ $producs->withQueryString()->links() }}
-        </div>
+
         <!-- /.box-body -->
     </div>
 

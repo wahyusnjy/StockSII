@@ -33,7 +33,7 @@ class ProductKeluarController extends Controller
         $customers = Customer::orderBy('nama','ASC')
         ->get(['nama','id']);
 
-        $invoice_data = Product_Keluar::paginate(1);
+        $invoice_data = Product_Keluar::paginate(10);
         return view('product_keluar.index', compact('products','customers', 'invoice_data'));
     }
 
@@ -57,7 +57,7 @@ class ProductKeluarController extends Controller
     ->orWhereHas('customer',function($q) use ($cari){
         return $q->where('nama','like',"%".$cari."%");
     })
-    ->paginate();
+    ->paginate(10);
 
     return view('product_keluar.index',compact('products','customers', 'invoice_data'));
    }

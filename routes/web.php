@@ -8,6 +8,7 @@ use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductKeluarController;
 use App\Http\Controllers\ProductMasukController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -106,6 +107,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/importProductsMasuk', [ProductMasukController::class, 'ImportExcel'])->name('import.productsMasuk');
 
 	Route::resource('user', UserController::class);
+    Route::get('/detail/{id}',[UserController::class,'detail'])->name('detail.users');
     Route::get('/cari/user',[UserController::class, 'Cari'])->name('cari.users');
 	Route::get('/apiUser', [UserController::class, 'apiUsers'])->name('api.users');
 
@@ -118,6 +120,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('assetinventory', AssetsController::class);
     Route::get('/cari/assets',[AssetsController::class, 'Cari'])->name('cari.asset');
 	Route::get('/apiAssetInventory', [AssetsController::class, 'apiAssetInventory'])->name('api.assetinventory');
+
+    //Profile
+    Route::get('profile/{id}',[ProfileController::class,'show'])->name('show.profile');
+    Route::get('profile/edit/{id}',[ProfileController::class, 'edit'])->name('edit.profile');
+    Route::patch('profile/update/{id}',[ProfileController::class,'update'])->name('update.profile');
 
 	Route::get('api/print/barcode', function(Request $request){
 
