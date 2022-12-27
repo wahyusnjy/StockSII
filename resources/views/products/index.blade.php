@@ -18,7 +18,7 @@
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Data Products</h3>
-            <a href="{{ url('/print/barcode?download=Y') }}" class="btn btn-warning pull-right" style="margin-top: -8px;">Print
+            <a href="{{ url('/print/barcodePage/') }}" class="btn btn-warning pull-right" style="margin-top: -8px;">Print
                 Barcode</a>
             <button type="button" id="button-export-selected" disabled class="btn btn-danger pull-right"
                 style="margin-top: -8px;" onclick="exportDataTerpilih()">Print Selected Barcode</button>

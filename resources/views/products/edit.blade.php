@@ -36,7 +36,12 @@
                         <label >Image</label>
                         <input type="file" class="form-control" value="{{ $producs->image }}" id="image" name="image" onchange="loadFile(event)">
                         <span class="help-block with-errors"></span>
-                        <img src="{{ url($producs->image) }}" id="output" style="width: 200px;" />
+                        @if(empty($producs->image))
+                        <img src="{{ asset('notfoundimage.png') }}" id="output" class="img-circle" style="max-width: 150px; " alt="">
+                        @else
+                        <img src="{{ url($producs->image) }}" id="output" style="max-width: 150px;" />
+                        @endif
+                        <img id="output" style="max-width: 200px;" />
                     </div>
 
                     <div class="form-group">

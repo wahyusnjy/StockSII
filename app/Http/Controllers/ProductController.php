@@ -44,12 +44,16 @@ class ProductController extends Controller
         $producs      = Product::paginate(20);
         $product      = Product::all();
         foreach($product as $p){
+        if(empty($activ)){
+
+        }else{
         $activ        = ActivityLog::where('product_id', $p->id)->orderBy('id_activity', 'desc')->first();
+    }
         }
 
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
-        return view('products.index', compact('category','lokasi','asset','producs','activ'));
+        return view('products.index', compact('category','lokasi','asset','producs'));
     }
    public function CariProduct(Request $request)
    {
@@ -380,6 +384,28 @@ class ProductController extends Controller
 		ini_set("max_execution_time", "999");
         $ids = explode(',', $request->ids);
 		$product1 = Product::findOrFail($ids);
+		$pdf = Pdf::loadView('products.barcode_pdf', ['product1' => $product1])->setOptions(['defaultFont' => 'sans-serif'])->setpaper('A4', 'potrait');
+		return $pdf->stream('Product.pdf');
+		if($request->download){
+			//return view('products.barcode')->with('product', $product);
+			return $pdf->download('product_'.date('Y-m-dHis').'.pdf');
+		}
+
+
+		// return view('products.barcode_pdf')->with('product1', $product1);
+    }
+
+    public function BarcodePage(Request $request)
+    {
+        // $ids = explode(',', $request->ids);
+        // return (new ExportProduk($ids))->download('produck.pdf', \Maatwebsite\Excel\Excel::TCPDF);
+        // return Excel::download(new ExportProduk($ids), 'karyawan.xlsx');
+
+        set_time_limit(3000);
+		ini_set("memory_limit", "999M");
+		ini_set("max_execution_time", "999");
+        $ids = explode(',', $request->ids);
+		$product1 = Product::paginate(20)->currentPage();
 		$pdf = Pdf::loadView('products.barcode_pdf', ['product1' => $product1])->setOptions(['defaultFont' => 'sans-serif'])->setpaper('A4', 'potrait');
 		return $pdf->stream('Product.pdf');
 		if($request->download){
