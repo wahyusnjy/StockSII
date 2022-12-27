@@ -57,7 +57,9 @@ class ProductController extends Controller
     }
    public function CariProduct(Request $request)
    {
+
     $cari = $request->cari;
+
     $category = Category::orderBy('name','ASC')
             ->get(['name','id']);
     $lokasi  = Lokasi::all();
@@ -75,7 +77,7 @@ class ProductController extends Controller
     ->orWhereHas('category',function($q) use ($cari){
         return $q->where('name','like',"%".$cari."%");
     })
-    ->paginate(20);
+    ->paginate(18);
 
     return view('products.index',compact('producs','category','lokasi','asset'));
    }

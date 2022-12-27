@@ -29,7 +29,7 @@
     <div class="box-header">
         <div style="max-width: 30%;" class="pull-right">
             <form action="{{ url('/cari/product') }}" method="get" class="input-group">
-                <input type="text" name="cari" class="form-control " placeholder="Cari Product..." value="{{ old('cari') }}">
+                <input type="text" name="cari" class="form-control " placeholder="Cari Product..." value="{{ request('cari') }}">
                 <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
             </form>
         </div>
