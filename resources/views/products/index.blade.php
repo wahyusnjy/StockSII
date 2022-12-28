@@ -40,7 +40,7 @@
             @php
 
             @endphp
-            <p> {{ "Showing ". $producs->currentPage() . " from " . $producs->firstItem() . " to " .  $producs->lastItem() ." of " . $producs->total() . " results "}}</p>
+            <p> {{ "Showing ". $producs->count() . " from " . $producs->firstItem() . " to " .  $producs->lastItem() ." of " . $producs->total() . " results "}}</p>
             <div class="table-responsive">
                 <table class="table table-bordered products-table" style="width: 100%;">
                     <thead>

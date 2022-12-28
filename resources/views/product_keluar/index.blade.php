@@ -37,7 +37,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
-            <p> {{ "Showing ". $invoice_data->firstItem() . " to " .  $invoice_data->lastItem() ." of " . $invoice_data->total() . " results "}}</p>
+            <p> {{ "Showing " .$invoice_data->count() . " from "  . $invoice_data->firstItem() . " to " .  $invoice_data->lastItem() ." of " . $invoice_data->total() . " results "}}</p>
             <table id="products-out-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -52,7 +52,7 @@
                 </thead>
                 <tbody>
                     @php
-                     $id = 1 + $invoice_data->currentPage() * $invoice_data->perPage() - $invoice_data->perPage();
+                     $id = 1 + $invoice_data->count() * $invoice_data->perPage() - $invoice_data->perPage();
                     @endphp
                     @foreach ($invoice_data as $i)
                     <tr>
