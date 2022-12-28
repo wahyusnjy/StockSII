@@ -62,6 +62,7 @@
                     <td>{{ $i->tanggal }}</td>
                     <td>{{ $i->keterangan }}</td>
                     <td>
+                        <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-danger">Export PDF</a>
                         <a href="{{ url('productsIn/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                         <form action="{{ route('productsIn.destroy', $i->id) }}" method="post">
                             @csrf
@@ -78,56 +79,6 @@
         <!-- /.box-body -->
     </div>
 
-    <div class="box col-md-6">
-
-        <div class="box-header">
-            <h3 class="box-title">Export Invoice</h3>
-        </div>
-
-        <div class="box-header">
-            <div style="max-width: 30%;" class="pull-right">
-                <form action="{{ url('/cari/productsIn') }}" method="get" class="input-group">
-                    <input type="text" name="cari" class="form-control " placeholder="Cari..." value="{{ old('cari') }}">
-                    <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
-                </form>
-            </div>
-        </div>
-
-    <!-- /.box-header -->
-        <div class="box-body">
-            <table id="invoice" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Products</th>
-                    <th>Supplier</th>
-                    <th>QTY</th>
-                    <th>Tanggal Masuk</th>
-                    <th>Keterangan</th>
-                    <th>Export Invoice</th>
-                </tr>
-                </thead>
-
-                @foreach($invoice_data as $i)
-                    <tbody>
-                    <td>{{ $i->id }}</td>
-                    <td>{{ $i->product->nama }}</td>
-                    <td>{{ $i->supplier->nama }}</td>
-                    <td>{{ $i->qty }}</td>
-                    <td>{{ $i->tanggal }}</td>
-                    <td>{{ $i->keterangan }}</td>
-                    <td>
-                        <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-sm btn-danger">Export PDF</a>
-                    </td>
-                    </tbody>
-                @endforeach
-            </table>
-            <div class="pull-right">
-            {{ $invoice_data->links() }}
-        </div>
-        </div>
-        <!-- /.box-body -->
-    </div>
 
     @include('product_masuk.form')
 
