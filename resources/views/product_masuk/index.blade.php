@@ -32,7 +32,7 @@
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
                 <form action="{{ url('/cari/productsIn') }}" method="get" class="input-group">
-                    <input type="text" name="cari" class="form-control " placeholder="Cari..." value="{{ old('cari') }}">
+                    <input type="text" name="cari" class="form-control " placeholder="Cari..."  value="{{ request('cari') }}"">
                     <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
                 </form>
             </div>
@@ -52,9 +52,9 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-         @foreach($invoice_data as $i)
             <tbody>
                 <tr>
+                    @foreach($invoice_data as $i)
                     <td>{{ $i->id }}</td>
                     <td>{{ $i->product->nama }}</td>
                     <td>{{ $i->supplier->nama }}</td>
@@ -62,7 +62,7 @@
                     <td>{{ $i->tanggal }}</td>
                     <td>{{ $i->keterangan }}</td>
                     <td>
-                        <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-danger">Export PDF</a>
+                        <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning">Invoice / Export Invoice</a>
                         <a href="{{ url('productsIn/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                         <form action="{{ route('productsIn.destroy', $i->id) }}" method="post">
                             @csrf
@@ -70,9 +70,9 @@
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
                     </td>
+                    @endforeach
                 </tr>
                 </tbody>
-                @endforeach
             </table>
             {{ $invoice_data->links() }}
         </div>

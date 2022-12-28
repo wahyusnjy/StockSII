@@ -132,6 +132,7 @@
                                     @endif
                                 </td>
                                 <td>
+                    
                                     <a href="/print/barcode/{{ $p->id }} ?download=Y"
                                         class="btn btn-warning btn-xs "><i class="glyphicon glyphicon-eye-open"></i>
                                         Export</a>

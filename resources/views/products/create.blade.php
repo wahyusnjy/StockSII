@@ -14,18 +14,27 @@
                         <label>Name</label>
                         <input type="text" class="form-control" id="nama" name="nama" autofocus required>
                         <span class="help-block with-errors"></span>
+                        @error('nama')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label>Price</label>
                         <input type="text" class="form-control rupiah" id="harga" name="harga" required>
                         <span class="help-block with-errors"></span>
+                        @error('harga')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label>Quantity</label>
                         <input type="number" class="form-control" id="qty" name="qty" required>
                         <span class="help-block with-errors"></span>
+                        @error('qty')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
 

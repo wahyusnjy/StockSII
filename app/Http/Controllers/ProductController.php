@@ -39,7 +39,7 @@ class ProductController extends Controller
     {
         $category = Category::orderBy('name','ASC')
             ->get(['name','id']);
-        
+
 
 
         $type         = $request->type;
