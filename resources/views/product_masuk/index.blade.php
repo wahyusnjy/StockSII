@@ -40,7 +40,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
-        <p> {{ "Showing ". $invoice_data->currentPage() . " to " .  $invoice_data->count() ." of " . $invoice_data->total() . " results "}}</p>
+        <p> {{ "Showing ". $invoice_data->currentPage() . " to " .  $invoice_data->count() ." of " . $invoice_data->lastPage() . " results "}}</p>
             <table id="products-in-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -63,13 +63,15 @@
                     <td>{{ $i->tanggal }}</td>
                     <td>{{ $i->keterangan }}</td>
                     <td>
+                        <div class="input-group">
                         <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning">Export Invoice</a>
                         <a href="{{ url('productsIn/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                        <form action="{{ route('productsIn.destroy', $i->id) }}" method="post">
+                        <form action="{{ route('productsIn.destroy', $i->id) }}" method="post" style="vertical-align: top;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
+                    </div>
                     </td>
                 </tr>
                 @endforeach
