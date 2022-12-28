@@ -62,11 +62,11 @@
                     <td>{{ $i->tanggal }}</td>
                     <td>{{ $i->keterangan }}</td>
                     <td>
-                        <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning">Invoice / Export Invoice</a>
+                        <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning">Export Invoice</a>
                         <a href="{{ url('productsIn/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                         <form action="{{ route('productsIn.destroy', $i->id) }}" method="post">
                             @csrf
-                            @method('DELETE')`
+                            @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
                     </td>
