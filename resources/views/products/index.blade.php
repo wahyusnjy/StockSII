@@ -37,7 +37,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
-            <p> {{ "Showing ". $producs->currentPage() . " to " .  $producs->count() ." of " . $producs->lastPage() . " results "}}</p>
+            <p> {{ "Showing ". $producs->currentPage() . " to " .  $producs->count() ." of " . $producs->total() . " results "}}</p>
             <div class="table-responsive">
                 <table class="table table-bordered products-table" style="width: 100%;">
                     <thead>

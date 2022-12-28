@@ -37,7 +37,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
-            <p> {{ "Showing ". $invoice_data->currentPage() . " to " .  $invoice_data->count() ." of " . $invoice_data->lastPage() . " results "}}</p>
+            <p> {{ "Showing ". $invoice_data->currentPage() . " to " .  $invoice_data->count() ." of " . $invoice_data->total() . " results "}}</p>
             <table id="products-out-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -60,12 +60,15 @@
                         <td>{{ $i->tanggal }}</td>
                         <td>{{ $i->keterangan }}</td>
                         <td>
+                        <form action="{{ route('productsOut.destroy', $i->id) }}" method="post">
+                            <div style="display:inline-block">
                             <a href="{{ route('exportPDF.productKeluar', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning">Export Invoice</a>
                             <a href="{{ url('productsOut/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                        <form action="{{ route('productsOut.destroy', $i->id) }}" method="post">
+
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </div>
                         </form>
                         </td>
                     </tr>
