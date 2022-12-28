@@ -40,7 +40,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
-        <p> {{ "Showing ". $invoice_data->firstItem() . " to " .  $invoice_data->lastItem() ." of " . $invoice_data->total() . " results "}}</p>
+        <p> {{ "Showing "  . $invoice_data->firstItem() . " to " .  $invoice_data->lastItem() ." of " . $invoice_data->total() . " results "}}</p>
             <table id="products-in-table" class="table table-striped">
                 <thead>
                 <tr>
