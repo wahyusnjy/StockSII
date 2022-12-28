@@ -50,8 +50,8 @@
                 </tr>
                 </thead>
                 <tbody>
+                    @foreach ($invoice_data as $i)
                     <tr>
-                        @foreach ($invoice_data as $i)
                         <td>{{ $i->id }}</td>
                         <td>{{ $i->product->nama }}</td>
                         <td>{{ $i->customer->nama }}</td>
@@ -67,8 +67,8 @@
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
                         </td>
-                        @endforeach
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
             {{ $invoice_data->links() }}
