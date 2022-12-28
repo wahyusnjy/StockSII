@@ -28,6 +28,8 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+            <p> {{ "Showing ". $categories->count() . " from " . $categories->firstItem() . " to " .  $categories->lastItem() ." of " . $categories->total() . " results "}}</p>
+            <table id="customer-table" class="table table-striped">
             <table id="categories-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -54,7 +56,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="mt-4 pull-right">
             {{ $categories->withQueryString()->links() }}
+            </div>
         </div>
         </div>
         <!-- /.box-body -->

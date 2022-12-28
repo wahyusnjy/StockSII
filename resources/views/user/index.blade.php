@@ -28,6 +28,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
+            <p> {{ "Showing ". $users->count() . " from " . $users->firstItem() . " to " .  $users->lastItem() ." of " . $users->total() . " results "}}</p>
             {{-- id="user-table" --}}
             <div class="table-responsive" >
             <table class="table table-striped user-table data-table">
@@ -47,19 +48,24 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
-                    <td><a href="{{ route('detail.users',$user->id) }}" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
-                        <a href="{{ url('user/'.$user->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                    <td>
                         <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                        <div style="display: inline-block">
+                        <a href="{{ route('detail.users',$user->id) }}" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
+                        <a href="{{ url('user/'.$user->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                        </div>
                         </form>
                     </td>
                 </tr>
                     @endforeach
                 </tbody>
             </table>
+            <div class="mt-4 pull-right">
             {{ $users->withQueryString()->links() }}
+            </div>
         </div>
         </div>
         <!-- /.box-body -->

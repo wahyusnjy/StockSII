@@ -28,6 +28,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
+            <p> {{ "Showing ". $assets->count() . " from " . $assets->firstItem() . " to " .  $assets->lastItem() ." of " . $assets->total() . " results "}}</p>
             <table id="assets-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -53,7 +54,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="mt-4 pull-right">
             {{ $assets->withQueryString()->links() }}
+            </div>
         </div>
         <!-- /.box-body -->
     </div>

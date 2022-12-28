@@ -29,6 +29,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
+            <p> {{ "Showing ". $lokasi->count() . " from " . $lokasi->firstItem() . " to " .  $lokasi->lastItem() ." of " . $lokasi->total() . " results "}}</p>
             <table id="lokasi-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -55,7 +56,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="mt-4 pull-right">
             {{ $lokasi->withQueryString()->links() }}
+            </div>
         </div>
         <!-- /.box-body -->
     </div>

@@ -30,6 +30,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
+            <p> {{ "Showing ". $suppliers->count() . " from " . $suppliers->firstItem() . " to " .  $suppliers->lastItem() ." of " . $suppliers->total() . " results "}}</p>
             <table id="sales-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -61,7 +62,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="mt-4 pull-right">
             {{ $suppliers->withQueryString()->links() }}
+            </div>
         </div>
         <!-- /.box-body -->
     </div>

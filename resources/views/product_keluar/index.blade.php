@@ -78,7 +78,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="mt-4 pull-right">
             {{ $invoice_data->links() }}
+            </div>
         </div>
         <!-- /.box-body -->
     </div>
