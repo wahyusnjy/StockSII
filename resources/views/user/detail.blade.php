@@ -32,7 +32,7 @@
         </table>
     </div>
 
-    <a href="{{ url('/products') }}" class="btn btn-danger">Back</a>
+    <a href="{{ url()->previous() }}" class="btn btn-danger">Back</a>
 
 @endsection
 

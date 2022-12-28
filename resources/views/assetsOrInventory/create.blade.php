@@ -21,7 +21,7 @@
             <!-- /.box-body -->
 
             <div class="modal-footer">
-                <a href="{{ route('assetinventory.index') }}"  type="button" class="btn btn-default pull-left" >Cancel</a>
+                <a href="{{ url()->previous() }}"  type="button" class="btn btn-default pull-left" >Cancel</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
 

@@ -32,6 +32,7 @@
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 
             <div>
+                <a href="{{ url()->previous() }}" class="btn btn-danger">Back</a>
                 <a href="{{ route('edit.profile',Auth::user()->id ) }}" class="btn btn-primary" >Update Data</a>
             </div>
 

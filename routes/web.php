@@ -108,7 +108,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/importProductsMasuk', [ProductMasukController::class, 'ImportExcel'])->name('import.productsMasuk');
 
 	Route::resource('user', UserController::class);
-    Route::get('/detail/{id}',[UserController::class,'detail'])->name('detail.users');
+    Route::get('/user/detail/{id}',[UserController::class,'detail'])->name('detail.users');
     Route::get('/cari/user',[UserController::class, 'Cari'])->name('cari.users');
 	Route::get('/apiUser', [UserController::class, 'apiUsers'])->name('api.users');
 

@@ -86,8 +86,7 @@ class ProfileController extends Controller
 
         if($request->password) {
             if(!$user->password == NULL){
-
-            Auth::user()->password = Hash::make($request->password);
+           $input['password'] = bcrypt($request->password);
             }
         }
 

@@ -37,25 +37,62 @@
             <li class="header">Fungsi</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="{{ request()->is('home') ?  'active' : '' }}"><a href="{{ url('/home') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li class="{{ request()->is('user') ?  'active' : '' }}"><a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
-            <li class="{{ request()->is('categories') ? 'active' : '' }}"><a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a></li>
+            <li class="{{ request()->is('user')
+            || request()->is('user/create')
+            || request()->is('user/show')
+            || request()->is('user/*/edit')
+            || request()->is('user/detail/*')
+            ?  'active' : '' }}"><a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
+            <li class="{{ request()->is('categories')
+            || request()->is('categories/create')
+            || request()->is('categories/show')
+            || request()->is('categories/*/edit')
+            ? 'active' : '' }}"><a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a></li>
             <li class="{{ request()->is('products')
             || request()->is('products/create')
             || request()->is('products/show')
             || request()->is('products/*/edit')
-            || request()->is('products/detail/*')? 'active' : '' }}">
+            || request()->is('products/detail/*')
+            ? 'active' : '' }}">
             <a href="{{ route('products.index') }}"><i class="fa fa-cubes"></i> <span>Product</span></a>
             </li>
-            <li class="{{ request()->is('customers') ? 'active' : '' }}"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customer</span></a></li>
-            <li class="{{ request()->is('sales') ? 'active' : '' }}"><a href="{{ route('sales.index') }}"><i class="fa fa-cart-plus"></i> <span>Penjualan</span></a></li>
-            <li class="{{ request()->is('suppliers') ? 'active' : '' }}"><a href="{{ route('suppliers.index') }}"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
-            <li class="{{ request()->is('productsOut') ? 'active' : '' }}"><a href="{{ route('productsOut.index') }}"><i class="fa fa-minus"></i> <span>Product Keluar</span></a></li>
+            <li class="{{ request()->is('customers')
+            || request()->is('customers/create')
+            || request()->is('customers/*/edit')
+            ? 'active' : '' }}"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customer</span></a></li>
+            <li class="{{ request()->is('sales')
+            || request()->is('sales/create')
+            || request()->is('sales/show')
+            || request()->is('sales/*/edit')
+            ? 'active' : '' }}"><a href="{{ route('sales.index') }}"><i class="fa fa-cart-plus"></i> <span>Penjualan</span></a></li>
+            <li class="{{ request()->is('suppliers')
+            || request()->is('suppliers/create')
+            || request()->is('suppliers/show')
+            || request()->is('suppliers/*/edit')
+            ? 'active' : '' }}"><a href="{{ route('suppliers.index') }}"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
+            <li class="{{ request()->is('productsOut')
+            || request()->is('productsOut/create')
+            || request()->is('productsOut/show')
+            || request()->is('productsOut/*/edit')
+            ? 'active' : '' }}"><a href="{{ route('productsOut.index') }}"><i class="fa fa-minus"></i> <span>Product Keluar</span></a></li>
 
-            <li class="{{ request()->is('productsIn') ? 'active' : '' }}"><a href="{{ route('productsIn.index') }}"><i class="fa fa-plus"></i> <span>Product Masuk</span></a></li>
+            <li class="{{ request()->is('productsIn')
+            || request()->is('productsIn/create')
+            || request()->is('productsIn/show')
+            || request()->is('productsIn/*/edit')
+            ? 'active' : '' }}"><a href="{{ route('productsIn.index') }}"><i class="fa fa-plus"></i> <span>Product Masuk</span></a></li>
 
-            <li class="{{ request()->is('lokasi') ? 'active' : '' }}"><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a></li>
+            <li class="{{ request()->is('lokasi')
+            || request()->is('lokasi/create')
+            || request()->is('lokasi/show')
+            || request()->is('lokasi/*/edit')
+            ? 'active' : '' }}"><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a></li>
 
-            <li class="{{ request()->is('assetinventory') ? 'active' : '' }}"><a href="{{ route('assetinventory.index') }}"><i class="fa fa-inbox"></i> <span>Assets / Inventory</span></a></li>
+            <li class="{{ request()->is('assetinventory')
+            || request()->is('assetinventory/create')
+            || request()->is('assetinventory/show')
+            || request()->is('assetinventory/*/edit')
+            ? 'active' : '' }}"><a href="{{ route('assetinventory.index') }}"><i class="fa fa-inbox"></i> <span>Assets / Inventory</span></a></li>
 
 
 
