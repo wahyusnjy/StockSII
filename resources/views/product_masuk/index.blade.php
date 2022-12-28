@@ -54,9 +54,12 @@
                 </tr>
                 </thead>
             <tbody>
+                @php
+                    $id = 1 + $invoice_data->currentPage() * $invoice_data->perPage() - $invoice_data->perPage();
+                 @endphp
                 @foreach($invoice_data as $i)
                 <tr>
-                    <td>{{ $i->id }}</td>
+                    <td>{{ $id++ }}</td>
                     <td>{{ $i->product->nama }}</td>
                     <td>{{ $i->supplier->nama }}</td>
                     <td>{{ $i->qty }}</td>
