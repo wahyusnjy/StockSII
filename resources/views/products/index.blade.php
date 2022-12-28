@@ -37,6 +37,7 @@
 
         <!-- /.box-header -->
         <div class="box-body">
+            <p> {{ "Showing ". $producs->currentPage() . " to " .  $producs->count() ." of " . $producs->total() . " results "}}</p>
             <div class="table-responsive">
                 <table class="table table-bordered products-table" style="width: 100%;">
                     <thead>
@@ -73,7 +74,7 @@
                             <tr>
                                 <td><input type="checkbox" class="child-cb" value="{{ $p->id }}"></td>
                                 <td> {{ $i++ }}</td>
-                                <td>{!! QrCode::size(100)->generate($p->product_code) !!} <br>
+                                <td>{!! QrCode::size(70)->generate($p->product_code) !!} <br>
                                     <p>{{ $p->qrcode }}</p>
                                 </td>
                                 <td>{{ $p->nama }}</td>
@@ -132,7 +133,7 @@
                                     @endif
                                 </td>
                                 <td>
-                    
+
                                     <a href="/print/barcode/{{ $p->id }} ?download=Y"
                                         class="btn btn-warning btn-xs "><i class="glyphicon glyphicon-eye-open"></i>
                                         Export</a>
