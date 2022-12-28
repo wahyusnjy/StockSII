@@ -148,7 +148,7 @@
                 </table>
                 <div class="mt-4 pull-right">
 
-                  {{ $producs->withQueryString()->links() }}
+                  {{ $producs->withQueryString()->links('pagination::bootstrap-5') }}
                 </div>
             </div>
         </div>

@@ -43,12 +43,16 @@
         $a=1;
         @endphp
         @foreach($product1 as $pr)
+        @php
+            $qr = \QrCode::size(100)->generate($pr->product_code);
+        @endphp
         <div class="app">
         <div class="header">
             <p>PT Solusi Intek Indonesia </p>
         </div>
             <div class="badge">
-                {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE', 2,2) !!}
+                <img src="data:image/png;base64,{!! base64_encode(QrCode::size(80)->generate($pr->product_code)) !!}">
+                {{-- {!! QrCode::size(100)->generate($pr->product_code) !!} --}}
                 <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
             </div>
         </div>

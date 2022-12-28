@@ -21,6 +21,7 @@ use Milon\Barcode\DNS1D;
 use Milon\Barcode\Facades\DNS2DFacade;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpParser\Node\Expr\Empty_;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -38,6 +39,7 @@ class ProductController extends Controller
     {
         $category = Category::orderBy('name','ASC')
             ->get(['name','id']);
+        
 
 
         $type         = $request->type;

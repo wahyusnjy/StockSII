@@ -40,7 +40,7 @@
                         @if($producs->image == NULL)
                         <p>No Image</p>
                         @else
-                        <img src="{{ $producs->image }}" width="150" target="_blank">
+                        <a href="{{ url($producs->image) }}"  target="_blank"><img src="{{ url($producs->image) }}" width="400"></a>
                         @endif
                     </td>
                 </tr>

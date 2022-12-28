@@ -39,7 +39,13 @@
             <li class="{{ request()->is('home') ?  'active' : '' }}"><a href="{{ url('/home') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="{{ request()->is('user') ?  'active' : '' }}"><a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
             <li class="{{ request()->is('categories') ? 'active' : '' }}"><a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a></li>
-            <li class="{{ request()->is('products') || request()->is('products/create') || request()->is('products/show') || request()->is('products//edit')? 'active' : '' }}"><a href="{{ route('products.index') }}"><i class="fa fa-cubes"></i> <span>Product</span></a></li>
+            <li class="{{ request()->is('products')
+            || request()->is('products/create')
+            || request()->is('products/show')
+            || request()->is('products/*/edit')
+            || request()->is('products/detail/*')? 'active' : '' }}">
+            <a href="{{ route('products.index') }}"><i class="fa fa-cubes"></i> <span>Product</span></a>
+            </li>
             <li class="{{ request()->is('customers') ? 'active' : '' }}"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customer</span></a></li>
             <li class="{{ request()->is('sales') ? 'active' : '' }}"><a href="{{ route('sales.index') }}"><i class="fa fa-cart-plus"></i> <span>Penjualan</span></a></li>
             <li class="{{ request()->is('suppliers') ? 'active' : '' }}"><a href="{{ route('suppliers.index') }}"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
