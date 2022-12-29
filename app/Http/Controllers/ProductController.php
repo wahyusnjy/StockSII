@@ -230,7 +230,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
-        
+
         $this->validate($request , [
             'nama'          => 'required|string',
             'harga'         => 'required',

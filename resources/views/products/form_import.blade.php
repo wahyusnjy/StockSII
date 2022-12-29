@@ -31,8 +31,15 @@
                         <label for="exampleInputFile" >
                             Input File
                         </label>
-                        <input type="file" id="file" name="file">
-                        <p class="text-danger">{{ $errors->first('file') }}</p>
+                        <input type="file" id="file" name="file" class="
+                         @error('file')
+                        is-invalid
+                        @enderror">
+                        @error('file')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                        {{-- <p class="text-danger">{{ $errors->first('file') }}</p> --}}
+
                     </div>
                 </div>
 

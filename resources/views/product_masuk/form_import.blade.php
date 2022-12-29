@@ -32,7 +32,10 @@
                             Input File
                         </label>
                         <input type="file" id="file" name="file">
-                        <p class="text-danger">{{ $errors->first('file') }}</p>
+                        @error('file')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                        {{-- <p class="text-danger">{{ $errors->first('file') }}</p> --}}
                     </div>
                 </div>
 
