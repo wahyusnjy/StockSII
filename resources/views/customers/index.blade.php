@@ -45,9 +45,12 @@
                 </tr>
                 </thead>
                 <tbody>
+                @php
+                    $i = 1 + $customers->currentPage() * $customers->perPage() - $customers->perPage();
+               @endphp
                     @foreach ($customers as $c)
                     <tr>
-                        <td>{{ $c->id }}</td>
+                        <td>{{ $i++ }}</td>
                         <td>{{ $c->nama }}</td>
                         <td>{{ $c->alamat }}</td>
                         <td>{{ $c->email }}</td>

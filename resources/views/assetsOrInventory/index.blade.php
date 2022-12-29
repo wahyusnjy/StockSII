@@ -38,9 +38,12 @@
                 </tr>
                 </thead>
                 <tbody>
+                    @php
+                    $i = 1 + $assets->currentPage() * $assets->perPage() - $assets->perPage();
+                    @endphp
                     @foreach ($assets as $a)
                     <tr>
-                        <td>{{ $a->id }}</td>
+                        <td>{{ $i++ }}</td>
                         <td>{{ $a->name }}</td>
                         <td>
                             <a href="{{ url('assetinventory/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>

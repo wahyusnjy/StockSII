@@ -39,9 +39,12 @@
                 </tr>
                 </thead>
                 <tbody>
+                @php
+                    $i = 1 + $categories->currentPage() * $categories->perPage() - $categories->perPage();
+                @endphp
                     @foreach ($categories as $c)
                     <tr>
-                        <td>{{ $c->id }}</td>
+                        <td>{{ $i++ }}</td>
                         <td>{{ $c->name }}</td>
                         <td>
                             {{-- <a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> --}}

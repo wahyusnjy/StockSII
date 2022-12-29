@@ -39,9 +39,12 @@
                 </tr>
                 </thead>
                 <tbody>
+                 @php
+                    $i = 1 + $lokasi->currentPage() * $lokasi->perPage() - $lokasi->perPage();
+                @endphp
                     @foreach ($lokasi as $l)
                     <tr>
-                        <td>{{ $l->id }}</td>
+                        <td>{{ $i++ }}</td>
                         <td>{{ $l->name }}</td>
                         <td>
                          <a href="{{ url('lokasi/'.$l->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
