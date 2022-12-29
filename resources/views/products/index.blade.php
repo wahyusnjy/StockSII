@@ -293,10 +293,10 @@
         }
 
         $(function() {
-            $('#modal-form form').validator().on('submit', function(e) {
+            $('#importform').validator().on('submit', function(e) {
                 console.log(e);
                 if (!e.isDefaultPrevented()) {
-                    var id = $('#id').val();
+                    var file = $('#file').val();
                     if (save_method == 'add') url = "{{ url('products') }}";
                     else url = "{{ url('products') . '/' }}" + id;
 

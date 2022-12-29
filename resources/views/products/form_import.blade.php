@@ -24,7 +24,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form"  action="{{ route('import.products') }}" method="post" enctype="multipart/form-data">
+            <form role="form" id="importform"  action="{{ route('import.products') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="box-body">
                     <div class="form-group">

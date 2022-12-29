@@ -172,7 +172,7 @@ class ProductController extends Controller
             $img->resize(1000,1000,function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath .'/'.$image2);
-            // $image->move($destinationPath, $img);
+            $image->move($destinationPath, $image2);
             // $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
             // $request->image->move(public_path('/upload/products/'), $input['image']);
             // $file = $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
@@ -264,7 +264,7 @@ class ProductController extends Controller
             $img->resize(1000,1000,function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath .'/'.$image2);
-
+            $image->move($destinationPath, $image2);
             // $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
             // $request->image->move(public_path('/upload/products/'), $input['image']);
         }
