@@ -35,7 +35,7 @@ class ProductsImport implements ToModel, WithHeadingRow
         $test = str_pad($id,5,'0', STR_PAD_LEFT);
         $qrcode = strtoupper(substr($get_category->name, 0, 1).substr($get_category->name, 6, 1)).$test;
 
-       return  $new = new Product([
+       return  $new = Product::updateOrCreate([
             'id'            => $row['no'],
             'nama'          => $row['nama'],
             'harga'         => $row['harga'],
