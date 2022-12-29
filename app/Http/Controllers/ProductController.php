@@ -259,7 +259,7 @@ class ProductController extends Controller
             $image = $request->file('image');
             $input['image'] = '/upload/products/' . Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
             $image2 = Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
-            $destinationPath = public_path('/upload/products/');
+            $destinationPath = public_path('/upload/products');
             $img = Image::make($image->getRealPath());
             $img->resize(1000,1000,function ($constraint) {
                 $constraint->aspectRatio();
