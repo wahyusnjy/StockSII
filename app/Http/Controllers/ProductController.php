@@ -21,7 +21,7 @@ use Milon\Barcode\DNS1D;
 use Milon\Barcode\Facades\DNS2DFacade;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpParser\Node\Expr\Empty_;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -136,6 +136,7 @@ class ProductController extends Controller
             'lokasi_id'     => 'required',
             'assets_id'     => 'required',
             'user'          => 'required',
+            'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
 
@@ -162,8 +163,22 @@ class ProductController extends Controller
 
 
         if ($request->hasFile('image')){
-            $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
-            $request->image->move(public_path('/upload/products/'), $input['image']);
+
+            $image = $request->file('image');
+            $input['image'] = '/upload/products/' . Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
+            $image2 = Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
+            $destinationPath = public_path('/upload/products/');
+            $img = Image::make($image->getRealPath());
+            $img->resize(1000,1000,function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath .'/'.$image2);
+            // $image->move($destinationPath, $img);
+            // $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
+            // $request->image->move(public_path('/upload/products/'), $input['image']);
+            // $file = $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
+
+            // dd($compresedImage);
+            //  $compresedImage->move(public_path('/upload/products/'), $input['image']);
         }
         $input['harga'] = str_replace(".", "", $input['harga']);
 
@@ -224,6 +239,7 @@ class ProductController extends Controller
             'lokasi_id'     => 'required',
             'assets_id'     => 'required',
             'user'          => 'required',
+            'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
 
@@ -240,8 +256,17 @@ class ProductController extends Controller
                 }
                 // unlink(public_path($produk->image));
             }
-            $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
-            $request->image->move(public_path('/upload/products/'), $input['image']);
+            $image = $request->file('image');
+            $input['image'] = '/upload/products/' . Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
+            $image2 = Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
+            $destinationPath = public_path('/upload/products/');
+            $img = Image::make($image->getRealPath());
+            $img->resize(1000,1000,function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath .'/'.$image2);
+
+            // $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
+            // $request->image->move(public_path('/upload/products/'), $input['image']);
         }
         if($request->qty != $produk->qty){
             ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 6, 'product_id'=> $id]);
