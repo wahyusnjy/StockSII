@@ -15,26 +15,47 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label >Name</label>
-                        <input type="text" class="form-control" value="{{ $producs->nama }}" id="nama" name="nama"  autofocus required>
+                        <input type="text" class="form-control
+                        @error('nama')
+                        is-invalid
+                        @enderror" value="{{ $producs->nama }}" id="nama" name="nama"  autofocus required>
                         <span class="help-block with-errors"></span>
+                        @error('nama')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label >Price</label>
-                        <input type="text" class="form-control rupiah" value="{{ $producs->harga }}" id="harga" name="harga"   required>
+                        <input type="text" class="form-control rupiah
+                        @error('harga')
+                        is-invalid
+                        @enderror" value="{{ $producs->harga }}" id="harga" name="harga"   required>
                         <span class="help-block with-errors"></span>
+                        @error('harga')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label >Quantity</label>
-                        <input type="number" class="form-control" value="{{ $producs->qty }}" id="qty" name="qty"   required>
+                        <input type="number" class="form-control
+                        @error('qty')
+                        is-invalid
+                        @enderror" value="{{ $producs->qty }}" id="qty" name="qty"   required>
                         <span class="help-block with-errors"></span>
+                        @error('qty')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
 
                     <div class="form-group">
                         <label >Image</label>
-                        <input type="file" class="form-control" value="{{ $producs->image }}" id="image" name="image" onchange="loadFile(event)">
+                        <input type="file" class="form-control
+                        @error('image')
+                        is-invalid
+                        @enderror" value="{{ $producs->image }}" id="image" name="image" onchange="loadFile(event)">
                         <span class="help-block with-errors"></span>
                         @if(empty($producs->image))
                         <img src="{{ asset('notfoundimage.png') }}" id="output" class="img-circle" style="max-width: 150px; " alt="">
@@ -42,23 +63,34 @@
                         <img src="{{ url($producs->image) }}" id="output" style="max-width: 150px;" />
                         @endif
                         <img id="output" style="max-width: 200px;" />
+                        @error('image')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label >Category</label>
-                        <select class="form-control select" name="category_id" id="category_id" required>
+                        <select class="form-control select
+                        @error('category_id')
+                        is-invalid
+                        @enderror" name="category_id" id="category_id" required>
                             <option selected="selected"  value="{{ $producs->category->id }}"> {{ $producs->category->name }}</option>
                             @foreach ($category as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
-
                         <span class="help-block with-errors"></span>
+                        @error('category_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label >Lokasi</label>
-                        <select class="form-control select" name="lokasi_id"  id="lokasi_id" required>
+                        <select class="form-control select
+                        @error('lokasi_id')
+                        is-invalid
+                        @enderror" name="lokasi_id"  id="lokasi_id" required>
                             <option selected="selected"  value="{{ $producs->lokasi->id }}">{{ $producs->lokasi->name }}</option>
                             @foreach ($lokasi as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
@@ -66,23 +98,37 @@
                         </select>
 
                         <span class="help-block with-errors"></span>
+                        @error('lokasi_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label >Assets/Inventory</label>
-                        <select class="form-control select" name="assets_id" id="assets_id" required>
+                        <select class="form-control select
+                        @error('assets_id')
+                        is-invalid
+                        @enderror" name="assets_id" id="assets_id" required>
                             <option selected="selected" value="{{ $producs->assets->id }}">{{ $producs->assets->name }}</option>
                             @foreach ($asset as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
-
                         <span class="help-block with-errors"></span>
+                        @error('assets_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label >User</label>
-                        <input type="text" class="form-control" id="user" name="user" value="{{ $producs->user }}" required>
+                        <input type="text" class="form-control
+                        @error('user')
+                        is-invalid
+                        @enderror" id="user" name="user" value="{{ $producs->user }}" required>
                         <span class="help-block with-errors"></span>
+                        @error('user')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                 </div>
