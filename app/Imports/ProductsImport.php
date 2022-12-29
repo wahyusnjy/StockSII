@@ -46,7 +46,6 @@ class ProductsImport implements ToModel, WithHeadingRow
             'product_code'  => $input,
             'qrcode'        => $qrcode
         ]);
-
         // return new Product([
         //     // 'id'            => $row['no'],
         //     // 'nama'          => $row['nama'],
@@ -58,7 +57,9 @@ class ProductsImport implements ToModel, WithHeadingRow
         //     // 'user'          => $row['user'],
         //     // 'product_code'  => $input,
         // ]);
-
-
+    }
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 }
