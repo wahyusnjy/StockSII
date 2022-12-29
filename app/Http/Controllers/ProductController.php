@@ -80,7 +80,7 @@ class ProductController extends Controller
     ->orWhereHas('category',function($q) use ($cari){
         return $q->where('name','like',"%".$cari."%");
     })
-    ->paginate(18);
+    ->paginate(20);
 
     return view('products.index',compact('producs','category','lokasi','asset'));
    }
