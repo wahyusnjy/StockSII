@@ -214,7 +214,7 @@ class ProductKeluarController extends Controller
     {
         $product_keluar = Product_Keluar::findOrFail($id);
         $pdf = Pdf::loadView('product_keluar.productKeluarPDF', compact('product_keluar'));
-        return $pdf->download($product_keluar->id.'_product_keluar.pdf');
+        return $pdf->stream($product_keluar->id.'_product_keluar.pdf');
     }
 
     public function exportExcel()

@@ -222,7 +222,7 @@ class ProductMasukController extends Controller
         $product_masuk = Product_Masuk::findOrFail($id);
         //dd($product_masuk);
         $pdf = Pdf::loadView('product_masuk.productMasukPDF', compact('product_masuk'));
-        return $pdf->download($product_masuk->id.'_product_masuk.pdf');
+        return $pdf->stream($product_masuk->id.'_product_masuk.pdf');
     }
 
     public function exportExcel()

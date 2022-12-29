@@ -23,8 +23,10 @@
         <tr>
             <td valign="top" style="padding-right: 2px;"><img src="{{ public_path('assets/LogoSII.png') }}" alt="" width="90"> </td>
             <td valign="top"> <h5>PT.SOLUSI INTEK INDONESIA</h5>
-             <p>Head Office : Emerald Commercial Blok UB No. 50 Summarecon Bekasi <br> Telp. 021-89454790 <br>
-            Mkt Office &nbsp;&nbsp; : Jl Tebet Barat dalam raya No. 31 Tebet Barat, Jakarta Selatan, <br>Telp 021-21383852</p>
+                <p>Head Office &nbsp; &nbsp; &nbsp; &nbsp;: Jl Cikunir Raya No.689 Jakamulya, Bekasi Selatan,
+                    <br> Telp. 021-89454790 <br>
+                     Marketing Office : Jl Tebet Barat dalam raya No.31 Tebet Barat, Jakarta Selatan,<br>
+                     Telp. 021-21383852</p>
             </td>
         </tr>
    </table>
@@ -38,6 +40,7 @@
                 <th class="text-center">No</th>
                 <th class="text-center">Quantity</th>
                 <th class="text-center">Nama Barang</th>
+                <th class="text-center">Kategori Barang</th>
                 <th class="text-center">Keterangan</th>
             </tr>
         </thead>
@@ -46,6 +49,7 @@
                 <td class="text-center"> {{ $product_keluar->id }}</td>
                 <td class="text-center"> {{ $product_keluar->qty }}</td>
                 <td class="text-center"> {{ $product_keluar->product->nama }}</td>
+                <td class="text-center"> {{ $product_keluar->product->category->name }}</td>
                 <td class="text-center"> {{ $product_keluar->keterangan }}</td>
             </tr>
         </tbody>
@@ -57,8 +61,8 @@
             <td class="text-center" style="font-weight:600;">Mengetahui</td>
         </tr>
         <tr aria-rowspan="2">
-            <td></td>
-            <td></td>
+            <td><br><br><br></td>
+            <td><br><br><br></td>
         </tr>
         <tr>
             <td class="text-center">{{ $product_keluar->customer->nama }}</td>
