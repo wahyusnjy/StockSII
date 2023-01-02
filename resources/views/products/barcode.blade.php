@@ -60,7 +60,6 @@
                 @php
                     $count = $pr->id;
                 @endphp
-                <p>{{ $count }}</p>
             </div>
          </div>
 
@@ -77,6 +76,7 @@
             <br>
             <br style="margin-top: 1cm;">
             @endif
+
         @endforeach
 
     </div>

@@ -46,10 +46,7 @@
             <br style="margin-top: 1cm;">
             @endif
 
-            @php
-            $a++;
 
-            @endphp
             @if($a%16 == 1)
             <!-- <p>OK</p> -->
             <div class="page-break"></div>
