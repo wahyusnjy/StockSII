@@ -38,6 +38,15 @@
                         {{-- <p class="text-danger">{{ $errors->first('file') }}</p> --}}
                     </div>
                 </div>
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul style="list-style: none;">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 
 
                 <!-- /.box-body -->

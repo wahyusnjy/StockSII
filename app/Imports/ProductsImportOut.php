@@ -20,14 +20,15 @@ class ProductsImportOut implements ToModel, WithHeadingRow
     {
 
         $date = $row['date'];
-        $datestr = str_replace(" ' ", "", $date);
+        $datestr = str_replace(" - ", "", $date);
 
         return new Product_Keluar([
             'id'            => $row['no'],
             'product_id'   => $row['products'],
             'customer_id'   => $row['customer'],
             'qty'           => $row['qty'],
-            'tanggal'       => $datestr
+            'tanggal'       => $datestr,
+            'keterangan'    => $row['keterangan']
         ]);
 
     }

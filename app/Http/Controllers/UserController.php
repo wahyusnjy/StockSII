@@ -147,21 +147,21 @@ class UserController extends Controller {
 			->rawColumns(['action'])->make(true);
 	}
 
-	public function ImportExcel(Request $request) {
-		//Validasi
-		$this->validate($request, [
-			'file' => 'required|mimes:xls,xlsx',
-		]);
+	// public function ImportExcel(Request $request) {
+	// 	//Validasi
+	// 	$this->validate($request, [
+	// 		'file' => 'required|mimes:xls,xlsx',
+	// 	]);
 
-		if ($request->hasFile('file')) {
-			//UPLOAD FILE
-			$file = $request->file('file'); //GET FILE
-			Excel::import(new SuppliersImport, $file); //IMPORT FILE
-			return redirect()->back()->with(['success' => 'Upload file data suppliers !']);
-		}
+	// 	if ($request->hasFile('file')) {
+	// 		//UPLOAD FILE
+	// 		$file = $request->file('file'); //GET FILE
+	// 		Excel::import(new SuppliersImport, $file); //IMPORT FILE
+	// 		return redirect()->back()->with(['success' => 'Upload file data suppliers !']);
+	// 	}
 
-		return redirect()->back()->with(['error' => 'Please choose file before!']);
-	}
+	// 	return redirect()->back()->with(['error' => 'Please choose file before!']);
+	// }
 
 	public function exportSuppliersAll() {
 		$suppliers = Supplier::all();
