@@ -53,7 +53,7 @@
             <div class="badge">
                 <img src="data:image/png;base64,{!! base64_encode(QrCode::size(80)->generate($pr->product_code)) !!}">
                 {{-- {!! QrCode::size(100)->generate($pr->product_code) !!} --}}
-                <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
+                <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p> 
             </div>
         </div>
 

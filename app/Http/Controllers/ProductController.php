@@ -389,15 +389,21 @@ class ProductController extends Controller
     {
         //Validasi
         $this->validate($request, [
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx|max:1001'
         ]);
 
-        if ($request->hasFile('file')) {
-            //UPLOAD FILE
-            $file = $request->file('file'); //GET FILE
-            //dd($file);
-            Excel::import(new ProductsImport, $file); //IMPORT FILE
-            return redirect()->back()->with(['success' => 'Upload file data Products !']);
+        try {
+            if ($request->hasFile('file')) {
+                //UPLOAD FILE
+                $file = $request->file('file'); //GET FILE
+                //dd($file);
+                Excel::import(new ProductsImport, $file); //IMPORT FILE
+                return redirect()->back()->with(['success' => 'Upload file data Products !']);
+            }
+
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->withErrors($errorMessage);
         }
 
         return redirect()->back()->with(['error' => 'Please choose file before!']);
@@ -434,9 +440,13 @@ class ProductController extends Controller
         set_time_limit(3000);
 		ini_set("memory_limit", "999M");
 		ini_set("max_execution_time", "999");
-        $ids = explode(',', $request->ids);
-		$product1 = Product::paginate(20)->currentPage();
-		$pdf = Pdf::loadView('products.barcode_pdf', ['product1' => $product1])->setOptions(['defaultFont' => 'sans-serif'])->setpaper('A4', 'potrait');
+
+		// $i = Product::paginate(20);
+        // $pagin = $i->currentPage();
+        $product1 =  Product::paginate(20);;
+        // dd($i);
+
+		$pdf = Pdf::loadView('products.barcode', ['product1' => $product1])->setOptions(['defaultFont' => 'sans-serif'])->setpaper('A4', 'potrait');
 		return $pdf->stream('Product.pdf');
 		if($request->download){
 			//return view('products.barcode')->with('product', $product);

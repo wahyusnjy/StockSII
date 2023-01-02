@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/exportSuppliersAllExcel', [SupplierController::class, 'exportExcel'])->name('exportExcel.suppliersAll');
 
 	Route::resource('products', ProductController::class);
-    Route::get('/barcodePage',[ProductController::class, 'BarcodePage'])->name('barcodePage.products');
+    Route::get('/barcodePage',[ProductController::class, 'BarcodePage'])->name('BarcodePage.products');
     Route::get('/barcodeSelected',[ProductController::class, 'BarcodeSelected'])->name('barcodeSelected.products');
     Route::get('/cari/product',[ProductController::class, 'CariProduct'])->name('cariproduct.products');
     Route::post('/importProducts', [ProductController::class, 'ImportExcel'])->name('import.products');

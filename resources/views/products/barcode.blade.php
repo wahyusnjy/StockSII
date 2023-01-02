@@ -10,56 +10,73 @@
         .page-break {
             page-break-after: always;
         }
+        .page-space {
+            word-break: break-word;
+        }
+        .app {
+            display: inline-flex;
+        }
+        .header {
+            font-size: 10px;
+            font-weight: bold;
+            font-family: 'poppins',sans-serif;
+        }
         .container {
-            width: 210mm;
-        min-height: 297mm;
-        padding: 20mm;
-        margin: 10mm auto;
-        border: 1px #D3D3D3 solid;
-        border-radius: 5px;
-        background: white;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+        width: 100%;
+        padding: 5px;
+        margin-top: 56px;
+        margin-left: 40px;
+        max-height: 2pt;
         }
 
         .badge {
-
-            display: inline-block;
-            margin-left: 2cm;
-            padding:10px;
+            margin-top: 5px;
+            margin-left: 20px;
 
 
-            width: 4cm; /* 1.9 */
-            height: 5.7cm;
-            /* width: 0.2cm; */
-        }
-        @media print {
-        #printPageButton {
-        display: none;
-            }
+            width: 5.6cm;
+            height: 4cm;
         }
     </style>
     <body>
-    <button id="printPageButton" onclick="window.print()"> PRINT </button>
+
     <div class="container">
         @php
         $a=1;
         @endphp
-        @foreach($product as $pr)
+        @foreach($product1 as $pr)
+        {{-- @php
+            $qr = \QrCode::size(100)->generate($pr->product_code);
+        @endphp --}}
+        <div class="app">
+        <div class="header">
+            <p>PT Solusi Intek Indonesia </p>
+        </div>
             <div class="badge">
-                {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE',3,3) !!}
+                <img src="data:image/png;base64,{!! base64_encode(QrCode::size(80)->generate($pr->product_code)) !!}">
+                {{-- {!! QrCode::size(100)->generate($pr->product_code) !!} --}}
                 <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
+                @php
+                    $count = $pr->id;
+                @endphp
+                <p>{{ $count }}</p>
             </div>
+         </div>
 
 
-            @php
-            $a++;
-
-            @endphp
-            @if($a%16 == 1)
+         @if($count%11 == 9)
             <!-- <p>OK</p> -->
             <div class="page-break"></div>
-            @endif
+        @endif
 
+
+        @if($count%11 == 9)
+            <br>
+            <br>
+            <br>
+            <br style="margin-top: 1cm;">
+            @endif
         @endforeach
 
     </div>
