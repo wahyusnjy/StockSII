@@ -22,6 +22,7 @@ use Milon\Barcode\Facades\DNS2DFacade;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpParser\Node\Expr\Empty_;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Validators\ValidationException;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -397,11 +398,19 @@ class ProductController extends Controller
                 //UPLOAD FILE
                 $file = $request->file('file'); //GET FILE
                 //dd($file);
-                Excel::import(new ProductsImport, $file); //IMPORT FILE
+                $import = new ProductsImport;
+                Excel::import($import, $file); //IMPORT FILE
+                // dd($import->getRowCount());
                 return redirect()->back()->with(['success' => 'Upload file data Products !']);
+                // if ($import->getRowCount() > 1001) {
+                //     return redirect()->back()->with(['Failed' => 'Upload file data Products !']);
+                // }
+                // else{
+
+                // }
             }
 
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        } catch (ValidationException $e) {
             $errorMessage = $e->getMessage();
             return redirect()->back()->withErrors($errorMessage);
         }

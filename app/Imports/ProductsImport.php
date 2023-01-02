@@ -8,6 +8,7 @@ use App\Models\Product;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -15,15 +16,21 @@ use Maatwebsite\Excel\Validators\ValidationException;
 
 class ProductsImport implements ToModel, WithHeadingRow, WithValidation
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+
+    private $rows = 0;
+
     public function model(array $row)
     {
+        ++$this->rows;
 
-        // $inputall = $row->all();
+
+        $validator = Validator::make($row, [
+            'no' => 'required|numeric|max:1000', // Maximum 1000 rows
+        ], [
+            'no.max' => 'The Rows must not be greater than 1000.'
+        ]
+        )->validate();
+
         $input = $row['no'];
         $code = $row['nama'];
         $get_category = Category::orderBy('name','ASC')
@@ -41,14 +48,11 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation
         $qrcode = strtoupper(substr($row['category_name'] , 0, 1).substr($row['category_name'], 6, 1)).$test;
         $productqty = Product::first();
         if(empty($productqty->qty)){
-
+            $newqty = $row['qty'];
         }else{
-            $newqty = $row['qty'] + $row['qty'];
+            $newqty = $productqty->qty + $row['qty'];
         }
-       //dd($get_category->name);
-    //    if($row['nama'] == null){
-    //     dd($row['nama']);
-    //    }
+
         return  $new = Product::updateOrCreate(
             [
             'nama' => $row['nama'] ?? $productname->nama ?? 'Not Found',
@@ -84,15 +88,20 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation
         //     // 'product_code'  => $input,
         // ]);
     }
-    public function chunkSize(): int
+
+    public function getRowCount(): int
     {
-        return 1000;
+        return $this->rows;
     }
 
     public function rules(): array
     {
         return [
-            '*' => 'max:1001',
+            'id' => 'numeric|min:1|max:4'
         ];
+    }
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 }
