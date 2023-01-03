@@ -56,8 +56,9 @@
                         <td>{{ $c->email }}</td>
                         <td>{{ $c->telepon }}</td>
                         <td>
-                        <a href="{{ url('customers/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                         <form action="{{ route('customers.destroy', $c->id) }}" method="post">
+                        <a href="{{ url('customers/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>

@@ -52,7 +52,7 @@
                 </thead>
                 <tbody>
                     @php
-                     $id = 1 + $invoice_data->count() * $invoice_data->perPage() - $invoice_data->perPage();
+                     $id = 1 +  $invoice_data->currentPage() * $invoice_data->perPage() - $invoice_data->perPage();
                     @endphp
                     @foreach ($invoice_data as $i)
                     <tr>

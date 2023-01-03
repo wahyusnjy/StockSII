@@ -46,8 +46,8 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $a->name }}</td>
                         <td>
-                            <a href="{{ url('assetinventory/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                             <form action="{{ route('assetinventory.destroy', $a->id) }}" method="post">
+                            <a href="{{ url('assetinventory/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>

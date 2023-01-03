@@ -48,8 +48,8 @@
                         <td>{{ $c->name }}</td>
                         <td>
                             {{-- <a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> --}}
+                            <form action="{{ route('categories.destroy', $c->id) }}" method="post">
                         <a href="{{ url('categories/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                        <form action="{{ route('categories.destroy', $c->id) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
