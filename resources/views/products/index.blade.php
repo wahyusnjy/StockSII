@@ -45,7 +45,7 @@
             @endphp
             <p> {{ "Showing ". $producs->count() . " from " . $producs->firstItem() . " to " .  $producs->lastItem() ." of " . $producs->total() . " results "}}</p>
             <div class="table-responsive">
-                <table class="table table-bordered products-table" style="width: 100%;">
+                <table class="table table-striped products-table" style="width: 100%;">
                     <thead>
                         <tr>
                             <th><input type="checkbox" id="head-cb">
