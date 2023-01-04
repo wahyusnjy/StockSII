@@ -127,7 +127,7 @@ class SaleController extends Controller
     {
         Sale::destroy($id);
 
-        return redirect()->route('sales.index');
+        return redirect()->back();
     }
 
     public function apiSales()

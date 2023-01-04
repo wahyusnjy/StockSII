@@ -173,7 +173,7 @@ class ProductKeluarController extends Controller
     {
         Product_Keluar::destroy($id);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 4, 'product_id'=> $id]);
-        return redirect()->route('productsOut.index');
+        return redirect()->back();
     }
 
 

@@ -178,7 +178,7 @@ class ProductMasukController extends Controller
     {
         Product_Masuk::destroy($id);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 5, 'product_id'=> $id]);
-        return redirect()->route('productsIn.index');
+        return redirect()->back();
     }
 
 

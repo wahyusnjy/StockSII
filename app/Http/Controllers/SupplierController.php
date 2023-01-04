@@ -118,7 +118,7 @@ class SupplierController extends Controller {
 	public function destroy($id) {
 		Supplier::destroy($id);
 
-		return redirect()->route('suppliers.index');
+		return redirect()->back();
 	}
 
 	public function apiSuppliers() {

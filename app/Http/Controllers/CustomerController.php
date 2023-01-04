@@ -127,7 +127,7 @@ class CustomerController extends Controller
     {
         Customer::destroy($id);
 
-        return redirect()->route('customers.index');
+        return redirect()->back();
     }
 
     public function apiCustomers()

@@ -115,7 +115,7 @@ class CategoryController extends Controller
     {
         Category::destroy($id);
 
-        return redirect()->route('categories.index');
+        return redirect()->back();
     }
 
     public function apiCategories()

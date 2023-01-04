@@ -114,7 +114,7 @@ class LokasiController extends Controller
     {
         Lokasi::destroy($id);
 
-		return redirect()->route('lokasi.index');
+		return redirect()->back();
     }
 
     public function apiLokasi() {

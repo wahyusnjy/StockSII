@@ -110,7 +110,7 @@ class AssetsController extends Controller
     {
         Assets::destroy($id);
 
-		return redirect()->route('assetinventory.index');
+		return redirect()->back();
     }
 
     public function apiAssetInventory() {
