@@ -52,15 +52,17 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
                     <td>
-                        <form action="{{ route('user.destroy', $user->id) }}" method="post">
+
                         <div style="display: inline-block">
                         <a href="{{ route('detail.users',$user->id) }}" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
                         <a href="{{ url('user/'.$user->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form id="myForm" action="{{ route('user.destroy', $user->id) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                        </div>
+                            <button type="button" class="btn btn-danger btn-xs"  onclick="confirmSubmit({{ $user->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
+                        </div>
+
                     </td>
                 </tr>
                     @endforeach
@@ -147,6 +149,33 @@
                 }
             });
         }
+
+            function confirmSubmit(id) {
+                // Display the confirm dialog
+            event.preventDefault(); // prevent form submit
+            var form = event.target.form; // storing the form
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+                }).then((willDelete) => {
+                // If the user clicks the "confirm" button, submit the form
+                if (willDelete) {
+                    form.submit();
+                }
+                });
+
+                // Prevent the form from being submitted
+                return false;
+            }
 
         function deleteData(id){
             var csrf_token = $('meta[name="csrf-token"]').attr('content');

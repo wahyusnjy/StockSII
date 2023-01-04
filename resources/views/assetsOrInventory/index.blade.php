@@ -46,11 +46,11 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $a->name }}</td>
                         <td>
-                            <form action="{{ route('assetinventory.destroy', $a->id) }}" method="post">
                             <a href="{{ url('assetinventory/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                            <form id="myForm" action="{{ route('assetinventory.destroy', $a->id) }}" method="post" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                                <button type="submit" class="btn btn-danger btn-xs" onclick="confirmSubmit({{ $a->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -168,6 +168,33 @@
                 });
             });
         }
+
+        function confirmSubmit(id) {
+                // Display the confirm dialog
+            event.preventDefault(); // prevent form submit
+            var form = event.target.form; // storing the form
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+                }).then((willDelete) => {
+                // If the user clicks the "confirm" button, submit the form
+                if (willDelete) {
+                    form.submit();
+                }
+                });
+
+                // Prevent the form from being submitted
+                return false;
+            }
 
         $(function(){
             $('#modal-form form').validator().on('submit', function (e) {

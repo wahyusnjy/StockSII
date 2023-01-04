@@ -56,12 +56,11 @@
                         <td>{{ $c->email }}</td>
                         <td>{{ $c->telepon }}</td>
                         <td>
-                        <form action="{{ route('customers.destroy', $c->id) }}" method="post">
                         <a href="{{ url('customers/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-
+                        <form id="myForm" action="{{ route('customers.destroy', $c->id) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                            <button type="submit" class="btn btn-danger btn-xs" onclick="confirmSubmit({{ $c->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
                         </td>
                     </tr>
@@ -122,73 +121,100 @@
         //     ]
         // });
 
-        function addForm() {
-            save_method = "add";
-            $('input[name=_method]').val('POST');
-            $('#modal-form').modal('show');
-            $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Customers');
-        }
+        // function addForm() {
+        //     save_method = "add";
+        //     $('input[name=_method]').val('POST');
+        //     $('#modal-form').modal('show');
+        //     $('#modal-form form')[0].reset();
+        //     $('.modal-title').text('Add Customers');
+        // }
 
-        function editForm(id) {
-            save_method = 'edit';
-            $('input[name=_method]').val('PATCH');
-            $('#modal-form form')[0].reset();
-            $.ajax({
-                url: "{{ url('customers') }}" + '/' + id + "/edit",
-                type: "GET",
-                dataType: "JSON",
-                success: function(data) {
-                    $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Customers');
+        // function editForm(id) {
+        //     save_method = 'edit';
+        //     $('input[name=_method]').val('PATCH');
+        //     $('#modal-form form')[0].reset();
+        //     $.ajax({
+        //         url: "{{ url('customers') }}" + '/' + id + "/edit",
+        //         type: "GET",
+        //         dataType: "JSON",
+        //         success: function(data) {
+        //             $('#modal-form').modal('show');
+        //             $('.modal-title').text('Edit Customers');
 
-                    $('#id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#alamat').val(data.alamat);
-                    $('#email').val(data.email);
-                    $('#telepon').val(data.telepon);
-                },
-                error : function() {
-                    alert("Nothing Data");
-                }
-            });
-        }
+        //             $('#id').val(data.id);
+        //             $('#nama').val(data.nama);
+        //             $('#alamat').val(data.alamat);
+        //             $('#email').val(data.email);
+        //             $('#telepon').val(data.telepon);
+        //         },
+        //         error : function() {
+        //             alert("Nothing Data");
+        //         }
+        //     });
+        // }
 
-        function deleteData(id){
-            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        function confirmSubmit(id) {
+                // Display the confirm dialog
+            event.preventDefault(); // prevent form submit
+            var form = event.target.form; // storing the form
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
-                type: 'warning',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
                 confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
-                $.ajax({
-                    url : "{{ url('customers') }}" + '/' + id,
-                    type : "POST",
-                    data : {'_method' : 'DELETE', '_token' : csrf_token},
-                    success : function(data) {
-                        table.ajax.reload();
-                        swal({
-                            title: 'Success!',
-                            text: data.message,
-                            type: 'success',
-                            timer: '1500'
-                        })
-                    },
-                    error : function () {
-                        swal({
-                            title: 'Oops...',
-                            text: data.message,
-                            type: 'error',
-                            timer: '1500'
-                        })
-                    }
+                confirmButtonText: 'Yes, Delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+                }).then((willDelete) => {
+                // If the user clicks the "confirm" button, submit the form
+                if (willDelete) {
+                    form.submit();
+                }
                 });
-            });
-        }
+
+                // Prevent the form from being submitted
+                return false;
+            }
+
+        // function deleteData(id){
+        //     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        //     swal({
+        //         title: 'Are you sure?',
+        //         text: "You won't be able to revert this!",
+        //         type: 'warning',
+        //         showCancelButton: true,
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonColor: '#3085d6',
+        //         confirmButtonText: 'Yes, delete it!'
+        //     }).then(function () {
+        //         $.ajax({
+        //             url : "{{ url('customers') }}" + '/' + id,
+        //             type : "POST",
+        //             data : {'_method' : 'DELETE', '_token' : csrf_token},
+        //             success : function(data) {
+        //                 table.ajax.reload();
+        //                 swal({
+        //                     title: 'Success!',
+        //                     text: data.message,
+        //                     type: 'success',
+        //                     timer: '1500'
+        //                 })
+        //             },
+        //             error : function () {
+        //                 swal({
+        //                     title: 'Oops...',
+        //                     text: data.message,
+        //                     type: 'error',
+        //                     timer: '1500'
+        //                 })
+        //             }
+        //         });
+        //     });
+        // }
 
         $(function(){
             $('#modal-form form').validator().on('submit', function (e) {

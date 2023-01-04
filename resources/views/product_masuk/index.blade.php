@@ -66,14 +66,13 @@
                     <td>{{ $i->tanggal }}</td>
                     <td>{{ $i->keterangan }}</td>
                     <td>
-                    <form action="{{ route('productsIn.destroy', $i->id) }}" method="post" style="vertical-align: top;">
                         <div style="display: inline-block">
                         <a href="{{ route('exportPDF.productMasuk', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning">Export Invoice</a>
                         <a href="{{ url('productsIn/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-
+                        <form id="myForm" action="{{ route('productsIn.destroy', $i->id) }}" method="post" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                            <button type="submit" class="btn btn-danger btn-xs" onclick="confirmSubmit({{ $i->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                     </div>
                 </form>
                     </td>
@@ -173,74 +172,102 @@
         //     ]
         // });
 
-        function addForm() {
-            save_method = "add";
-            $('input[name=_method]').val('POST');
-            $('#modal-form').modal('show');
-            $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Products In');
-        }
+        // function addForm() {
+        //     save_method = "add";
+        //     $('input[name=_method]').val('POST');
+        //     $('#modal-form').modal('show');
+        //     $('#modal-form form')[0].reset();
+        //     $('.modal-title').text('Add Products In');
+        // }
 
-        function editForm(id) {
-            save_method = 'edit';
-            $('input[name=_method]').val('PATCH');
-            $('#modal-form form')[0].reset();
-            $.ajax({
-                url: "{{ url('productsIn') }}" + '/' + id + "/edit",
-                type: "GET",
-                dataType: "JSON",
-                success: function(data) {
-                    $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Products In');
+        // function editForm(id) {
+        //     save_method = 'edit';
+        //     $('input[name=_method]').val('PATCH');
+        //     $('#modal-form form')[0].reset();
+        //     $.ajax({
+        //         url: "{{ url('productsIn') }}" + '/' + id + "/edit",
+        //         type: "GET",
+        //         dataType: "JSON",
+        //         success: function(data) {
+        //             $('#modal-form').modal('show');
+        //             $('.modal-title').text('Edit Products In');
 
-                    $('#id').val(data.id);
-                    $('#product_id').val(data.product_id);
-                    $('#supplier_id').val(data.supplier_id);
-                    $('#qty').val(data.qty);
-                    $('#tanggal').val(data.tanggal);
-                    $('#keterangan').val(data.keterangan);
-                },
-                error : function() {
-                    alert("Nothing Data");
-                }
-            });
-        }
+        //             $('#id').val(data.id);
+        //             $('#product_id').val(data.product_id);
+        //             $('#supplier_id').val(data.supplier_id);
+        //             $('#qty').val(data.qty);
+        //             $('#tanggal').val(data.tanggal);
+        //             $('#keterangan').val(data.keterangan);
+        //         },
+        //         error : function() {
+        //             alert("Nothing Data");
+        //         }
+        //     });
+        // }
 
-        function deleteData(id){
-            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        // function deleteData(id){
+        //     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        //     swal({
+        //         title: 'Are you sure?',
+        //         text: "You won't be able to revert this!",
+        //         type: 'warning',
+        //         showCancelButton: true,
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonColor: '#3085d6',
+        //         confirmButtonText: 'Yes, delete it!'
+        //     }).then(function () {
+        //         $.ajax({
+        //             url : "{{ url('productsIn') }}" + '/' + id,
+        //             type : "POST",
+        //             data : {'_method' : 'DELETE', '_token' : csrf_token},
+        //             success : function(data) {
+        //                 table.ajax.reload();
+        //                 swal({
+        //                     title: 'Success!',
+        //                     text: data.message,
+        //                     type: 'success',
+        //                     timer: '1500'
+        //                 })
+        //             },
+        //             error : function () {
+        //                 swal({
+        //                     title: 'Oops...',
+        //                     text: data.message,
+        //                     type: 'error',
+        //                     timer: '1500'
+        //                 })
+        //             }
+        //         });
+        //     });
+        // }
+
+
+        function confirmSubmit(id) {
+                // Display the confirm dialog
+            event.preventDefault(); // prevent form submit
+            var form = event.target.form; // storing the form
             swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
-                type: 'warning',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
                 confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
-                $.ajax({
-                    url : "{{ url('productsIn') }}" + '/' + id,
-                    type : "POST",
-                    data : {'_method' : 'DELETE', '_token' : csrf_token},
-                    success : function(data) {
-                        table.ajax.reload();
-                        swal({
-                            title: 'Success!',
-                            text: data.message,
-                            type: 'success',
-                            timer: '1500'
-                        })
-                    },
-                    error : function () {
-                        swal({
-                            title: 'Oops...',
-                            text: data.message,
-                            type: 'error',
-                            timer: '1500'
-                        })
-                    }
+                confirmButtonText: 'Yes, Delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+                }).then((willDelete) => {
+                // If the user clicks the "confirm" button, submit the form
+                if (willDelete) {
+                    form.submit();
+                }
                 });
-            });
-        }
+
+                // Prevent the form from being submitted
+                return false;
+            }
 
         $(function(){
             $('#modal-form form').validator().on('submit', function (e) {

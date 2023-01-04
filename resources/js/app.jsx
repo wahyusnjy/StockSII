@@ -3,6 +3,7 @@ import '../css/app.css';
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import swal from 'sweetalert2';
 import { createInertiaApp } from '@inertiajs/inertia-react';
 import { InertiaProgress } from '@inertiajs/progress';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';

@@ -300,10 +300,7 @@ class ProductController extends Controller
 
         Product::destroy($id);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 3, 'product_id'=> $id]);
-        return response()->json([
-            'success' => true,
-            'message' => 'Products Deleted'
-        ]);
+        return redirect()->route('products.index');
     }
 
     public function apiProducts(){
