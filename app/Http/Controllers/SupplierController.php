@@ -34,7 +34,7 @@ class SupplierController extends Controller {
     ->orWhere('id','like',"%".$cari."%")
     ->paginate(10);
 
-    return view('user.index',compact('users'));
+    return view('suppliers.index',compact('suppliers'));
    }
 
 	/**

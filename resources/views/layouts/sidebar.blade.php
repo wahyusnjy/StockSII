@@ -42,56 +42,66 @@
             || request()->is('user/show')
             || request()->is('user/*/edit')
             || request()->is('user/detail/*')
+            || request()->is('cari/user')
             ?  'active' : '' }}"><a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
             <li class="{{ request()->is('categories')
             || request()->is('categories/create')
             || request()->is('categories/show')
             || request()->is('categories/*/edit')
+            || request()->is('cari/categories')
             ? 'active' : '' }}"><a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a></li>
             <li class="{{ request()->is('products')
             || request()->is('products/create')
             || request()->is('products/show')
             || request()->is('products/*/edit')
             || request()->is('products/detail/*')
+            || request()->is('cari/product')
             ? 'active' : '' }}">
             <a href="{{ route('products.index') }}"><i class="fa fa-cubes"></i> <span>Product</span></a>
             </li>
             <li class="{{ request()->is('customers')
             || request()->is('customers/create')
             || request()->is('customers/*/edit')
+            || request()->is('cari/customers')
             ? 'active' : '' }}"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customer</span></a></li>
             <li class="{{ request()->is('sales')
             || request()->is('sales/create')
             || request()->is('sales/show')
             || request()->is('sales/*/edit')
+            || request()->is('cari/sales')
             ? 'active' : '' }}"><a href="{{ route('sales.index') }}"><i class="fa fa-cart-plus"></i> <span>Penjualan</span></a></li>
             <li class="{{ request()->is('suppliers')
             || request()->is('suppliers/create')
             || request()->is('suppliers/show')
             || request()->is('suppliers/*/edit')
+            || request()->is('cari/suppliers')
             ? 'active' : '' }}"><a href="{{ route('suppliers.index') }}"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
             <li class="{{ request()->is('productsOut')
             || request()->is('productsOut/create')
             || request()->is('productsOut/show')
             || request()->is('productsOut/*/edit')
+            || request()->is('cari/productsOut')
             ? 'active' : '' }}"><a href="{{ route('productsOut.index') }}"><i class="fa fa-minus"></i> <span>Product Keluar</span></a></li>
 
             <li class="{{ request()->is('productsIn')
             || request()->is('productsIn/create')
             || request()->is('productsIn/show')
             || request()->is('productsIn/*/edit')
+            || request()->is('cari/productsIn')
             ? 'active' : '' }}"><a href="{{ route('productsIn.index') }}"><i class="fa fa-plus"></i> <span>Product Masuk</span></a></li>
 
             <li class="{{ request()->is('lokasi')
             || request()->is('lokasi/create')
             || request()->is('lokasi/show')
             || request()->is('lokasi/*/edit')
+            || request()->is('cari/lokasi')
             ? 'active' : '' }}"><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a></li>
 
             <li class="{{ request()->is('assetinventory')
             || request()->is('assetinventory/create')
             || request()->is('assetinventory/show')
             || request()->is('assetinventory/*/edit')
+            || request()->is('cari/assets')
             ? 'active' : '' }}"><a href="{{ route('assetinventory.index') }}"><i class="fa fa-inbox"></i> <span>Assets / Inventory</span></a></li>
 
 
