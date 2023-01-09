@@ -14,6 +14,7 @@
             display: inline-flex;
         }
         .header {
+            margin-top: -30px;
             font-size: 10px;
             font-weight: bold;
             font-family: 'poppins',sans-serif;
@@ -22,13 +23,12 @@
 
         width: 100%;
         padding: 5px;
-        margin-top: 56px;
+        margin-top: 80px;
         margin-left: 40px;
         max-height: 2pt;
         }
 
         .badge {
-            margin-top: 5px;
             margin-left: 20px;
 
 
@@ -43,17 +43,15 @@
         $a=1;
         @endphp
         @foreach($product1 as $pr)
-        @php
-            $qr = \QrCode::size(100)->generate($pr->product_code);
-        @endphp
+
         <div class="app">
         <div class="header">
             <p>PT Solusi Intek Indonesia </p>
         </div>
             <div class="badge">
-                <img src="data:image/png;base64,{!! base64_encode(QrCode::size(80)->generate($pr->product_code)) !!}">
+                <img src="data:image/png;base64,{!! base64_encode(QrCode::size(70)->generate($pr->product_code)) !!}">
                 {{-- {!! QrCode::size(100)->generate($pr->product_code) !!} --}}
-                <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p> 
+                <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
             </div>
         </div>
 

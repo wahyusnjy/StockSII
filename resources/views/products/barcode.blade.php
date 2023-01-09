@@ -9,6 +9,7 @@
     <style>
         .page-break {
             page-break-after: always;
+            margin-top: 20px;
         }
         .page-space {
             word-break: break-word;
@@ -25,7 +26,7 @@
 
         width: 100%;
         padding: 5px;
-        margin-top: 56px;
+        margin-top: 100px;
         margin-left: 40px;
         max-height: 2pt;
         }
@@ -43,7 +44,7 @@
 
     <div class="container">
         @php
-        $a=1;
+        $i=0;
         @endphp
         @foreach($product1 as $pr)
         {{-- @php
@@ -63,19 +64,13 @@
             </div>
          </div>
 
+         @php
+         $i++;
+     @endphp
 
-         @if($count%11 == 9)
-            <!-- <p>OK</p> -->
-            <div class="page-break"></div>
-        @endif
-
-
-        @if($count%11 == 9)
-            <br>
-            <br>
-            <br>
-            <br style="margin-top: 1cm;">
-            @endif
+     @if($i % 12 == 0 )
+     <div class="page-break"></div>
+     @endif
 
         @endforeach
 
