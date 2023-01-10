@@ -33,7 +33,7 @@
 
 
             width: 5.6cm;
-            height: 3.6cm;
+            height: 3.8cm;
         }
     </style>
     <body>
