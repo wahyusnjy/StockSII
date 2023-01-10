@@ -24,7 +24,7 @@
         width: 100%;
         padding: 5px;
         margin-top: 80px;
-        margin-left: 50px;
+        margin-left: 60px;
         max-height: 2pt;
         }
 
@@ -33,7 +33,7 @@
 
 
             width: 5.6cm;
-            height: 4cm;
+            height: 3.6cm;
         }
     </style>
     <body>
