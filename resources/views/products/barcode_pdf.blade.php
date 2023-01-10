@@ -23,8 +23,8 @@
 
         width: 100%;
         padding: 5px;
-        margin-top: 100px;
-        margin-left: 40px;
+        margin-top: 80px;
+        margin-left: 50px;
         max-height: 2pt;
         }
 
