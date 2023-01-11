@@ -249,6 +249,22 @@ class ProductController extends Controller
         $produk = Product::findOrFail($id);
         $input['harga'] = str_replace(".", "", $input['harga']);
 
+        $get_category = Category::orderBy('name','ASC')
+        ->where('id', $input["category_id"])->first();
+        $lokasi = Lokasi::orderBy('name','ASC')
+        ->where('id',$input["lokasi_id"])->first();
+
+        if(empty($produk->id)){
+            $id = 0;
+            $test = str_pad($id++,5,'0', STR_PAD_LEFT);
+            $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+        }else{
+            $id = $produk->id;
+            $id++;
+            $test = str_pad($id,5,'0', STR_PAD_LEFT);
+            $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+        }
+
         $input['image'] = $produk->image;
         if ($request->hasFile('image')){
             if (!$produk->image == NULL){
