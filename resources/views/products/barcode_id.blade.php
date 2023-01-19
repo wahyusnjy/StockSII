@@ -3,12 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sistem Inventory</title>
+    <title>Sistem Inventory </title>
     <!-- Tell the browser to be responsive to screen width -->
 
     <style>
         .page-break {
             page-break-after: always;
+            margin-top: 20px;
+        }
+        .page-space {
+            word-break: break-word;
         }
         .app {
             display: inline-flex;
@@ -22,7 +26,7 @@
 
         width: 100%;
         padding: 5px;
-        margin-top: 60px;
+        margin-top: 100px;
         margin-left: 40px;
         max-height: 2pt;
         }
@@ -43,16 +47,23 @@
             $a=1;
             @endphp
             @foreach($product1 as $pr)
+            @php
+
+                $qty = $pr->qty;
+            @endphp
+            @for ($i = 0; $i < $qty; $i++)
             <div class="app">
             <div class="header">
                 <p>PT Solusi Intek Indonesia </p>
             </div>
+
                 <div class="badge">
                     {!! DNS2D::getBarcodeHTML($pr->product_code, 'QRCODE', 2,2) !!}
                     <p class="text" style="margin-top: 2px">( {{$pr->qrcode}} )</p>
                 </div>
-            </div>
 
+            </div>
+            @endfor
                 @php
                 $a++;
 
