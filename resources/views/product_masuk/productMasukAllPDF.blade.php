@@ -38,17 +38,20 @@
     <table id="product-masuk" width="100%">
         <thead>
         <tr>
-            <td>ID</td>
+            <td>No</td>
             <td>Product</td>
             <td>Supplier</td>
             <td>Quantity</td>
             <td>Date</td>
         </tr>
         </thead>
+        @php
+            $id = 1;
+        @endphp
         @foreach($product_masuk as $p)
             <tbody>
             <tr>
-                <td>{{ $p->id }}</td>
+                <td>{{ $id++ }}</td>
                 <td>{{ $p->product->nama }}</td>
                 <td>{{ $p->supplier->nama }}</td>
                 <td>{{ $p->qty }}</td>
