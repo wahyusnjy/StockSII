@@ -38,7 +38,7 @@
     <table id="product-masuk" width="100%">
         <thead>
         <tr>
-            <td>No</td>
+            <td>ID</td>
             <td>Product</td>
             <td>Supplier</td>
             <td>Quantity</td>

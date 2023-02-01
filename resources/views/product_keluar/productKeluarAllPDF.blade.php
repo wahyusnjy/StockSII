@@ -46,10 +46,13 @@
         <td>Date</td>
     </tr>
     </thead>
+    @php
+    $id = 1;
+    @endphp
     @foreach($product_keluar as $p)
         <tbody>
         <tr>
-            <td>{{ $p->id }}</td>
+            <td>{{ $id++ }}</td>
             <td>{{ $p->product->nama }}</td>
             <td>{{ $p->customer->nama }}</td>
             <td>{{ $p->qty }}</td>
