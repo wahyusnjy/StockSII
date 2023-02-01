@@ -44,6 +44,7 @@
         <td>Customer</td>
         <td>Quantity</td>
         <td>Date</td>
+        <td>Keterangan</td>
     </tr>
     </thead>
     @php
@@ -57,6 +58,7 @@
             <td>{{ $p->customer->nama }}</td>
             <td>{{ $p->qty }}</td>
             <td>{{ $p->tanggal }}</td>
+            <td>{{ $p->keterangan }}</td>
         </tr>
         </tbody>
     @endforeach
