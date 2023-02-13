@@ -264,7 +264,7 @@ class ProductController extends Controller
             $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
         }
 
-        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$lokasi->name)."\n".strtoupper("Category : ".$get_category->name);
+        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$lokasi->name)."\n".strtoupper("Category : ".$get_category->name)."\n".strtoupper("User : ".$produk->user);
 
         $input['image'] = $produk->image;
         if ($request->hasFile('image')){
