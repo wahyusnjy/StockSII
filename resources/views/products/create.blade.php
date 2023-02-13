@@ -127,6 +127,7 @@
                 <!-- /.box-body -->
 
         </div>
+        <input type="hidden" name="url" value="{{ url()->previous() }}">
 
         <div class="modal-footer">
             <a href="{{ route('products.index') }}" type="button" class="btn btn-default pull-left">Cancel</a>

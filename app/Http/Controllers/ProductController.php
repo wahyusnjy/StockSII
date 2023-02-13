@@ -185,7 +185,8 @@ class ProductController extends Controller
 
         $product_eks = Product::create($input);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 1, 'product_id'=> $product_eks->id]);
-        return redirect()->route('products.index');
+        $url = $request->input('url');
+        return redirect($url);
 
     }
 
@@ -294,7 +295,9 @@ class ProductController extends Controller
 
         $produk->update($input);
 
-       return redirect()->route('products.index');
+        $url = $request->input('url');
+
+       return redirect($url);
 
     }
 
