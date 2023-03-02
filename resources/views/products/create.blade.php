@@ -61,10 +61,10 @@
 
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control
+                        <select class="form-control js-example-basic-single
                         @error('category_id')
                         is-invalid
-                        @enderror" name="category_id" id="category_id" data-live-search="true" required>
+                        @enderror" name="category_id" id="category_id" required>
                             <option selected="selected" value="{{ old('category_id') }}" disabled>-- Choose Category --</option>
                             @foreach ($category as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -79,11 +79,8 @@
 
                     <div class="form-group">
                         <label>Lokasi</label>
-                        <select class="form-control select selectpicker
-                        @error('lokasi_id')
-                        is-invalid
-                        @enderror" name="lokasi_id" id="lokasi_id" data-live-search="true" required>
-                            <option selected="selected"  value="" disabled>-- Choose Lokasi --</option>
+                        <select class="form-control js-example-basic-single" name="lokasi_id" id="lokasi_id" required  data-live-search="true">
+                            <option selected="selected" >-- Choose Lokasi --</option>
                             @foreach ($lokasi as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
@@ -97,10 +94,10 @@
 
                     <div class="form-group">
                         <label>Assets/Inventory</label>
-                        <select class="form-control 
+                        <select class="form-control js-example-basic-single
                         @error('assets_id')
                         is-invalid
-                        @enderror" name="assets_id" id="assets_id" data-live-search="true" required>
+                        @enderror" name="assets_id" id="assets_id" required>
                             <option selected="selected" value="" disabled>-- Choose Assets / Inventory --</option>
                             @foreach ($asset as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -138,7 +135,12 @@
     </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script>
+        $('.js-example-basic-single').select2();
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             var rupiah = document.querySelectorAll(".rupiah");
