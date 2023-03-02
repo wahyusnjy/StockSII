@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Add Products</h3>
@@ -60,10 +61,10 @@
 
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control select
+                        <select class="form-control
                         @error('category_id')
                         is-invalid
-                        @enderror" name="category_id" id="category_id" required>
+                        @enderror" name="category_id" id="category_id" data-live-search="true" required>
                             <option selected="selected" value="{{ old('category_id') }}" disabled>-- Choose Category --</option>
                             @foreach ($category as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -78,11 +79,11 @@
 
                     <div class="form-group">
                         <label>Lokasi</label>
-                        <select class="form-control select
+                        <select class="form-control select selectpicker
                         @error('lokasi_id')
                         is-invalid
-                        @enderror" name="lokasi_id" id="lokasi_id" required>
-                            <option selected="selected" value="" disabled>-- Choose Lokasi --</option>
+                        @enderror" name="lokasi_id" id="lokasi_id" data-live-search="true" required>
+                            <option selected="selected"  value="" disabled>-- Choose Lokasi --</option>
                             @foreach ($lokasi as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
@@ -96,10 +97,10 @@
 
                     <div class="form-group">
                         <label>Assets/Inventory</label>
-                        <select class="form-control select
+                        <select class="form-control 
                         @error('assets_id')
                         is-invalid
-                        @enderror" name="assets_id" id="assets_id" required>
+                        @enderror" name="assets_id" id="assets_id" data-live-search="true" required>
                             <option selected="selected" value="" disabled>-- Choose Assets / Inventory --</option>
                             @foreach ($asset as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -136,8 +137,8 @@
         </form>
     </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             var rupiah = document.querySelectorAll(".rupiah");
@@ -166,7 +167,7 @@
         });
     </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script type="text/javascript">
     var loadFile = function(event) {
         var output = document.getElementById('output');
@@ -178,4 +179,5 @@
         }
     };
 </script>
+
 @endsection

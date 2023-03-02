@@ -32,14 +32,6 @@ use Yajra\DataTables\Facades\DataTables;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
 
 Route::get('/dashboard', function () {
     // return Inertia::render('Dashboard');
@@ -49,9 +41,6 @@ Route::get('/dashboard', function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('homes');
 
-// Route::get('dashboard', function () {
-// 	return view('layouts.master');
-// });
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('categories', CategoryController::class);

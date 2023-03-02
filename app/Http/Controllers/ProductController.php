@@ -181,7 +181,8 @@ class ProductController extends Controller
             // dd($compresedImage);
             //  $compresedImage->move(public_path('/upload/products/'), $input['image']);
         }
-        $input['harga'] = str_replace(".", "", $input['harga']);
+        $character = [',','.'];
+        $input['harga'] = str_replace($character, "", $input['harga']);
 
         $product_eks = Product::create($input);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 1, 'product_id'=> $product_eks->id]);

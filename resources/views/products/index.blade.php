@@ -84,7 +84,7 @@
                                     <p>{{ $p->qrcode }}</p>
                                 </td>
                                 <td>{{ $p->nama }}</td>
-                                <td>{{ $p->harga }}</td>
+                                <td>{{ number_format($p->harga) }}</td>
                                 <td>{{ $p->qty }}</td>
                                 @if (empty($p->image))
                                     <td>No Image</td>
