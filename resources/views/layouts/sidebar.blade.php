@@ -44,12 +44,19 @@
             || request()->is('user/detail/*')
             || request()->is('cari/user')
             ?  'active' : '' }}"><a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
+             <li class="{{ request()->is('divisi')
+                || request()->is('divisi/create')
+                || request()->is('divisi/show')
+                || request()->is('divisi/*/edit')
+                || request()->is('cari/assets')
+                ? 'active' : '' }}"><a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Divisi</span></a></li>
             <li class="{{ request()->is('categories')
             || request()->is('categories/create')
             || request()->is('categories/show')
             || request()->is('categories/*/edit')
             || request()->is('cari/categories')
             ? 'active' : '' }}"><a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a></li>
+
             <li class="{{ request()->is('products')
             || request()->is('products/create')
             || request()->is('products/show')
@@ -104,12 +111,7 @@
             || request()->is('cari/assets')
             ? 'active' : '' }}"><a href="{{ route('assetinventory.index') }}"><i class="fa fa-inbox"></i> <span>Assets / Inventory</span></a></li>
 
-            <li class="{{ request()->is('divisi')
-            || request()->is('divisi/create')
-            || request()->is('divisi/show')
-            || request()->is('divisi/*/edit')
-            || request()->is('cari/assets')
-            ? 'active' : '' }}"><a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Divisi</span></a></li>
+
 
 
 
