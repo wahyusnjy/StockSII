@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductKeluarController;
 use App\Http\Controllers\ProductMasukController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RakController;
+use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -123,6 +125,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('divisi/edit/{id}',[DivisiController::class, 'edit'])->name('edit.profile');
     Route::get('divisi/detail/{id}',[DivisiController::class,'detail'])->name('detail.divisi');
 	Route::get('/apiDivisi', [DivisiController::class, 'apiDivisi'])->name('api.divisi');
+
+    Route::resource('rak', RakController::class);
+    Route::get('/cari/rak',[RakController::class, 'CariRak'])->name('cari.rak');
+	Route::get('/apirak', [RakController::class, 'apirak'])->name('api.rak');
+	Route::get('/exportrakMasukAllExcel', [RakController::class, 'exportExcel'])->name('exportExcel.rakAll');
+    Route::post('/importrakMasuk', [RakController::class, 'ImportExcel'])->name('import.rak');
+
+    Route::resource('ruangan', RuanganController::class);
+    Route::get('/cari/ruangan',[RuanganController::class, 'CariRuangan'])->name('cari.ruangan');
+	Route::get('/apiruangan', [RuanganController::class, 'apiruangan'])->name('api.ruangan');
+	Route::get('/exportruanganMasukAllExcel', [RuanganController::class, 'exportExcel'])->name('exportExcel.ruanganAll');
+    Route::post('/importruanganMasuk', [RuanganController::class, 'ImportExcel'])->name('import.ruangan');
 
 	Route::get('api/print/barcode', function(Request $request){
 

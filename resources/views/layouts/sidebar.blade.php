@@ -20,21 +20,8 @@
             </div>
         </div>
 
-        {{-- <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-            </div>
-        </form>
-        <!-- /.search form --> --}}
-
-
         <!-- Sidebar Menu -->
-        <ul class="sidebar-menu" data-widget="tree">
+        <ul class="sidebar-menu tree" data-widget="tree">
             <li class="header">Fungsi</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="{{ request()->is('home') ?  'active' : '' }}"><a href="{{ url('/home') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
@@ -45,9 +32,6 @@
             || request()->is('user/detail/*')
             || request()->is('cari/user')
             ?  'active' : '' }}"><a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
-
-
-
 
 
             <li class="{{ request()->is('products')
@@ -92,40 +76,98 @@
             || request()->is('cari/productsIn')
             ? 'active' : '' }}"><a href="{{ route('productsIn.index') }}"><i class="fa fa-plus"></i> <span>Product Masuk</span></a></li>
 
-<li class="dropdown">
-    <li class="{{ request()->is('divisi')
-        || request()->is('divisi/create')
-        || request()->is('divisi/show')
-        || request()->is('divisi/*/edit')
-        || request()->is('cari/assets')
-        ? 'active' : '' }}">
-        <a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Divisi</span></a>
-    </li>
+<li class="treeview {{
+    request()->is('divisi')
+    || request()->is('divisi/create')
+    || request()->is('divisi/show')
+    || request()->is('divisi/*/edit')
+    || request()->is('cari/assets')
+    || request()->is('wilayah')
+    || request()->is('wilayah/create')
+    || request()->is('wilayah/show')
+    || request()->is('wilayah/*/edit')
+    || request()->is('cari/wilayah')
+    || request()->is('lokasi')
+    || request()->is('lokasi/create')
+    || request()->is('lokasi/show')
+    || request()->is('lokasi/*/edit')
+    || request()->is('cari/lokasi')
+    || request()->is('kategori')
+    || request()->is('kategori/create')
+    || request()->is('kategori/show')
+    || request()->is('kategori/*/edit')
+    || request()->is('cari/kategori')
+    || request()->is('rak')
+    || request()->is('rak/create')
+    || request()->is('rak/show')
+    || request()->is('rak/*/edit')
+    || request()->is('cari/rak')
+    || request()->is('ruangan')
+    || request()->is('ruangan/create')
+    || request()->is('ruangan/show')
+    || request()->is('ruangan/*/edit')
+    || request()->is('cari/ruangan')
+    ? 'active' : '' }}">
+    <a href="#">
+        <i class="fa fa-server"></i>
+        <span>Data Master</span>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="{{ request()->is('divisi')
+            || request()->is('divisi/create')
+            || request()->is('divisi/show')
+            || request()->is('divisi/*/edit')
+            || request()->is('cari/assets')
+            ? 'active' : '' }} ">
+            <a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Divisi</span></a>
+        </li>
 
-    <li class="{{ request()->is('wilayah')
-        || request()->is('wilayah/create')
-        || request()->is('wilayah/show')
-        || request()->is('wilayah/*/edit')
-        || request()->is('cari/wilayah')
-        ? 'active' : '' }}"><a href="{{ route('wilayah.index') }}"><i class="fa fa-location-arrow""></i> <span>Wilayah</span>
-        </a>
-    </li>
+        <li class="{{ request()->is('wilayah')
+            || request()->is('wilayah/create')
+            || request()->is('wilayah/show')
+            || request()->is('wilayah/*/edit')
+            || request()->is('cari/wilayah')
+            ? 'active' : '' }}"><a href="{{ route('wilayah.index') }}"><i class="fa fa-location-arrow""></i> <span>Wilayah</span>
+            </a>
+        </li>
 
-    <li class="{{ request()->is('lokasi')
-        || request()->is('lokasi/create')
-        || request()->is('lokasi/show')
-        || request()->is('lokasi/*/edit')
-        || request()->is('cari/lokasi')
-        ? 'active' : '' }}"><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a>
-    </li>
+        <li class="{{ request()->is('lokasi')
+            || request()->is('lokasi/create')
+            || request()->is('lokasi/show')
+            || request()->is('lokasi/*/edit')
+            || request()->is('cari/lokasi')
+            ? 'active' : '' }} "><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a>
+        </li>
 
-    <li class="{{ request()->is('kategori')
-        || request()->is('kategori/create')
-        || request()->is('kategori/show')
-        || request()->is('kategori/*/edit')
-        || request()->is('cari/kategori')
-        ? 'active' : '' }}"><a href="{{ route('kategori.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a>
-    </li>
+        <li class="{{ request()->is('kategori')
+            || request()->is('kategori/create')
+            || request()->is('kategori/show')
+            || request()->is('kategori/*/edit')
+            || request()->is('cari/kategori')
+            ? 'active' : '' }}"><a href="{{ route('kategori.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a>
+        </li>
+
+        <li class="{{ request()->is('rak')
+            || request()->is('rak/create')
+            || request()->is('rak/show')
+            || request()->is('rak/*/edit')
+            || request()->is('cari/rak')
+            ? 'active' : '' }} "><a href="{{ route('rak.index') }}"><i class="fa fa-codepen"></i> <span>Rak</span></a>
+        </li>
+
+        <li class="{{ request()->is('ruangan')
+            || request()->is('ruangan/create')
+            || request()->is('ruangan/show')
+            || request()->is('ruangan/*/edit')
+            || request()->is('cari/ruangan')
+            ? 'active' : '' }} "><a href="{{ route('ruangan.index') }}"><i class="fa fa-university"></i> <span>Ruangan</span></a>
+        </li>
+    </ul>
+
+
 </li>
 
 
