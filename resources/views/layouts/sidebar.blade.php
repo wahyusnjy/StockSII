@@ -32,6 +32,7 @@
         </form>
         <!-- /.search form --> --}}
 
+
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Fungsi</li>
@@ -44,18 +45,10 @@
             || request()->is('user/detail/*')
             || request()->is('cari/user')
             ?  'active' : '' }}"><a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
-             <li class="{{ request()->is('divisi')
-                || request()->is('divisi/create')
-                || request()->is('divisi/show')
-                || request()->is('divisi/*/edit')
-                || request()->is('cari/assets')
-                ? 'active' : '' }}"><a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Divisi</span></a></li>
-            <li class="{{ request()->is('wilayah')
-            || request()->is('wilayah/create')
-            || request()->is('wilayah/show')
-            || request()->is('wilayah/*/edit')
-            || request()->is('cari/wilayah')
-            ? 'active' : '' }}"><a href="{{ route('wilayah.index') }}"><i class="fa fa-location-arrow""></i> <span>Wilayah</span></a></li>
+
+
+
+
 
             <li class="{{ request()->is('products')
             || request()->is('products/create')
@@ -67,10 +60,12 @@
             <a href="{{ route('products.index') }}"><i class="fa fa-cubes"></i> <span>Product</span></a>
             </li>
             <li class="{{ request()->is('customers')
-            || request()->is('customers/create')
-            || request()->is('customers/*/edit')
-            || request()->is('cari/customers')
-            ? 'active' : '' }}"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customer</span></a></li>
+                || request()->is('customers/create')
+                || request()->is('customers/*/edit')
+                || request()->is('cari/customers')
+                ? 'active' : '' }}"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customer</span></a>
+            </li>
+
             <li class="{{ request()->is('sales')
             || request()->is('sales/create')
             || request()->is('sales/show')
@@ -97,30 +92,47 @@
             || request()->is('cari/productsIn')
             ? 'active' : '' }}"><a href="{{ route('productsIn.index') }}"><i class="fa fa-plus"></i> <span>Product Masuk</span></a></li>
 
-            <li class="{{ request()->is('lokasi')
-            || request()->is('lokasi/create')
-            || request()->is('lokasi/show')
-            || request()->is('lokasi/*/edit')
-            || request()->is('cari/lokasi')
-            ? 'active' : '' }}"><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a></li>
+<li class="dropdown">
+    <li class="{{ request()->is('divisi')
+        || request()->is('divisi/create')
+        || request()->is('divisi/show')
+        || request()->is('divisi/*/edit')
+        || request()->is('cari/assets')
+        ? 'active' : '' }}">
+        <a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Divisi</span></a>
+    </li>
 
-            <li class="{{ request()->is('kategori')
-            || request()->is('kategori/create')
-            || request()->is('kategori/show')
-            || request()->is('kategori/*/edit')
-            || request()->is('cari/kategori')
-            ? 'active' : '' }}"><a href="{{ route('kategori.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a></li>
+    <li class="{{ request()->is('wilayah')
+        || request()->is('wilayah/create')
+        || request()->is('wilayah/show')
+        || request()->is('wilayah/*/edit')
+        || request()->is('cari/wilayah')
+        ? 'active' : '' }}"><a href="{{ route('wilayah.index') }}"><i class="fa fa-location-arrow""></i> <span>Wilayah</span>
+        </a>
+    </li>
 
+    <li class="{{ request()->is('lokasi')
+        || request()->is('lokasi/create')
+        || request()->is('lokasi/show')
+        || request()->is('lokasi/*/edit')
+        || request()->is('cari/lokasi')
+        ? 'active' : '' }}"><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a>
+    </li>
 
-
-
-
-
+    <li class="{{ request()->is('kategori')
+        || request()->is('kategori/create')
+        || request()->is('kategori/show')
+        || request()->is('kategori/*/edit')
+        || request()->is('cari/kategori')
+        ? 'active' : '' }}"><a href="{{ route('kategori.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a>
+    </li>
+</li>
 
 
 
 
         </ul>
+
         <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

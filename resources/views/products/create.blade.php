@@ -60,12 +60,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Category</label>
+                        <label>Wilayah</label>
                         <select class="form-control js-example-basic-single
                         @error('category_id')
                         is-invalid
                         @enderror" name="category_id" id="category_id" required>
-                            <option selected="selected" value="{{ old('category_id') }}" disabled>-- Choose Category --</option>
+                            <option selected="selected" value="{{ old('category_id') }}" disabled>-- Choose Wilayah --</option>
                             @foreach ($category as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
@@ -93,12 +93,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Assets/Inventory</label>
+                        <label>Kategori</label>
                         <select class="form-control js-example-basic-single
                         @error('assets_id')
                         is-invalid
                         @enderror" name="assets_id" id="assets_id" required>
-                            <option selected="selected" value="" disabled>-- Choose Assets / Inventory --</option>
+                            <option selected="selected" value="" disabled>-- Choose Kategori --</option>
                             @foreach ($asset as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach

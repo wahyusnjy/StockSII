@@ -44,7 +44,13 @@
                     @foreach ($assets as $a)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ $a->name }}</td>
+                        <td>
+                            @if($a->parent_id != 0)
+                               {{ $a->parent->name }} - {{ $a->name }}
+                            @else
+                            {{ $a->name }}
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ url('kategori/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                             <form id="myForm" action="{{ route('kategori.destroy', $a->id) }}" method="post" style="display: inline;">
@@ -54,6 +60,14 @@
                             </form>
                         </td>
                     </tr>
+
+                        {{-- @foreach ($a->child as $child)
+                        <tr>
+                            <td></td>
+                            <td style="padding-left: 80px; ">{{ $child->name }}</td>
+                            <td></td>
+                        </tr>
+                        @endforeach --}}
                     @endforeach
                 </tbody>
             </table>

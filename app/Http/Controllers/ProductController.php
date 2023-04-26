@@ -185,6 +185,9 @@ class ProductController extends Controller
         $character = [',','.'];
         $input['harga'] = str_replace($character, "", $input['harga']);
 
+        $input['divisi_id'] = Auth::user()->divisi_id;
+        $input['user_id'] = Auth::user()->id;
+
         $product_eks = Product::create($input);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 1, 'product_id'=> $product_eks->id]);
         return redirect()->route('products.index');

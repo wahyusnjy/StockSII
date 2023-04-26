@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
+        $this->call(DivisiSeeder::class);
         $this->call(AdSd::class);
-
+    
         // Supplier::factory(2000)->create();
     }
 }

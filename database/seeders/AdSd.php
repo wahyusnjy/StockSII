@@ -16,19 +16,22 @@ class AdSd extends Seeder
     public function run()
     {
         User::updateOrCreate(['id' => 1], [
-            'name' => "AdminKU",
-            'email' => "admin@mail.com",
-            'password' => bcrypt("#kuadmiDI"),
+            'name' => "Admin",
+            'email' => "admin@admin.com",
+            'password' => bcrypt("password"),
+            'role'  => "admin",
         ]);
         User::updateOrCreate(['id' => 2], [
             'name' => "Tri Minarsih",
             'email' => "triminarsih@intek.co.id",
             'password' => bcrypt("tebetinventorysii2022;"),
+            'role'  => "staff",
         ]);
         User::updateOrCreate(['id' => 3], [
-            'name' => "Danang",
-            'email' => "danang@intek.co.id",
-            'password' => bcrypt("cikunirinventorysii2022;"),
+            'name' => "Eko Prasetyo",
+            'email' => "eko@intek.co.id",
+            'password' => bcrypt("password;"),
+            'role'  => "staff",
         ]);
     }
 }

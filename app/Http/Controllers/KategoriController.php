@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assets;
+use App\Models\KategoriChild;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -35,7 +36,9 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        return view('kategori.create');
+        $parent_id = Assets::all();
+        return view('kategori.create')
+        ->with('parent_id',$parent_id);
     }
 
     /**
@@ -46,11 +49,13 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
+        // $data = $request->all();
         $this->validate($request, [
 			'name' => 'required|string'
 		]);
 
-		Assets::create([
+		$parent = Assets::create([
+            'parent_id' => $request->parent_id ,
             'name' => $request->name,
         ]);
 
