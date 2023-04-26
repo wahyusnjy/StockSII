@@ -26,8 +26,8 @@
 
                 <div class="form-group">
                     <label >Password</label>
-                    <input type="password" class="form-control" placeholder="Please re-input password" id="password" name="password"   required>
-                    <span class="help-block with-errors"></span>
+                    <input type="password" class="form-control" placeholder="Please re-input password" id="password" name="password">
+                    {{-- <span class="help-block with-errors"></span> --}}
                 </div>
 
                 <div class="form-group">
@@ -49,7 +49,10 @@
                         <option value="{{ $d->id }}">{{ $d->name }}</option>
                         @endforeach
                     @else
-                        <option selected="" value="{{ $users->divisi->id }}">{{ $users->divisi->name }}</option>
+                    <option selected="" value="{{ $users->divisi->id }}">{{ $users->divisi->name }}</option>
+                    @foreach ($divisi as $d)
+                    <option value="{{ $d->id }}">{{ $d->name }}</option>
+                    @endforeach
                     @endif
                     </select>
                     <span class="help-block with-errors"></span>

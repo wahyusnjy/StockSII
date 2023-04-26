@@ -71,7 +71,7 @@ class UserController extends Controller {
 			'email' => 'required|string|email|max:255|unique:users',
 		]);
 
-
+        dd($request->all());
 		User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -116,16 +116,17 @@ class UserController extends Controller {
 	public function update(Request $request, $id) {
 		$this->validate($request, [
 			'name' => 'required|string|min:2',
-			'email' => 'required|string|email|max:255|unique:suppliers',
+			'email' => 'required|string|email|max:255',
 		]);
 
-		User::where('id',$id)->update([
+        User::where('id', $id)->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password'=> bcrypt($request->password),
-            'role'=> $request->role,
+            'password' => ($request->password) ? bcrypt($request->password) : User::find($id)->password,
+            'role' => $request->role,
             'divisi_id' => $request->divisi,
         ]);
+
 
 		return redirect()->route('user.index');
 	}
