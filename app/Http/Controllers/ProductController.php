@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportProducts;
 use App\Exports\ExportProduk;
 use App\Imports\ProductsImport;
 use App\Models\ActivityLog;
@@ -481,5 +482,10 @@ class ProductController extends Controller
 
 
 		// return view('products.barcode_pdf')->with('product1', $product1);
+    }
+
+    public function exportExcel()
+    {
+        return (new ExportProducts())->download('products.xlsx');
     }
 }

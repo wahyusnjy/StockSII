@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\AssetsController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\HomeController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WilayahController;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -44,11 +44,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('homes');
 
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::resource('categories', CategoryController::class);
-    Route::get('/cari/categories',[CategoryController::class, 'Cari'])->name('cari.categories');
-	Route::get('/apiCategories', [CategoryController::class, 'apiCategories'])->name('api.categories');
-	Route::get('/exportCategoriesAll', [CategoryController::class, 'exportCategoriesAll'])->name('exportPDF.categoriesAll');
-	Route::get('/exportCategoriesAllExcel', [CategoryController::class, 'exportExcel'])->name('exportExcel.categoriesAll');
+	Route::resource('wilayah', WilayahController::class);
+    Route::get('/cari/wilayah',[WilayahController::class, 'Cari'])->name('cari.wilayah');
+	Route::get('/apiwilayah', [WilayahController::class, 'apiwilayah'])->name('api.wilayah');
+	Route::get('/exportwilayahAll', [WilayahController::class, 'exportwilayahAll'])->name('exportPDF.wilayahAll');
+	Route::get('/exportwilayahAllExcel', [WilayahController::class, 'exportExcel'])->name('exportExcel.wilayahAll');
 
 	Route::resource('customers', CustomerController::class);
     Route::get('/cari/customers',[CustomerController::class, 'Cari'])->name('cari.customers');
@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/getProducts',[ProductController::class, 'getProducts'])->name('getProducts.products');
     Route::get('products/detail/{id}',[ProductController::class,'detail'])->name('detail.products');
 	Route::get('/apiProducts', [ProductController::class, 'apiProducts'])->name('api.products');
+    Route::get('/ProductsAllExcel', [ProductController::class, 'exportExcel'])->name('exportExcel.products');
 
 
 	Route::resource('productsOut', ProductKeluarController::class);
@@ -108,9 +109,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/exportLokasiMasukAllExcel', [LokasiController::class, 'exportExcel'])->name('exportExcel.lokasiAll');
     Route::post('/importLokasiMasuk', [LokasiController::class, 'ImportExcel'])->name('import.lokasi');
 
-    Route::resource('assetinventory', AssetsController::class);
-    Route::get('/cari/assets',[AssetsController::class, 'Cari'])->name('cari.asset');
-	Route::get('/apiAssetInventory', [AssetsController::class, 'apiAssetInventory'])->name('api.assetinventory');
+    Route::resource('kategori', KategoriController::class);
+    Route::get('/cari/assets',[KategoriController::class, 'Cari'])->name('cari.kategori');
+	Route::get('/apikategori', [KategoriController::class, 'apikategori'])->name('api.kategori');
 
     //Profile
     Route::get('profile/{id}',[ProfileController::class,'show'])->name('show.profile');

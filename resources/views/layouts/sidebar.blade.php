@@ -50,12 +50,12 @@
                 || request()->is('divisi/*/edit')
                 || request()->is('cari/assets')
                 ? 'active' : '' }}"><a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Divisi</span></a></li>
-            <li class="{{ request()->is('categories')
-            || request()->is('categories/create')
-            || request()->is('categories/show')
-            || request()->is('categories/*/edit')
-            || request()->is('cari/categories')
-            ? 'active' : '' }}"><a href="{{ route('categories.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a></li>
+            <li class="{{ request()->is('wilayah')
+            || request()->is('wilayah/create')
+            || request()->is('wilayah/show')
+            || request()->is('wilayah/*/edit')
+            || request()->is('cari/wilayah')
+            ? 'active' : '' }}"><a href="{{ route('wilayah.index') }}"><i class="fa fa-location-arrow""></i> <span>Wilayah</span></a></li>
 
             <li class="{{ request()->is('products')
             || request()->is('products/create')
@@ -104,12 +104,12 @@
             || request()->is('cari/lokasi')
             ? 'active' : '' }}"><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Lokasi</span></a></li>
 
-            <li class="{{ request()->is('assetinventory')
-            || request()->is('assetinventory/create')
-            || request()->is('assetinventory/show')
-            || request()->is('assetinventory/*/edit')
-            || request()->is('cari/assets')
-            ? 'active' : '' }}"><a href="{{ route('assetinventory.index') }}"><i class="fa fa-inbox"></i> <span>Assets / Inventory</span></a></li>
+            <li class="{{ request()->is('kategori')
+            || request()->is('kategori/create')
+            || request()->is('kategori/show')
+            || request()->is('kategori/*/edit')
+            || request()->is('cari/kategori')
+            ? 'active' : '' }}"><a href="{{ route('kategori.index') }}"><i class="fa fa-list"></i> <span>Kategori</span></a></li>
 
 
 

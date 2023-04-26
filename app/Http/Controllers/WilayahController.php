@@ -8,7 +8,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoryController extends Controller
+class WilayahController extends Controller
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate(10);
-        return view('categories.index',compact('categories'));
+        return view('wilayah.index',compact('categories'));
     }
 
     public function Cari(Request $request)
@@ -32,7 +32,7 @@ class CategoryController extends Controller
     ->orWhere('id','like',"%".$cari."%")
     ->paginate(10);
 
-    return view('categories.index',compact('categories'));
+    return view('wilayah.index',compact('categories'));
    }
 
     /**
@@ -42,7 +42,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('wilayah.create');
     }
 
     /**
@@ -59,7 +59,7 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return redirect()->route('categories.index');
+        return redirect()->route('wilayah.index');
     }
 
     /**
@@ -82,7 +82,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        return view('categories.edit',compact('category'));
+        return view('wilayah.edit',compact('category'));
     }
 
     /**
@@ -102,7 +102,7 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('categories.index');
+        return redirect()->route('wilayah.index');
     }
 
     /**

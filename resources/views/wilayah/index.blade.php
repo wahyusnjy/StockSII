@@ -10,17 +10,17 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Categories</h3>
+            <h3 class="box-title">Data Wilayah</h3>
         </div>
 
         <div class="box-header">
-            <a href="{{ route('categories.create') }}" class="btn btn-primary" >Add Categories</a>
-            <a href="{{ route('exportPDF.categoriesAll') }}" class="btn btn-danger">Export PDF</a>
-            <a href="{{ route('exportExcel.categoriesAll') }}" class="btn btn-success">Export Excel</a>
+            <a href="{{ route('wilayah.create') }}" class="btn btn-primary" >Add Wilayah</a>
+            <a href="{{ route('exportPDF.wilayahAll') }}" class="btn btn-danger">Export PDF</a>
+            <a href="{{ route('exportExcel.wilayahAll') }}" class="btn btn-success">Export Excel</a>
         </div>
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
-                <form action="{{ url('/cari/categories') }}" method="get" class="input-group">
+                <form action="{{ url('/cari/wilayah') }}" method="get" class="input-group">
                     <input type="text" name="cari" class="form-control " placeholder="Cari..." value="{{ request('cari') }}">
                     <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
                 </form>
@@ -48,8 +48,8 @@
                         <td>{{ $c->name }}</td>
                         <td>
                             {{-- <a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> --}}
-                        <a href="{{ url('categories/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                        <form id="myForm" action="{{ route('categories.destroy', $c->id) }}" method="post" style="display: inline;">
+                        <a href="{{ url('wilayah/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                        <form id="myForm" action="{{ route('wilayah.destroy', $c->id) }}" method="post" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-xs"  onclick="confirmSubmit({{ $c->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
@@ -67,7 +67,7 @@
         <!-- /.box-body -->
     </div>
 
-    @include('categories.form')
+    @include('wilayah.form')
 
 @endsection
 
@@ -99,7 +99,7 @@
         //     processing: true,
         //     serverSide: true,
         //     deferRender: true,
-        //     ajax: "{{ route('api.categories') }}",
+        //     ajax: "{{ route('api.wilayah') }}",
         //     columns: [
         //         {data: 'id', name: 'id'},
         //         {data: 'name', name: 'name'},
@@ -112,7 +112,7 @@
             $('input[name=_method]').val('POST');
             $('#modal-form').modal('show');
             $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Categories');
+            $('.modal-title').text('Add Wilayah');
         }
 
         function editForm(id) {
@@ -120,12 +120,12 @@
             $('input[name=_method]').val('PATCH');
             $('#modal-form form')[0].reset();
             $.ajax({
-                url: "{{ url('categories') }}" + '/' + id + "/edit",
+                url: "{{ url('wilayah') }}" + '/' + id + "/edit",
                 type: "GET",
                 dataType: "JSON",
                 success: function(data) {
                     $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Categories');
+                    $('.modal-title').text('Edit Wilayah');
 
                     $('#id').val(data.id);
                     $('#name').val(data.name);
@@ -175,7 +175,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then(function () {
                 $.ajax({
-                    url : "{{ url('categories') }}" + '/' + id,
+                    url : "{{ url('wilayah') }}" + '/' + id,
                     type : "POST",
                     data : {'_method' : 'DELETE', '_token' : csrf_token},
                     success : function(data) {
@@ -203,8 +203,8 @@
             $('#modal-form form').validator().on('submit', function (e) {
                 if (!e.isDefaultPrevented()){
                     var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('categories') }}";
-                    else url = "{{ url('categories') . '/' }}" + id;
+                    if (save_method == 'add') url = "{{ url('wilayah') }}";
+                    else url = "{{ url('wilayah') . '/' }}" + id;
 
                     $.ajax({
                         url : url,

@@ -8,7 +8,7 @@
 
     <div class="box-body">
 
-        <form method="POST"class="form-horizontal" enctype="multipart/form-data" action="{{ route('assetinventory.update', $assets->id)}}">
+        <form method="POST"class="form-horizontal" enctype="multipart/form-data" action="{{ route('kategori.update', $assets->id)}}">
             @csrf
             @method('PATCH')
           <input type="hidden" id="id" name="id">
@@ -23,7 +23,7 @@
             <!-- /.box-body -->
 
             <div class="modal-footer">
-                <a href="{{ route('assetinventory.index') }}" type="button" class="btn btn-default pull-left" >Cancel</a>
+                <a href="{{ route('kategori.index') }}" type="button" class="btn btn-default pull-left" >Cancel</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
 

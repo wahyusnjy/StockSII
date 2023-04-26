@@ -10,16 +10,16 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Assets / Inventory</h3>
+            <h3 class="box-title">Data Kategori</h3>
         </div>
 
         <div class="box-header">
-            <a href="{{ route('assetinventory.create') }}" class="btn btn-primary" >Add Assets / Inventory</a>
+            <a href="{{ route('kategori.create') }}" class="btn btn-primary" >Add Kategori</a>
         </div>
 
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
-                <form action="{{ url('/cari/assets') }}" method="get" class="input-group">
+                <form action="{{ url('/cari/kategori') }}" method="get" class="input-group">
                     <input type="text" name="cari" class="form-control " placeholder="Cari..." value="{{ request('cari') }}">
                     <span class="input-group-btn "><input type="submit" class="btn btn-primary" value="CARI">Go</span>
                 </form>
@@ -33,7 +33,7 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Assets/Invetory</th>
+                    <th>Kategori</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -46,8 +46,8 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $a->name }}</td>
                         <td>
-                            <a href="{{ url('assetinventory/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                            <form id="myForm" action="{{ route('assetinventory.destroy', $a->id) }}" method="post" style="display: inline;">
+                            <a href="{{ url('kategori/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                            <form id="myForm" action="{{ route('kategori.destroy', $a->id) }}" method="post" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-xs" onclick="confirmSubmit({{ $a->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
@@ -64,7 +64,7 @@
         <!-- /.box-body -->
     </div>
 
-    @include('assetsOrInventory.form')
+    @include('kategori.form')
 @endsection
 
 @section('bot')
@@ -96,7 +96,7 @@
         //     serverSide: true,
         //     deferRender: true,
         //     pagingType: 'full_numbers',
-        //     ajax: "{{ route('api.assetinventory') }}",
+        //     ajax: "{{ route('api.kategori') }}",
         //     columns: [
         //         {data: 'id', name: 'id'},
         //         {data: 'name', name: 'name'},
@@ -109,7 +109,7 @@
             $('input[name=_method]').val('POST');
             $('#modal-form').modal('show');
             $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Asset/Inventory');
+            $('.modal-title').text('Add Kategori');
         }
 
         function editForm(id) {
@@ -117,7 +117,7 @@
             $('input[name=_method]').val('PATCH');
             $('#modal-form form')[0].reset();
             $.ajax({
-                url: "{{ url('assetinventory') }}" + '/' + id + "/edit",
+                url: "{{ url('kategori') }}" + '/' + id + "/edit",
                 type: "GET",
                 dataType: "JSON",
                 success: function(data) {
@@ -145,7 +145,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then(function () {
                 $.ajax({
-                    url : "{{ url('assetinventory') }}" + '/' + id,
+                    url : "{{ url('kategori') }}" + '/' + id,
                     type : "POST",
                     data : {'_method' : 'DELETE', '_token' : csrf_token},
                     success : function(data) {
@@ -200,8 +200,8 @@
             $('#modal-form form').validator().on('submit', function (e) {
                 if (!e.isDefaultPrevented()){
                     var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('assetinventory') }}";
-                    else url = "{{ url('assetinventory') . '/' }}" + id;
+                    if (save_method == 'add') url = "{{ url('kategori') }}";
+                    else url = "{{ url('kategori') . '/' }}" + id;
 
                     $.ajax({
                         url : url,

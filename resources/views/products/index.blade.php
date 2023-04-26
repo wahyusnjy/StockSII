@@ -21,12 +21,14 @@
             @php
                 $page = $producs->currentPage();
             @endphp
+             <a href="{{ route('exportExcel.products') }}" class="btn btn-success pull-right" style="margin-top: -8px;">Export Excel</a>
             <a href="{{ url('/barcodePage?page='.$page.'') }}" class="btn btn-warning pull-right" style="margin-top: -8px;">Print
                 Barcode</a>
             <button type="button" id="button-export-selected" disabled class="btn btn-danger pull-right"
                 style="margin-top: -8px;" onclick="exportDataTerpilih()">Print Selected Barcode</button>
             <a href="{{ url('/products/create') }}" class="btn btn-primary pull-right" style="margin-top: -8px;">Add
                 Products</a>
+
         </div>
 
     <div class="box-header">

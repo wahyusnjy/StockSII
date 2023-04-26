@@ -6,7 +6,7 @@
         <h3 class="box-title">Add Assets / Inventory</h3>
     </div>
     <div class="box-body">
-        <form method="post"class="form-horizontal" enctype="multipart/form-data" action="{{route('assetinventory.store')}}">
+        <form method="post"class="form-horizontal" enctype="multipart/form-data" action="{{route('kategori.store')}}">
             @csrf
 
             <input type="hidden" id="id" name="id">

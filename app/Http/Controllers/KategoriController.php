@@ -6,7 +6,7 @@ use App\Models\Assets;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class AssetsController extends Controller
+class KategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class AssetsController extends Controller
     public function index()
     {
         $assets = Assets::paginate(10);
-        return view('assetsOrInventory.index', compact('assets'));
+        return view('kategori.index', compact('assets'));
     }
 
     public function Cari(Request $request)
@@ -25,7 +25,7 @@ class AssetsController extends Controller
     $assets = Assets::where('name','like',"%".$cari."%")
     ->paginate(10);
 
-    return view('assetsOrInventory.index',compact('assets'));
+    return view('kategori.index',compact('assets'));
    }
 
     /**
@@ -35,7 +35,7 @@ class AssetsController extends Controller
      */
     public function create()
     {
-        return view('assetsOrInventory.create');
+        return view('kategori.create');
     }
 
     /**
@@ -54,7 +54,7 @@ class AssetsController extends Controller
             'name' => $request->name,
         ]);
 
-		return redirect()->route('assetinventory.index');
+		return redirect()->route('kategori.index');
     }
 
     /**
@@ -77,7 +77,7 @@ class AssetsController extends Controller
     public function edit(Assets $assets,$id)
     {
         $assets = Assets::find($id);
-		return view('assetsOrInventory.edit', compact('assets'));
+		return view('kategori.edit', compact('assets'));
     }
 
     /**
