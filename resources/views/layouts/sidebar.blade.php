@@ -104,6 +104,13 @@
             || request()->is('cari/assets')
             ? 'active' : '' }}"><a href="{{ route('assetinventory.index') }}"><i class="fa fa-inbox"></i> <span>Assets / Inventory</span></a></li>
 
+            <li class="{{ request()->is('divisi')
+            || request()->is('divisi/create')
+            || request()->is('divisi/show')
+            || request()->is('divisi/*/edit')
+            || request()->is('cari/assets')
+            ? 'active' : '' }}"><a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Divisi</span></a></li>
+
 
 
 

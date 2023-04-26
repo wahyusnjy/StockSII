@@ -38,7 +38,8 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th></th>
+                    <th>Divisi</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,6 +52,13 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
+                    <td>
+                        @if(empty($user->divisi->name))
+                        -
+                        @else
+                        {{ $user->divisi->name }}
+                        @endif
+                    </td>
                     <td>
 
                         <div style="display: inline-block">
@@ -88,36 +96,9 @@
     {{-- Validator --}}
     <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
 
-    {{--<script>--}}
-    {{--$(function () {--}}
-    {{--$('#items-table').DataTable()--}}
-    {{--$('#example2').DataTable({--}}
-    {{--'paging'      : true,--}}
-    {{--'lengthChange': false,--}}
-    {{--'searching'   : false,--}}
-    {{--'ordering'    : true,--}}
-    {{--'info'        : true,--}}
-    {{--'autoWidth'   : false--}}
-    {{--})--}}
-    {{--})--}}
-    {{--</script>--}}
+
 
     <script type="text/javascript">
-        // var table = $('#user-table').DataTable({
-        //     processing: true,
-        //     serverSide: true,
-        //     pagingType: 'full_numbers',
-        //     deferRender: true,
-        //     ajax: "{{ route('api.users') }}",
-        //     columns: [
-        //         {data: 'id', name: 'id'},
-        //         {data: 'name', name: 'name'},
-        //         {data: 'email', name: 'email'},
-        //         {data: 'role', name: 'role'},
-        //         {data: 'action', name: 'action', orderable: false, searchable: false}
-        //     ]
-        // });
-
         function addForm() {
             save_method = "add";
             $('input[name=_method]').val('POST');

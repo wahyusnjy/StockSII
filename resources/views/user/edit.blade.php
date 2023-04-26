@@ -41,6 +41,20 @@
                     <span class="help-block with-errors"></span>
                 </div>
 
+                <div class="form-group">
+                    <select class="form-control"
+                    placeholder="Divisi" name="divisi" id="divisi" required>
+                    @if(empty($users->divisi->id))
+                        @foreach ($divisi as $d)
+                        <option value="{{ $d->id }}">{{ $d->name }}</option>
+                        @endforeach
+                    @else
+                        <option selected="" value="{{ $users->divisi->id }}">{{ $users->divisi->name }}</option>
+                    @endif
+                    </select>
+                    <span class="help-block with-errors"></span>
+                </div>
+
 
             </div>
             <!-- /.box-body -->

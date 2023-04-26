@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'image'
+        'image',
+        'divisi_id',
     ];
 
     /**
@@ -43,4 +44,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class);
+    }
 }

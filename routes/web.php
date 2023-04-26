@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ProductController;
@@ -115,6 +116,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profile/{id}',[ProfileController::class,'show'])->name('show.profile');
     Route::get('profile/edit/{id}',[ProfileController::class, 'edit'])->name('edit.profile');
     Route::patch('profile/update/{id}',[ProfileController::class,'update'])->name('update.profile');
+
+    Route::resource('divisi', DivisiController::class);
+    Route::get('/cari/divisi',[DivisiController::class, 'CariDivisi'])->name('caridivisi.divisi');
+    Route::get('divisi/edit/{id}',[DivisiController::class, 'edit'])->name('edit.profile');
+    Route::get('divisi/detail/{id}',[DivisiController::class,'detail'])->name('detail.divisi');
+	Route::get('/apiDivisi', [DivisiController::class, 'apiDivisi'])->name('api.divisi');
 
 	Route::get('api/print/barcode', function(Request $request){
 

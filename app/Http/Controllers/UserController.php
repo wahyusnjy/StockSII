@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\ExportSuppliers;
 use App\Imports\SuppliersImport;
+use App\Models\Divisi;
 use App\Models\Supplier;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -53,7 +54,9 @@ class UserController extends Controller {
 	 */
 	public function create(Request $request)
     {
-        return view('user.create');
+        $divisi = Divisi::all();
+        return view('user.create')
+        ->with('divisi',$divisi);
 	}
 
 	/**
@@ -68,11 +71,13 @@ class UserController extends Controller {
 			'email' => 'required|string|email|max:255|unique:users',
 		]);
 
+
 		User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password'=> bcrypt($request->password),
             'role'=> $request->role,
+            'divisi_id' => $request->divisi,
         ]);
 
 		return redirect()->route('user.index');
@@ -97,7 +102,8 @@ class UserController extends Controller {
 	 */
 	public function edit($id) {
 		$users = User::find($id);
-		return view('user.edit',compact('users'));
+        $divisi = Divisi::all();
+		return view('user.edit',compact('users','divisi'));
 	}
 
 	/**

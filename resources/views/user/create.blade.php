@@ -41,6 +41,18 @@
                         <span class="help-block with-errors"></span>
                     </div>
 
+                    <div class="form-group">
+                        <select class="form-control"
+                        placeholder="Divisi" name="divisi" id="divisi" required>
+                        <option selected="" disabled="" value="">Divisi
+                        </option>
+                        @foreach ($divisi as $d)
+                        <option value="{{ $d->id }}">{{ $d->name }}</option>
+                        @endforeach
+                        </select>
+                        <span class="help-block with-errors"></span>
+                    </div>
+
 
                 </div>
                 <!-- /.box-body -->
