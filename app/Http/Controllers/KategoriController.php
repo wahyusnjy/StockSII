@@ -54,10 +54,19 @@ class KategoriController extends Controller
 			'name' => 'required|string'
 		]);
 
-		$parent = Assets::create([
-            'parent_id' => $request->parent_id ,
-            'name' => $request->name,
-        ]);
+        if($request->parent_id == null)
+        {
+            $parent = Assets::create([
+                'parent_id' => 0,
+                'name' => $request->name,
+            ]);
+        }else {
+            $parent = Assets::create([
+                'parent_id' => $request->parent_id,
+                'name' => $request->name,
+            ]);
+        }
+
 
 		return redirect()->route('kategori.index');
     }
