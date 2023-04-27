@@ -71,7 +71,7 @@ class UserController extends Controller {
 			'email' => 'required|string|email|max:255|unique:users',
 		]);
 
-        dd($request->all());
+        // dd($request->all());
 		User::create([
             'name' => $request->name,
             'email' => $request->email,
