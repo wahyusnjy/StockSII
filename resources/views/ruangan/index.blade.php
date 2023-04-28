@@ -13,9 +13,11 @@
             <h3 class="box-title">Data Ruangan</h3>
         </div>
 
+        @if(Auth::user()->role == 'admin')
         <div class="box-header">
             <a href="{{ route('ruangan.create') }}" class="btn btn-primary" >Add Ruangan</a>
         </div>
+        @endif
 
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
@@ -34,7 +36,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Ruangan</th>
+                    @if(Auth::user()->role == 'admin')
                     <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -45,6 +49,7 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $l->name }}</td>
+                        @if(Auth::user()->role == 'admin')
                         <td>
                          <a href="{{ url('ruangan/'.$l->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                          <form id="myForm" action="{{ route('ruangan.destroy', $l->id) }}" method="post" style="display: inline;">
@@ -54,6 +59,7 @@
                         </form>
 
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

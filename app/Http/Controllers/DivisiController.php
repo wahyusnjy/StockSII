@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Divisi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DivisiController extends Controller
 {
@@ -27,7 +28,9 @@ class DivisiController extends Controller
      */
     public function create()
     {
-        return view('divisi.create');
+        if(Auth::user()->role == 'admin'){
+            return view('divisi.create');
+        }
     }
 
     public function CariDivisi(Request $request)
@@ -78,10 +81,12 @@ class DivisiController extends Controller
      */
     public function edit(Divisi $divisi,$id)
     {
+        if(Auth::user()->role == 'admin'){
         $divisi = Divisi::find($id);
 
         return view('divisi.edit')
         ->with('divisi',$divisi);
+        } 
     }
 
     /**

@@ -10,13 +10,15 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Lokasi</h3>
+            <h3 class="box-title">Data Location</h3>
         </div>
 
+        @if(Auth::user()->role == 'admin')
         <div class="box-header">
-            <a href="{{ route('lokasi.create') }}" class="btn btn-primary" >Add Lokasi</a>
+            <a href="{{ route('lokasi.create') }}" class="btn btn-primary" >Add Location</a>
             <a href="{{ route('exportExcel.lokasiAll') }}" class="btn btn-success">Export Excel</a>
         </div>
+        @endif
 
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
@@ -34,8 +36,10 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Lokasi</th>
+                    <th>Location</th>
+                    @if(Auth::user()->role == 'admin')
                     <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -46,6 +50,7 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $l->name }}</td>
+                        @if(Auth::user()->role == 'admin')
                         <td>
                          <a href="{{ url('lokasi/'.$l->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                          <form id="myForm" action="{{ route('lokasi.destroy', $l->id) }}" method="post" style="display: inline;">
@@ -55,6 +60,7 @@
                         </form>
 
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -67,7 +73,9 @@
     </div>
 
     @include('lokasi.form')
+    @if(Auth::user()->role == 'admin')
     @include('lokasi.form_import')
+    @endif
 
 @endsection
 

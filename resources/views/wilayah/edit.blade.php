@@ -3,7 +3,7 @@
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Edit Wilayah</h3>
+        <h3 class="box-title">Edit Region</h3>
     </div>
 
     <div class="box-body">
@@ -15,6 +15,12 @@
                 <div class="form-group">
                     <label >Name</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}" autofocus required>
+                    <span class="help-block with-errors"></span>
+                </div>
+
+                <div class="form-group">
+                    <label >Desc</label>
+                    <input type="text" class="form-control" id="desc" name="desc" value="{{ $category->desc }}" autofocus required>
                     <span class="help-block with-errors"></span>
                 </div>
             </div>

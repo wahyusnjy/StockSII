@@ -6,6 +6,7 @@ use App\Exports\ExportCategories;
 use App\Models\Category;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class WilayahController extends Controller
@@ -42,7 +43,9 @@ class WilayahController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->role == 'admin'){
         return view('wilayah.create');
+        }
     }
 
     /**
@@ -81,8 +84,10 @@ class WilayahController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::user()->role == 'admin'){
         $category = Category::find($id);
         return view('wilayah.edit',compact('category'));
+        }
     }
 
     /**

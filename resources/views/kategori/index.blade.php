@@ -10,12 +10,14 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Kategori</h3>
+            <h3 class="box-title">Data Category</h3>
         </div>
 
+        @if(Auth::user()->role == 'admin')
         <div class="box-header">
-            <a href="{{ route('kategori.create') }}" class="btn btn-primary" >Add Kategori</a>
+            <a href="{{ route('kategori.create') }}" class="btn btn-primary" >Add Category</a>
         </div>
+        @endif
 
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
@@ -33,8 +35,10 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Kategori</th>
+                    <th>Category</th>
+                    @if(Auth::user()->role == 'admin')
                     <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -51,6 +55,7 @@
                             {{ $a->name }}
                             @endif
                         </td>
+                        @if(Auth::user()->role == 'admin')
                         <td>
                             <a href="{{ url('kategori/'.$a->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                             <form id="myForm" action="{{ route('kategori.destroy', $a->id) }}" method="post" style="display: inline;">
@@ -59,6 +64,7 @@
                                 <button type="submit" class="btn btn-danger btn-xs" onclick="confirmSubmit({{ $a->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                             </form>
                         </td>
+                        @endif
                     </tr>
 
                         {{-- @foreach ($a->child as $child)

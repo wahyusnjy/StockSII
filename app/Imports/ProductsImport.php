@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Lokasi;
 use App\Models\Product;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -61,32 +62,15 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation
             'lokasi_id'     => $row['lokasi'] ?? 71,
             'product_code'  => $input ?? '404 Not Found',
             'qrcode'        => $qrcode ?? '404 Not Found',
+            'divisi_id'     => Auth::user()->divisi_id,
+            'user_id'       => Auth::user()->id,
             ],[
-                // 'id'            => $row['no'],
-                // 'harga'         => $row['harga'],
-                // 'qty'           => $row['qty'],
-                // 'user'          => $row['user'],
-                // 'product_code'  => $input,
-                // 'qrcode'        => $qrcode,
-                // 'category_id'   => $row['category'],
-                // 'lokasi_id'     => $row['lokasi'],
-                // 'assets_id'     => $row['assets'],
+
                 'id'            => $row['no'] ?? 404,
                 'qty'           => $newqty ?? $row['qty'] ?? 0,
                 'harga'         => $row['harga'] ?? 0,
                 'user'          => $row['user'] ?? 'Tidak Ditemukan',
             ]);
-        // return new Product([
-        //     // 'id'            => $row['no'],
-        //     // 'nama'          => $row['nama'],
-        //     // 'harga'         => $row['harga'],
-        //     // 'qty'           => $row['qty'],
-        //     // 'category_id'   => $row['category'],
-        //     // 'lokasi_id'     => $row['lokasi'],
-        //     // 'assets_id'     => $row['assets'],
-        //     // 'user'          => $row['user'],
-        //     // 'product_code'  => $input,
-        // ]);
     }
 
     public function getRowCount(): int

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assets;
 use App\Models\KategoriChild;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class KategoriController extends Controller
@@ -36,9 +37,11 @@ class KategoriController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->role == 'admin'){
         $parent_id = Assets::all();
         return view('kategori.create')
         ->with('parent_id',$parent_id);
+        }
     }
 
     /**
@@ -90,8 +93,11 @@ class KategoriController extends Controller
      */
     public function edit(Assets $assets,$id)
     {
-        $assets = Assets::find($id);
-		return view('kategori.edit', compact('assets'));
+        if(Auth::user()->role == 'admin'){
+        $allkategori = Assets::all();
+        $parent_id = Assets::find($id);
+		return view('kategori.edit', compact('parent_id','allkategori'));
+        }
     }
 
     /**
@@ -107,11 +113,21 @@ class KategoriController extends Controller
 			'name' => 'required|string',
 		]);
 
-		Assets::where('id',$id)->update([
-            'name' => $request->name,
-        ]);
+        if($request->parent_id == null)
+        {
+            $parent = Assets::where('id',$id)->update([
+                'parent_id' => 0,
+                'name' => $request->name,
+            ]);
+        }else {
+            $parent = Assets::where('id',$id)->update([
+                'parent_id' => $request->parent_id,
+                'name' => $request->name,
+            ]);
+        }
 
-		return redirect()->route('assetinventory.index');
+
+		return redirect()->route('kategori.index');
     }
 
     /**

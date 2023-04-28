@@ -28,7 +28,8 @@ class ProductMasukController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('id','ASC')
+
+        $products = Product::orderBy('id','ASC')->where('divisi_id',Auth::user()->divisi_id)
         ->get(['nama','id','qrcode']);
 
         $suppliers = Supplier::orderBy('nama','ASC')
@@ -72,7 +73,7 @@ class ProductMasukController extends Controller
      */
     public function create()
     {
-        $products = Product::orderBy('id','ASC')
+        $products = Product::orderBy('id','ASC')->where('divisi_id',Auth::user()->divisi_id)
         ->get(['nama','id','qrcode']);
 
         $suppliers = Supplier::orderBy('nama','ASC')

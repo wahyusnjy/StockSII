@@ -10,13 +10,14 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Divisi</h3>
+            <h3 class="box-title">Data Division</h3>
         </div>
 
+        @if(Auth::user()->role == 'admin')
         <div class="box-header">
-            <a href="{{ route('divisi.create') }}" class="btn btn-primary" >Add Divisi</a>
-            {{-- <a href="{{ route('exportExcel.lokasiAll') }}" class="btn btn-success">Export Excel</a> --}}
+            <a href="{{ route('divisi.create') }}" class="btn btn-primary" >Add Division</a>
         </div>
+        @endif
 
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
@@ -35,7 +36,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Divisi</th>
+                    @if(Auth::user()->role == 'admin')
                     <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -46,6 +49,7 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $d->name }}</td>
+                        @if(Auth::user()->role == 'admin')
                         <td>
                          <a href="{{ url('divisi/edit/'.$d->id.'') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                          <form id="myForm" action="{{ route('divisi.destroy', $d->id) }}" method="post" style="display: inline;">
@@ -55,6 +59,7 @@
                         </form>
 
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

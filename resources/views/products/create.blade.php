@@ -10,116 +10,174 @@
                 @csrf
                 <input type="hidden" name="id">
                 <div class="box-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control @error('nama')
+                                    is-invalid
+                                    @enderror" id="nama" name="nama" value="{{ old('nama') }}" autofocus required>
+                                    <span class="help-block with-errors"></span>
+                                    @error('nama')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control rupiah @error('harga')
+                                    is-invalid
+                                    @enderror" id="harga" name="harga" value="{{ old('harga') }}" required>
+                                    <span class="help-block with-errors"></span>
+                                    @error('harga')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Quantity</label>
+                                    <input type="number" class="form-control
+                                    @error('qty')
+                                    is-invalid
+                                    @enderror" id="qty" name="qty"  value="{{ old('qty') }}" required>
+                                    <span class="help-block with-errors"></span>
+                                    @error('qty')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Region</label>
+                                    <select class="form-control js-example-basic-single
+                                    @error('category_id')
+                                    is-invalid
+                                    @enderror" name="category_id" id="category_id" required>
+                                        <option selected="selected" value="{{ old('category_id') }}" disabled>-- Choose Region --</option>
+                                        @foreach ($region as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
 
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control @error('nama')
-                        is-invalid
-                        @enderror" id="nama" name="nama" value="{{ old('nama') }}" autofocus required>
-                        <span class="help-block with-errors"></span>
-                        @error('nama')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                                    <span class="help-block with-errors"></span>
+                                    @error('category_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Location</label>
+                                    <select class="form-control js-example-basic-single" name="lokasi_id" id="lokasi_id" required  data-live-search="true">
+                                        <option selected="selected" disabled>-- Choose Location --</option>
+                                        @foreach ($lokasi as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <span class="help-block with-errors"></span>
+                                    @error('lokasi_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="form-control js-example-basic-single
+                                    @error('assets_id')
+                                    is-invalid
+                                    @enderror" name="assets_id" id="assets_id" required>
+                                        <option selected="selected" value="" disabled>-- Choose Category --</option>
+                                        @foreach ($asset as $item)
+                                        @if($item->parent_id == 0)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @else
+                                        <option value="{{ $item->id }}">{{ $item->parent->name }} - {{ $item->name }}</option>
+                                        @endif
+
+                                        @endforeach
+                                    </select>
+
+                                    <span class="help-block with-errors"></span>
+                                    @error('assets_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Rack</label>
+                                    <select class="form-control js-example-basic-single
+                                    @error('rack_id')
+                                    is-invalid
+                                    @enderror" name="rack_id" id="rack_id">
+                                        <option selected="selected" value="" disabled>-- Choose Rack --</option>
+                                        @foreach ($rack as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <span class="help-block with-errors"></span>
+                                    @error('rack_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Room</label>
+                                    <select class="form-control js-example-basic-single
+                                    @error('room_id')
+                                    is-invalid
+                                    @enderror" name="room_id" id="room_id" >
+                                        <option selected="selected" value="" disabled>-- Choose Room --</option>
+                                        @foreach ($room as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <span class="help-block with-errors"></span>
+                                    @error('room_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>User</label>
+                                    <input type="text" class="form-control
+                                    @error('user')
+                                    is-invalid
+                                    @enderror" id="user" name="user" value="{{ old('user') }}" required>
+                                    <span class="help-block with-errors"></span>
+                                    @error('user')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" class="form-control
+                                    @error('image')
+                                    is-invalid
+                                    @enderror" id="image" name="image" onchange="loadFile(event)">
+                                    <span class="help-block with-errors"></span>
+                                    <img id="output" style="width: 200px;" />
+                                    @error('image')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Price</label>
-                        <input type="text" class="form-control rupiah @error('harga')
-                        is-invalid
-                        @enderror" id="harga" name="harga" value="{{ old('harga') }}" required>
-                        <span class="help-block with-errors"></span>
-                        @error('harga')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="number" class="form-control
-                        @error('qty')
-                        is-invalid
-                        @enderror" id="qty" name="qty"  value="{{ old('qty') }}" required>
-                        <span class="help-block with-errors"></span>
-                        @error('qty')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
 
 
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input type="file" class="form-control
-                        @error('image')
-                        is-invalid
-                        @enderror" id="image" name="image" onchange="loadFile(event)">
-                        <span class="help-block with-errors"></span>
-                        <img id="output" style="width: 200px;" />
-                        @error('image')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label>Wilayah</label>
-                        <select class="form-control js-example-basic-single
-                        @error('category_id')
-                        is-invalid
-                        @enderror" name="category_id" id="category_id" required>
-                            <option selected="selected" value="{{ old('category_id') }}" disabled>-- Choose Wilayah --</option>
-                            @foreach ($category as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-
-                        <span class="help-block with-errors"></span>
-                        @error('category_id')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label>Lokasi</label>
-                        <select class="form-control js-example-basic-single" name="lokasi_id" id="lokasi_id" required  data-live-search="true">
-                            <option selected="selected" >-- Choose Lokasi --</option>
-                            @foreach ($lokasi as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-
-                        <span class="help-block with-errors"></span>
-                        @error('lokasi_id')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label>Kategori</label>
-                        <select class="form-control js-example-basic-single
-                        @error('assets_id')
-                        is-invalid
-                        @enderror" name="assets_id" id="assets_id" required>
-                            <option selected="selected" value="" disabled>-- Choose Kategori --</option>
-                            @foreach ($asset as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-
-                        <span class="help-block with-errors"></span>
-                        @error('assets_id')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label>User</label>
-                        <input type="text" class="form-control
-                        @error('user')
-                        is-invalid
-                        @enderror" id="user" name="user" value="{{ old('user') }}" required>
-                        <span class="help-block with-errors"></span>
-                        @error('user')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
 
                 </div>
                 <!-- /.box-body -->

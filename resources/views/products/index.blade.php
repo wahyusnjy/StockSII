@@ -53,16 +53,13 @@
                             <th><input type="checkbox" id="head-cb">
                             </th>
                             <th>ID</th>
-                            <th>QR_CODE</th>
-                            <th>Nama</th>
-                            <th>Harga</th>
-                            <th>QTY</th>
+                            <th>QR Code</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Qty</th>
                             <th>Image</th>
-                            <th>Category</th>
-                            <th>Lokasi</th>
-                            <th>Asset/Inventory</th>
-                            <th>User</th>
-                            <th>Activity</th>
+                            <th style="text-align: center;">Info</th>
+                            <th>Division</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -95,51 +92,17 @@
                                                 width="50" height="50" src="{{ url($p->image) }}"
                                                 alt=""></a></td>
                                 @endif
-                                <td>{{ $p->category->name }}</td>
-                                <td>{{ $p->lokasi->name }}</td>
-                                <td>{{ $p->assets->name }}</td>
-                                <td>{{ $p->user }}</td>
                                 <td>
-                                    @if (empty($activ->activity_status))
-                                        <span class="badge badge-warning">Nothing <br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 1)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 2)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 3)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 4)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 5)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 6)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 7)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 8)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 9)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 10)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 11)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @elseif($activ->activity_status == 12)
-                                        <span class="badge badge-warning">Last Input Product
-                                            by{{ auth()->user()->name }}<br>{{ $date }}</span>
-                                    @endif
+                                    <ul style="white-space: nowrap; list-style-type:none;">
+                                        <li>Region&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:  {{ $p->category->name }} - {{ $p->category->desc }}</li>
+                                        <li>Location&nbsp;&nbsp;: {{ $p->lokasi->name }}</li>
+                                        <li>Category&nbsp;&nbsp;: {{ $p->assets->name }}</li>
+                                    </ul>
                                 </td>
+                                <td>
+                                    {{ $p->divisi->name }}
+                                </td>
+
                                 <td>
 
                                     <a href="/print/barcode/{{ $p->id }} ?download=Y"

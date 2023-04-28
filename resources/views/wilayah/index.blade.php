@@ -10,14 +10,16 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Wilayah</h3>
+            <h3 class="box-title">Data Region</h3>
         </div>
 
+        @if(Auth::user()->role == 'admin')
         <div class="box-header">
-            <a href="{{ route('wilayah.create') }}" class="btn btn-primary" >Add Wilayah</a>
+            <a href="{{ route('wilayah.create') }}" class="btn btn-primary" >Add Region</a>
             <a href="{{ route('exportPDF.wilayahAll') }}" class="btn btn-danger">Export PDF</a>
             <a href="{{ route('exportExcel.wilayahAll') }}" class="btn btn-success">Export Excel</a>
         </div>
+        @endif
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
                 <form action="{{ url('/cari/wilayah') }}" method="get" class="input-group">
@@ -34,8 +36,11 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Code</th>
                     <th>Name</th>
+                    @if(Auth::user()->role == 'admin')
                     <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -46,6 +51,8 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $c->name }}</td>
+                        <td>{{ $c->desc }}</td>
+                        @if(Auth::user()->role == 'admin')
                         <td>
                             {{-- <a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> --}}
                         <a href="{{ url('wilayah/'.$c->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
@@ -55,6 +62,7 @@
                             <button type="submit" class="btn btn-danger btn-xs"  onclick="confirmSubmit({{ $c->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

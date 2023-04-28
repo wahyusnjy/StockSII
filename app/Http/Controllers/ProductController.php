@@ -10,6 +10,8 @@ use App\Models\Assets;
 use App\Models\Category;
 use App\Models\Lokasi;
 use App\Models\Product;
+use App\Models\Rak;
+use App\Models\Ruangan;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Laravel\Breeze\BreezeServiceProvider;
@@ -46,7 +48,7 @@ class ProductController extends Controller
 
         $type         = $request->type;
         $search       = $request->search;
-        $producs      = Product::paginate(20);
+        $producs      = Product::where('divisi_id',Auth::user()->divisi_id)->paginate(20);
         $product      = Product::all();
         foreach($product as $p){
         if(empty($activ)){
@@ -58,7 +60,9 @@ class ProductController extends Controller
 
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
-        return view('products.index', compact('category','lokasi','asset','producs'));
+        $room    = Ruangan::all();
+        $rack    = Rak::all();
+        return view('products.index', compact('category','lokasi','asset','producs','room','rack'));
     }
    public function CariProduct(Request $request)
    {
@@ -109,14 +113,18 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
-        //dd($category);
+        $region = Category::all();
+        //dd($region);
         $producs = Product::all();
         //dd($producs);
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
+        $room    = Ruangan::all();
+        $rack    = Rak::all();
         return view('products.create')
-        ->with('category',$category)
+        ->with('room',$room)
+        ->with('rack',$rack)
+        ->with('region',$region)
         ->with('lokasi',$lokasi)
         ->with('asset',$asset)
         ->with('producs', $producs);
@@ -144,23 +152,74 @@ class ProductController extends Controller
 
         $input = $request->all();
 
+
         $product = Product::orderBy('id', 'DESC')->first();
         $get_category = Category::orderBy('name','ASC')
         ->where('id', $input["category_id"])->first();
+        $kategori = Assets::orderBy('name','ASC')
+        ->where('id', $input["assets_id"])->first();
         $lokasi = Lokasi::orderBy('name','ASC')
         ->where('id',$input["lokasi_id"])->first();
+
+        if(empty($input["room_id"])){
+
+        }else{
+            $room = Ruangan::orderBy('name','ASC')
+            ->where('id',$input["room_id"])->first();
+
+        }
+
+        if(empty($input["rack_id"])){
+
+        }else{
+        $rack = Rak::orderBy('name','ASC')
+        ->where('id',$input["rack_id"])->first();
+        }
+
         $input['image'] = null;
-        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$lokasi->name)."\n".strtoupper("Category : ".$get_category->name);
+        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Location : ".$lokasi->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$product->user);
+
 
         if(empty($product->id)){
-            $id = 0;
-            $test = str_pad($id++,5,'0', STR_PAD_LEFT);
-            $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+            $id = 1;
+            $test = str_pad($id,3,'0', STR_PAD_LEFT);
+            if(empty($room)){
+
+                if(empty($rack)){
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper($test);
+                }else {
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                }
+            }else{
+
+                if(empty($rack)){
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper($test);
+                }else {
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                }
+            }
+
         }else{
             $id = $product->id;
             $id++;
-            $test = str_pad($id,5,'0', STR_PAD_LEFT);
-            $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+            $test = str_pad($id,3,'0', STR_PAD_LEFT);
+
+            if(empty($room)){
+
+                if(empty($rack)){
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper($test);
+                }else {
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                }
+            }else{
+
+                if(empty($rack)){
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper($test);
+                }else {
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                }
+            }
+
         }
 
 
@@ -187,7 +246,7 @@ class ProductController extends Controller
 
         $input['divisi_id'] = Auth::user()->divisi_id;
         $input['user_id'] = Auth::user()->id;
-
+        // dd($input);
         $product_eks = Product::create($input);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 1, 'product_id'=> $product_eks->id]);
         return redirect()->route('products.index');
@@ -219,9 +278,13 @@ class ProductController extends Controller
         //dd($producs);
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
+        $room    = Ruangan::all();
+        $rack    = Rak::all();
         return view('products.edit')
         ->with('category',$category)
         ->with('lokasi',$lokasi)
+        ->with('rack',$rack)
+        ->with('room',$room)
         ->with('asset',$asset)
         ->with('producs', $producs);
     }
@@ -256,20 +319,66 @@ class ProductController extends Controller
 
         $get_category = Category::orderBy('name','ASC')
         ->where('id', $input["category_id"])->first();
+        $kategori = Assets::orderBy('name','ASC')
+        ->where('id', $input["assets_id"])->first();
         $lokasi = Lokasi::orderBy('name','ASC')
         ->where('id',$input["lokasi_id"])->first();
 
-        if(empty($produk->id)){
-            $id = 0;
-            $test = str_pad($id++,5,'0', STR_PAD_LEFT);
-            $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+        if(empty($input["room_id"])){
+
         }else{
-            $id = $produk->id;
-            $test = str_pad($id,5,'0', STR_PAD_LEFT);
-            $input['qrcode'] = strtoupper(substr($get_category->name, 0, 1)).strtoupper(substr($get_category->name, 6, 1)).strtoupper($test);
+            $room = Ruangan::orderBy('name','ASC')
+            ->where('id',$input["room_id"])->first();
+
         }
 
-        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$lokasi->name)."\n".strtoupper("Category : ".$get_category->name)."\n".strtoupper("User : ".$produk->user);
+        if(empty($input["rack_id"])){
+
+        }else{
+        $rack = Rak::orderBy('name','ASC')
+        ->where('id',$input["rack_id"])->first();
+        }
+        if(empty($produk->id)){
+            $id = 1;
+            $test = str_pad($id++,3,'0', STR_PAD_LEFT);
+            if(empty($room)){
+
+                if(empty($rack)){
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper($test);
+                }else {
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                }
+            }else{
+
+                if(empty($rack)){
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper($test);
+                }else {
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                }
+            }
+
+        }else{
+            $id = $produk->id;
+            $test = str_pad($id,3,'0', STR_PAD_LEFT);
+            if(empty($room)){
+
+                if(empty($rack)){
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper($test);
+                }else {
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                }
+            }else{
+
+                if(empty($rack)){
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper($test);
+                }else {
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                }
+            }
+
+        }
+
+        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$lokasi->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
 
         $input['image'] = $produk->image;
         if ($request->hasFile('image')){
@@ -299,9 +408,9 @@ class ProductController extends Controller
 
         $produk->update($input);
 
-        $url = $request->input('url');
+        // $url = $request->input('url');
 
-       return redirect($url);
+       return redirect()->route('products.index');
 
     }
 

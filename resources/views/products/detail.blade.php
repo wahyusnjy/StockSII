@@ -17,17 +17,24 @@
         <table class="table table-bordered mt-4">
             <tbody>
                 <tr>
-                    <td>Product Code</td>
+                    <td>QR Code</td>
                     <td>{!! QrCode::size(100)->generate($producs->product_code)!!}
                         <p style="margin-top: 20px;">{{ $producs->qrcode }}</p>
                     </td>
+
                 </tr>
                 <tr>
-                    <td>Nama</td>
+                    <td>Barcode Code</td>
+                    <td>
+                        {!! DNS1D::getBarcodeSVG($producs->qrcode, 'C128', true) !!}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Name</td>
                     <td>{{ $producs->nama }}</td>
                 </tr>
                 <tr>
-                    <td>Harga</td>
+                    <td>Price</td>
                     <td>{{ number_format($producs->harga) }}</td>
                 </tr>
                 <tr>
@@ -45,181 +52,46 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Category</td>
+                    <td>Region</td>
                     <td>{{ $producs->category->name }}</td>
                 </tr>
                 <tr>
-                    <td>Lokasi</td>
+                    <td>Location</td>
                     <td>{{ $producs->lokasi->name }}</td>
                 </tr>
                 <tr>
-                    <td>Assets/Inventory</td>
-                    <td>{{ $producs->assets->name }}</td>
+                    <td>Category</td>
+                    <td>
+                        @if($producs->assets->parent_id == 0)
+                        {{ $producs->assets->name}}
+                        @else
+                        {{ $producs->assets->parent->name }} - {{ $producs->assets->name }}
+                        @endif
+                        {{-- {{ $producs->assets->name }} --}}
+                    </td>
                 </tr>
+
+                @if(empty($producs->room->name))
+
+                @else
+                <tr>
+                    <td>Room</td>
+                    <td>{{ $producs->room->name }}</td>
+                </tr>
+                @endif
+
+                @if(empty($producs->rack->name))
+
+                @else
+                <tr>
+                    <td>Rack</td>
+                    <td>{{ $producs->rack->name }}</td>
+                </tr>
+                @endif
             </tbody>
         </table>
     </div>
 
     <a href="{{ url()->previous() }}" class="btn btn-danger">Back</a>
-
-@endsection
-
-@section('bot')
-
-    <!-- DataTables -->
-    <script src=" {{ asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') }} "></script>
-    <script src="{{ asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }} "></script>
-
-    {{-- Validator --}}
-    <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
-
-    {{--<script>--}}
-    {{--$(function () {--}}
-    {{--$('#items-table').DataTable()--}}
-    {{--$('#example2').DataTable({--}}
-    {{--'paging'      : true,--}}
-    {{--'lengthChange': false,--}}
-    {{--'searching'   : false,--}}
-    {{--'ordering'    : true,--}}
-    {{--'info'        : true,--}}
-    {{--'autoWidth'   : false--}}
-    {{--})--}}
-    {{--})--}}
-    {{--</script>--}}
-
-    <script type="text/javascript">
-        var table = $('#products-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('api.products') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'product_code', name: 'product_code'},
-                {data: 'nama', name: 'nama'},
-                {data: 'harga', name: 'harga'},
-                {data: 'qty', name: 'qty'},
-                {data: 'show_photo', name: 'show_photo'},
-                {data: 'category_name', name: 'category_name'},
-                // {data: 'link', name: 'link'},
-                // {data: 'desc_product', name: 'desc_product'},
-                {data: 'activity_status', name: 'activity_status'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
-
-        function addForm() {
-            save_method = "add";
-            $('input[name=_method]').val('POST');
-            $('#modal-form').modal('show');
-            $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Products');
-        }
-
-        function editForm(id) {
-            save_method = 'edit';
-            $('input[name=_method]').val('PATCH');
-            $('#modal-form form')[0].reset();
-            $.ajax({
-                url: "{{ url('products') }}" + '/' + id + "/edit",
-                type: "GET",
-                dataType: "JSON",
-                success: function(data) {
-                    $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Products');
-
-                    $('#id').val(data.id);
-                    $('#product_code').val(data.product_code);
-                    $('#nama').val(data.nama);
-                    $('#harga').val(data.harga);
-                    $('#qty').val(data.qty);
-                    // $('#link').val(data.link);
-                    // $('#description').val(data.description);
-                    $('#category_id').val(data.category_id);
-                },
-                error : function() {
-                    alert("Nothing Data");
-                }
-            });
-        }
-
-        function deleteData(id){
-            var csrf_token = $('meta[name="csrf-token"]').attr('content');
-            swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#d33',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
-                $.ajax({
-                    url : "{{ url('products') }}" + '/' + id,
-                    type : "POST",
-                    data : {'_method' : 'DELETE', '_token' : csrf_token},
-                    success : function(data) {
-                        table.ajax.reload();
-                        swal({
-                            title: 'Success!',
-                            text: data.message,
-                            type: 'success',
-                            timer: '1500'
-                        })
-                    },
-                    error : function () {
-                        swal({
-                            title: 'Oops...',
-                            text: data.message,
-                            type: 'error',
-                            timer: '1500'
-                        })
-                    }
-                });
-            });
-        }
-
-        $(function(){
-            $('#modal-form form').validator().on('submit', function (e) {
-                console.log(e);
-                if (!e.isDefaultPrevented()){
-                    var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('products') }}";
-                    else url = "{{ url('products') . '/' }}" + id;
-
-                    $.ajax({
-                        url : url,
-                        type : "POST",
-                        //hanya untuk input data tanpa dokumen
-//                      data : $('#modal-form form').serialize(),
-                        data: new FormData($("#modal-form form")[0]),
-                        contentType: false,
-                        processData: false,
-                        success : function(data) {
-                            console.log(data);
-                            $('#modal-form').modal('hide');
-                            table.ajax.reload();
-                            window.location.reload();
-                            swal({
-                                title: 'Success!',
-                                text: data.message,
-                                type: 'success',
-                                timer: '1500'
-                            })
-                        },
-                        error : function(data){
-                            console.log(data);
-                            swal({
-                                title: 'Oops...',
-                                text: data.message,
-                                type: 'error',
-                                timer: '1500'
-                            })
-                        }
-                    });
-                    return false;
-                }
-            });
-        });
-    </script>
 
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rak;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RakController extends Controller
 {
@@ -26,7 +27,9 @@ class RakController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->role == 'admin'){
         return view('rak.create');
+        }
     }
 
 
@@ -72,9 +75,11 @@ class RakController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::user()->role == 'admin'){
         $rak = Rak::find($id);
         return view('rak.edit')
         ->with('rak',$rak);
+        }
     }
 
     /**

@@ -3,7 +3,7 @@
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Add Kategori</h3>
+        <h3 class="box-title">Add Category</h3>
     </div>
     <div class="box-body">
         <form method="post"class="form-horizontal" enctype="multipart/form-data" action="{{route('kategori.store')}}">
@@ -17,7 +17,7 @@
                     @error('parent_id')
                     is-invalid
                     @enderror" name="parent_id" id="parent_id">
-                    <option selected="selected" value="0" disabled>Parent Kategori</option>
+                    <option selected="selected" value="0" disabled>Parent Category</option>
                     @if(empty($parent_id))
                     @else
                     @foreach ($parent_id as $kategori)
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label >Kategori </label>
+                    <label >Category </label>
                     <input type="text" class="form-control" id="name" name="name"  autofocus required>
                     <span class="help-block with-errors"></span>
                 </div>

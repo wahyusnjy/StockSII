@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RuanganController extends Controller
 {
@@ -35,7 +36,9 @@ class RuanganController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->role == 'admin'){
         return view('ruangan.create');
+        }
     }
 
     /**
@@ -76,9 +79,11 @@ class RuanganController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::user()->role == 'admin'){
         $ruangan =  Ruangan::find($id);
         return view('ruangan.edit')
         ->with('ruangan',$ruangan);
+        }
     }
 
     /**

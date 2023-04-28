@@ -6,6 +6,7 @@ use App\Exports\ExportLokasi;
 use App\Imports\LokasiImport;
 use App\Models\Lokasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -38,7 +39,11 @@ class LokasiController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->role == 'admin'){
         return view('lokasi.create');
+        }else {
+            return view('notallowed');
+        }
     }
 
     /**
@@ -80,8 +85,12 @@ class LokasiController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::user()->role == 'admin'){
         $lokasi = Lokasi::find($id);
 		return view('lokasi.edit', compact('lokasi'));
+        }else {
+            return view('notallowed');
+        }
     }
 
     /**

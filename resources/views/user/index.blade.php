@@ -13,9 +13,11 @@
             <h3 class="box-title">Data Users</h3>
         </div>
 
+        @if(Auth::user()->role == 'admin')
         <div class="box-header">
             <a href="{{ route('user.create') }}" class="btn btn-primary" >Add User</a>
         </div>
+        @endif
 
         <div class="box-header">
             <div style="max-width: 30%;" class="pull-right">
@@ -39,7 +41,9 @@
                     <th>Email</th>
                     <th>Role</th>
                     <th>Divisi</th>
+                    @if(Auth::user()->role == 'admin')
                     <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -59,6 +63,7 @@
                         {{ $user->divisi->name }}
                         @endif
                     </td>
+                    @if(Auth::user()->role == 'admin')
                     <td>
 
                         <div style="display: inline-block">
@@ -70,8 +75,8 @@
                             <button type="button" class="btn btn-danger btn-xs"  onclick="confirmSubmit({{ $user->id }})"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                         </form>
                         </div>
-
                     </td>
+                    @endif
                 </tr>
                     @endforeach
                 </tbody>

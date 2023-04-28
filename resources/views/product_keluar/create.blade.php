@@ -16,7 +16,7 @@
                             <select class="form-control  selectpicker" name="product_id" required data-live-search="true">
                                 <option selected="selected" value="">-- Choose Product --</option>
                                 @foreach ($products as $item)
-                                    <option value="{{$item->id}}">{{$item->qrcode}}</option>
+                                    <option value="{{$item->id}}">{{$item->nama}}</option>
                                 @endforeach
                             </select>
                             <span class="help-block with-errors"></span>

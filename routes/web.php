@@ -181,7 +181,9 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 
 
+    // Route::get('notallowed',)
 });
+
 
 Route::get('barcode/allfireman', function(Request $request){
 	// set_time_limit(3000);

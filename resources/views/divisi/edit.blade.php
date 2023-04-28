@@ -3,7 +3,7 @@
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Edit Divisi</h3>
+        <h3 class="box-title">Edit Division</h3>
     </div>
 
     <div class="box-body">
@@ -13,7 +13,7 @@
             @method('PATCH')
             <div class="box-body">
                 <div class="form-group">
-                    <label >Lokasi</label>
+                    <label >Division</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ $divisi->name }}"  autofocus required>
                     <span class="help-block with-errors"></span>
                 </div>
