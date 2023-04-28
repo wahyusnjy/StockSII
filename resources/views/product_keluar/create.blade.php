@@ -23,9 +23,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label >Customer</label>
+                            <label >Product Users</label>
                             <select class="form-control selectpicker" name="customer_id" required data-live-search="true">
-                                <option selected="selected" value="">-- Choose Customer --</option>
+                                <option selected="selected" value="">-- Choose Product Users --</option>
                                 @foreach ($customers as $item)
                                     <option value="{{$item->id}}">{{$item->nama}}</option>
                                 @endforeach
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label >Keterangan</label>
+                            <label >Information</label>
                             <input type="text" class="form-control" id="keterangan" name="keterangan" required>
                             <span class="help-block with-errors"></span>
                         </div>

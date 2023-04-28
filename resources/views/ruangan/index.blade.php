@@ -10,12 +10,12 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Ruangan</h3>
+            <h3 class="box-title">Data Room</h3>
         </div>
 
         @if(Auth::user()->role == 'admin')
         <div class="box-header">
-            <a href="{{ route('ruangan.create') }}" class="btn btn-primary" >Add Ruangan</a>
+            <a href="{{ route('ruangan.create') }}" class="btn btn-primary" >Add Room</a>
         </div>
         @endif
 
@@ -35,7 +35,7 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ruangan</th>
+                    <th>Room</th>
                     @if(Auth::user()->role == 'admin')
                     <th>Action</th>
                     @endif
@@ -72,6 +72,7 @@
     </div>
 
     @include('ruangan.form')
+    @include('ruangan.form_import')
 
 @endsection
 

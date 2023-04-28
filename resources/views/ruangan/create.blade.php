@@ -3,7 +3,7 @@
 <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Add Ruangan</h3>
+        <h3 class="box-title">Add Room</h3>
     </div>
     <div class="box-body">
         <form method="post"class="form-horizontal" enctype="multipart/form-data" action="{{route('ruangan.store')}}">
@@ -13,7 +13,7 @@
 
             <div class="box-body">
                 <div class="form-group">
-                    <label >Ruangan</label>
+                    <label >Room</label>
                     <input type="text" class="form-control" id="name" name="name"  autofocus required>
                     <span class="help-block with-errors"></span>
                 </div>

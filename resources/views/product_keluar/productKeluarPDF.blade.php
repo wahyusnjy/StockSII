@@ -38,18 +38,21 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
+                <th class="text-center">Product</th>
                 <th class="text-center">Quantity</th>
-                <th class="text-center">Nama Barang</th>
-                <th class="text-center">Kategori Barang</th>
-                <th class="text-center">Keterangan</th>
+                <th class="text-center">Category</th>
+                <th class="text-center">Information</th>
             </tr>
         </thead>
         <tbody>
+            @php
+                $i = 1;
+            @endphp
             <tr>
-                <td class="text-center"> {{ $product_keluar->id }}</td>
-                <td class="text-center"> {{ $product_keluar->qty }}</td>
+                <td class="text-center"> {{ $i++ }}</td>
                 <td class="text-center"> {{ $product_keluar->product->nama }}</td>
-                <td class="text-center"> {{ $product_keluar->product->category->name }}</td>
+                <td class="text-center"> {{ $product_keluar->qty }}</td>
+                <td class="text-center"> {{ $product_keluar->product->assets->name }}</td>
                 <td class="text-center"> {{ $product_keluar->keterangan }}</td>
             </tr>
         </tbody>
@@ -57,7 +60,7 @@
 
     <table border="0" id="table-data" width="100%" class="mt-4">
         <tr>
-            <td class="text-center" style="font-weight:600;">Yang Memasukan,</td>
+            <td class="text-center" style="font-weight:600;">Yang Menerima,</td>
             <td class="text-center" style="font-weight:600;">Mengetahui</td>
         </tr>
         <tr aria-rowspan="2">

@@ -8,6 +8,7 @@ use App\Imports\ProductsImport;
 use App\Models\ActivityLog;
 use App\Models\Assets;
 use App\Models\Category;
+use App\Models\Divisi;
 use App\Models\Lokasi;
 use App\Models\Product;
 use App\Models\Rak;
@@ -143,7 +144,6 @@ class ProductController extends Controller
             'harga'         => 'required',
             'qty'           => 'required|numeric',
             'category_id'   => 'required',
-            'lokasi_id'     => 'required',
             'assets_id'     => 'required',
             'user'          => 'required',
             'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -158,16 +158,11 @@ class ProductController extends Controller
         ->where('id', $input["category_id"])->first();
         $kategori = Assets::orderBy('name','ASC')
         ->where('id', $input["assets_id"])->first();
-        $lokasi = Lokasi::orderBy('name','ASC')
-        ->where('id',$input["lokasi_id"])->first();
+        $divisi = Divisi::orderBy('name','ASC')
+        ->where('id',Auth::user()->divisi_id)->first();
+        $room = Ruangan::orderBy('name','ASC')
+        ->where('id',$input["room_id"])->first();
 
-        if(empty($input["room_id"])){
-
-        }else{
-            $room = Ruangan::orderBy('name','ASC')
-            ->where('id',$input["room_id"])->first();
-
-        }
 
         if(empty($input["rack_id"])){
 
@@ -177,7 +172,7 @@ class ProductController extends Controller
         }
 
         $input['image'] = null;
-        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Location : ".$lokasi->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$product->user);
+        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Location : ".$room->name)."\n".strtoupper("Category : ".$kategori->name);
 
 
         if(empty($product->id)){
@@ -186,16 +181,16 @@ class ProductController extends Controller
             if(empty($room)){
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }else{
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }
 
@@ -207,16 +202,16 @@ class ProductController extends Controller
             if(empty($room)){
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }else{
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }
 
@@ -305,7 +300,6 @@ class ProductController extends Controller
             'harga'         => 'required',
             'qty'           => 'required',
             'category_id'   => 'required',
-            'lokasi_id'     => 'required',
             'assets_id'     => 'required',
             'user'          => 'required',
             'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -319,18 +313,20 @@ class ProductController extends Controller
 
         $get_category = Category::orderBy('name','ASC')
         ->where('id', $input["category_id"])->first();
+
         $kategori = Assets::orderBy('name','ASC')
         ->where('id', $input["assets_id"])->first();
-        $lokasi = Lokasi::orderBy('name','ASC')
-        ->where('id',$input["lokasi_id"])->first();
 
-        if(empty($input["room_id"])){
-
-        }else{
-            $room = Ruangan::orderBy('name','ASC')
+        $room = Ruangan::orderBy('name','ASC')
             ->where('id',$input["room_id"])->first();
 
-        }
+        $divisi = Divisi::orderBy('name','ASC')
+        ->where('id',Auth::user()->divisi_id)->first();
+
+        $room = Ruangan::orderBy('name','ASC')
+        ->where('id',$input["room_id"])->first();
+
+
 
         if(empty($input["rack_id"])){
 
@@ -344,16 +340,16 @@ class ProductController extends Controller
             if(empty($room)){
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($divisi->name).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }else{
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }
 
@@ -363,22 +359,22 @@ class ProductController extends Controller
             if(empty($room)){
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($divisi->name).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }else{
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($lokasi->name, 0, 2)).strtoupper(substr($room->name,0,2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }
 
         }
 
-        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$lokasi->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
+        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$room->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
 
         $input['image'] = $produk->image;
         if ($request->hasFile('image')){

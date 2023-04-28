@@ -43,10 +43,10 @@
                 <tr>
                     <th>ID</th>
                     <th>Products</th>
-                    <th>Customer</th>
+                    <th>Product Users</th>
                     <th>QTY</th>
-                    <th>Tanggal Keluar</th>
-                    <th>Keterangan</th>
+                    <th>Out Date</th>
+                    <th>Information</th>
                     <th>Action</th>
                 </tr>
                 </thead>

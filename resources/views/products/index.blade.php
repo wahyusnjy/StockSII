@@ -79,8 +79,10 @@
                             <tr>
                                 <td><input type="checkbox" class="child-cb" value="{{ $p->id }}"></td>
                                 <td> {{ $i++ }}</td>
-                                <td>{!! QrCode::size(70)->generate($p->product_code) !!} <br>
-                                    <p>{{ $p->qrcode }}</p>
+                                <td>
+                                    {!! DNS1D::getBarcodeSVG($p->qrcode, 'C128',1) !!}
+                                    {{-- {!! QrCode::size(70)->generate($p->product_code) !!} <br>
+                                    <p>{{ $p->qrcode }}</p> --}}
                                 </td>
                                 <td>{{ $p->nama }}</td>
                                 <td>{{ number_format($p->harga) }}</td>
@@ -95,7 +97,7 @@
                                 <td>
                                     <ul style="white-space: nowrap; list-style-type:none;">
                                         <li>Region&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:  {{ $p->category->name }} - {{ $p->category->desc }}</li>
-                                        <li>Location&nbsp;&nbsp;: {{ $p->lokasi->name }}</li>
+                                        <li>Location&nbsp;&nbsp;: {{ $p->room->name }}</li>
                                         <li>Category&nbsp;&nbsp;: {{ $p->assets->name }}</li>
                                     </ul>
                                 </td>

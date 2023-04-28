@@ -35,14 +35,14 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation
         $input = $row['no'];
         $code = $row['nama'];
         $get_category = Category::orderBy('name','ASC')
-        ->where('id', $row["category"])->first();
+        ->where('id', $row["region"])->first();
         //  dd($get_category);
         $lokasi       = Lokasi::orderBy('name','ASC')
         ->where('id',$row["lokasi"])->first();
         $productname = Product::where('nama', $row['nama'])->first();
         //dd($row['category_name']);
 
-        $input = strtoupper("Product :".$row['nama'])."\n".strtoupper("Lokasi : ". $row['lokasi_name'])."\n".strtoupper("Category : ".$row['category_name']);
+        $input = strtoupper("Product :".$row['nama'])."\n".strtoupper("Lokasi : ". $row['lokasi_name']).    $row['user'];
         $prefix = '.';
         $id = $row['no'];
         $test = str_pad($id,5,'0', STR_PAD_LEFT);
@@ -57,16 +57,16 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation
         return  $new = Product::updateOrCreate(
             [
             'nama' => $row['nama'] ?? $productname->nama ?? 'Not Found',
-            'category_id'   => $row['category'] ?? 5,
-            'assets_id'     => $row['assets'] ?? 3,
-            'lokasi_id'     => $row['lokasi'] ?? 71,
+            'category_id'   => $row['region'] ?? 0,
+            'assets_id'     => $row['category'] ?? 0,
+            'lokasi_id'     => $row['lokasi'] ?? 0,
             'product_code'  => $input ?? '404 Not Found',
             'qrcode'        => $qrcode ?? '404 Not Found',
             'divisi_id'     => Auth::user()->divisi_id,
             'user_id'       => Auth::user()->id,
             ],[
 
-                'id'            => $row['no'] ?? 404,
+                'id'            => $row['no'] ?? 0,
                 'qty'           => $newqty ?? $row['qty'] ?? 0,
                 'harga'         => $row['harga'] ?? 0,
                 'user'          => $row['user'] ?? 'Tidak Ditemukan',

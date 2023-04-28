@@ -3,7 +3,7 @@
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Edit Supplier</h3>
+        <h3 class="box-title">Edit Product Users</h3>
     </div>
 
     <div class="box-body">
@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label >Customer</label>
+                            <label >Product Users</label>
                             <select class="form-control select selectpicker" name="customer_id" id="customer_id" required data-live-search="true">
                                 <option selected="selected" value="{{ $product_keluar->customer->id }}">{{ $product_keluar->customer->nama }}</option>
                                 @foreach ($customers as $item)
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label >Keterangan</label>
+                            <label >Information</label>
                             <input type="text" class="form-control" id="keterangan" value="{{ $product_keluar->keterangan }}" name="keterangan" required>
                             <span class="help-block with-errors"></span>
                         </div>

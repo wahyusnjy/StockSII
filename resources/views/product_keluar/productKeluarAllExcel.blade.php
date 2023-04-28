@@ -44,7 +44,7 @@
     <tr>
         <td>ID</td>
         <td>Product</td>
-        <td>Customer</td>
+        <td>Product Users</td>
         <td>Quantity</td>
         <td>Date</td>
     </tr>

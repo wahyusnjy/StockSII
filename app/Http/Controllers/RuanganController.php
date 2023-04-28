@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\RoomImport;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RuanganController extends Controller
 {
@@ -117,5 +119,23 @@ class RuanganController extends Controller
         Ruangan::destroy($id);
 
         return redirect()->back();
+    }
+
+    public function ImportExcel(Request $request)
+    {
+        //Validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        if ($request->hasFile('file')) {
+            //UPLOAD FILE
+            $file = $request->file('file'); //GET FILE
+            //dd($file);
+            Excel::import(new RoomImport, $file); //IMPORT FILE
+            return redirect()->back()->with(['success' => 'Upload file data !']);
+        }
+
+        return redirect()->back()->with(['error' => 'Please choose file before!']);
     }
 }

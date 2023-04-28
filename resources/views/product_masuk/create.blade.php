@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label >Supplier</label>
+                            <label >Product Supplier</label>
                             <select class="form-control select selectpicker" name="supplier_id" id="supplier_id" required  data-live-search="true">
                                 <option selected="selected" value="">-- Choose Supplier --</option>
                                 @foreach ($suppliers as $item)
@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label >Keterangan</label>
+                            <label >Information</label>
                             <input type="text" class="form-control" id="keterangan" name="keterangan" required>
                             <span class="help-block with-errors"></span>
                         </div>

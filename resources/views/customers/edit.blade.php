@@ -3,7 +3,7 @@
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Edit Lokasi</h3>
+        <h3 class="box-title">Edit Product Users</h3>
     </div>
 
     <div class="box-body">

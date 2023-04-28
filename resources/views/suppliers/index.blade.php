@@ -10,7 +10,7 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Suppliers</h3>
+            <h3 class="box-title">Data Product Suppliers</h3>
         </div>
 
         <div class="box-header">

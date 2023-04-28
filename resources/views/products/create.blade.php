@@ -68,42 +68,22 @@
                                     @enderror
                                 </div>
                             </div>
+
                             <div class="col-md-4">
-                                <div class="form-group ">
-                                    <label>Location</label>
-                                    <select class="form-control js-example-basic-single" name="lokasi_id" id="lokasi_id" required  data-live-search="true">
-                                        <option selected="selected" disabled>-- Choose Location --</option>
-                                        @foreach ($lokasi as $item)
+                                <div class="form-group">
+                                    <label>Room</label>
+                                    <select class="form-control js-example-basic-single
+                                    @error('room_id')
+                                    is-invalid
+                                    @enderror" name="room_id" id="room_id" >
+                                        <option selected="selected" value="" disabled>-- Choose Room --</option>
+                                        @foreach ($room as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
 
                                     <span class="help-block with-errors"></span>
-                                    @error('lokasi_id')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Category</label>
-                                    <select class="form-control js-example-basic-single
-                                    @error('assets_id')
-                                    is-invalid
-                                    @enderror" name="assets_id" id="assets_id" required>
-                                        <option selected="selected" value="" disabled>-- Choose Category --</option>
-                                        @foreach ($asset as $item)
-                                        @if($item->parent_id == 0)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @else
-                                        <option value="{{ $item->id }}">{{ $item->parent->name }} - {{ $item->name }}</option>
-                                        @endif
-
-                                        @endforeach
-                                    </select>
-
-                                    <span class="help-block with-errors"></span>
-                                    @error('assets_id')
+                                    @error('room_id')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -127,21 +107,27 @@
                                     @enderror
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Room</label>
+                                    <label>Category</label>
                                     <select class="form-control js-example-basic-single
-                                    @error('room_id')
+                                    @error('assets_id')
                                     is-invalid
-                                    @enderror" name="room_id" id="room_id" >
-                                        <option selected="selected" value="" disabled>-- Choose Room --</option>
-                                        @foreach ($room as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @enderror" name="assets_id" id="assets_id" required>
+                                        <option selected="selected" value="" disabled>-- Choose Category --</option>
+                                        @foreach ($asset as $item)
+                                        @if($item->parent_id == 0)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @else
+                                        <option value="{{ $item->id }}">{{ $item->parent->name }} - {{ $item->name }}</option>
+                                        @endif
+
                                         @endforeach
                                     </select>
 
                                     <span class="help-block with-errors"></span>
-                                    @error('room_id')
+                                    @error('assets_id')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

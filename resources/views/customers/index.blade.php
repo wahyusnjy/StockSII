@@ -12,11 +12,11 @@
     <div class="box">
 
         <div class="box-header">
-            <h3 class="box-title">Data Customers</h3>
+            <h3 class="box-title">Data Product Users</h3>
         </div>
 
         <div class="box-header">
-            <a href="{{ route('customers.create') }}" class="btn btn-primary" >Add Customers</a>
+            <a href="{{ route('customers.create') }}" class="btn btn-primary" >Add Product Users</a>
             <a href="{{ route('exportPDF.customersAll') }}" class="btn btn-danger">Export PDF</a>
             <a href="{{ route('exportExcel.customersAll') }}" class="btn btn-success">Export Excel</a>
         </div>

@@ -56,10 +56,6 @@
                     <td>{{ $producs->category->name }}</td>
                 </tr>
                 <tr>
-                    <td>Location</td>
-                    <td>{{ $producs->lokasi->name }}</td>
-                </tr>
-                <tr>
                     <td>Category</td>
                     <td>
                         @if($producs->assets->parent_id == 0)
@@ -81,7 +77,10 @@
                 @endif
 
                 @if(empty($producs->rack->name))
-
+                <tr>
+                    <td>Rack</td>
+                    <td>-</td>
+                </tr>
                 @else
                 <tr>
                     <td>Rack</td>

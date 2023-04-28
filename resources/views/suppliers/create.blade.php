@@ -3,7 +3,7 @@
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Add Suppliers</h3>
+        <h3 class="box-title">Add Product Suppliers</h3>
     </div>
     <div class="box-body">
         <form method="post"class="form-horizontal" enctype="multipart/form-data" action="{{route('suppliers.store')}}">

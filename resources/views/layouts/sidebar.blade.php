@@ -47,7 +47,7 @@
                 || request()->is('customers/create')
                 || request()->is('customers/*/edit')
                 || request()->is('cari/customers')
-                ? 'active' : '' }}"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customer</span></a>
+                ? 'active' : '' }}"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Product Users</span></a>
             </li>
 
             <li class="{{ request()->is('sales')
@@ -61,7 +61,7 @@
             || request()->is('suppliers/show')
             || request()->is('suppliers/*/edit')
             || request()->is('cari/suppliers')
-            ? 'active' : '' }}"><a href="{{ route('suppliers.index') }}"><i class="fa fa-truck"></i> <span>Supplier</span></a></li>
+            ? 'active' : '' }}"><a href="{{ route('suppliers.index') }}"><i class="fa fa-truck"></i> <span>Product Supplier</span></a></li>
             <li class="{{ request()->is('productsOut')
             || request()->is('productsOut/create')
             || request()->is('productsOut/show')
@@ -134,13 +134,13 @@
             </a>
         </li>
 
-        <li class="{{ request()->is('lokasi')
+        {{-- <li class="{{ request()->is('lokasi')
             || request()->is('lokasi/create')
             || request()->is('lokasi/show')
             || request()->is('lokasi/*/edit')
             || request()->is('cari/lokasi')
             ? 'active' : '' }} "><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Location</span></a>
-        </li>
+        </li> --}}
 
         <li class="{{ request()->is('kategori')
             || request()->is('kategori/create')
