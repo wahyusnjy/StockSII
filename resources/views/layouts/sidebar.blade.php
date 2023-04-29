@@ -124,6 +124,13 @@
             ? 'active' : '' }} ">
             <a href="{{ route('divisi.index') }}"><i class="fa fa-building"></i> <span>Division</span></a>
         </li>
+        <li class="{{ request()->is('kategori')
+            || request()->is('kategori/create')
+            || request()->is('kategori/show')
+            || request()->is('kategori/*/edit')
+            || request()->is('cari/kategori')
+            ? 'active' : '' }}"><a href="{{ route('kategori.index') }}"><i class="fa fa-list"></i> <span>Category</span></a>
+        </li>
 
         <li class="{{ request()->is('wilayah')
             || request()->is('wilayah/create')
@@ -134,20 +141,12 @@
             </a>
         </li>
 
-        {{-- <li class="{{ request()->is('lokasi')
-            || request()->is('lokasi/create')
-            || request()->is('lokasi/show')
-            || request()->is('lokasi/*/edit')
-            || request()->is('cari/lokasi')
-            ? 'active' : '' }} "><a href="{{ route('lokasi.index') }}"><i class="fa fa-search"></i> <span>Location</span></a>
-        </li> --}}
-
-        <li class="{{ request()->is('kategori')
-            || request()->is('kategori/create')
-            || request()->is('kategori/show')
-            || request()->is('kategori/*/edit')
-            || request()->is('cari/kategori')
-            ? 'active' : '' }}"><a href="{{ route('kategori.index') }}"><i class="fa fa-list"></i> <span>Category</span></a>
+        <li class="{{ request()->is('ruangan')
+            || request()->is('ruangan/create')
+            || request()->is('ruangan/show')
+            || request()->is('ruangan/*/edit')
+            || request()->is('cari/ruangan')
+            ? 'active' : '' }} "><a href="{{ route('ruangan.index') }}"><i class="fa fa-university"></i> <span>Room</span></a>
         </li>
 
         <li class="{{ request()->is('rak')
@@ -158,13 +157,7 @@
             ? 'active' : '' }} "><a href="{{ route('rak.index') }}"><i class="fa fa-codepen"></i> <span>Rack</span></a>
         </li>
 
-        <li class="{{ request()->is('ruangan')
-            || request()->is('ruangan/create')
-            || request()->is('ruangan/show')
-            || request()->is('ruangan/*/edit')
-            || request()->is('cari/ruangan')
-            ? 'active' : '' }} "><a href="{{ route('ruangan.index') }}"><i class="fa fa-university"></i> <span>Room</span></a>
-        </li>
+
     </ul>
 
 

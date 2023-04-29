@@ -19,6 +19,7 @@ use Laravel\Breeze\BreezeServiceProvider;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Milon\Barcode\DNS1D;
@@ -145,13 +146,15 @@ class ProductController extends Controller
             'qty'           => 'required|numeric',
             'category_id'   => 'required',
             'assets_id'     => 'required',
-            'user'          => 'required',
-            'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            // 'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
 
         $input = $request->all();
 
+        if(empty($request->user)){
+            $input["user"] = "-";
+        }
 
         $product = Product::orderBy('id', 'DESC')->first();
         $get_category = Category::orderBy('name','ASC')
@@ -160,9 +163,14 @@ class ProductController extends Controller
         ->where('id', $input["assets_id"])->first();
         $divisi = Divisi::orderBy('name','ASC')
         ->where('id',Auth::user()->divisi_id)->first();
+
+
+        if(empty($input["room_id"])){
+
+        }else{
         $room = Ruangan::orderBy('name','ASC')
         ->where('id',$input["room_id"])->first();
-
+        }
 
         if(empty($input["rack_id"])){
 
@@ -172,8 +180,11 @@ class ProductController extends Controller
         }
 
         $input['image'] = null;
+        if(empty($room)){
+            $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Location : -")."\n".strtoupper("Category : ".$kategori->name);
+        }else{
         $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Location : ".$room->name)."\n".strtoupper("Category : ".$kategori->name);
-
+        }
 
         if(empty($product->id)){
             $id = 1;
@@ -181,9 +192,9 @@ class ProductController extends Controller
             if(empty($room)){
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }else{
 
@@ -202,9 +213,9 @@ class ProductController extends Controller
             if(empty($room)){
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }else{
 
@@ -229,13 +240,30 @@ class ProductController extends Controller
                 $constraint->aspectRatio();
             })->save($destinationPath .'/'.$image2);
             $image->move($destinationPath, $image2);
-            // $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
-            // $request->image->move(public_path('/upload/products/'), $input['image']);
-            // $file = $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
-
-            // dd($compresedImage);
-            //  $compresedImage->move(public_path('/upload/products/'), $input['image']);
         }
+
+        if($request->image_webcam != null){
+            $img = $request->image_webcam;
+            $folderPath = "upload/products/";
+            $image_parts = explode(";base64,", $img);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+
+            $image_base64 = base64_decode($image_parts[1]);
+            $input['image'] = 'upload/products/'. Str::slug($input['nama'], '-').strtotime('now'). '.png';
+            $image2 = Str::slug($input['nama'], '-').strtotime('now'). '.png';
+
+            $file = public_path($folderPath) . $image2;
+
+            $image = imagecreatefromstring($image_base64);
+            // Simpan file gambar ke direktori yang diinginkan
+            imagepng($image, $file);
+
+            // Hapus variable image dari memory
+            imagedestroy($image);
+
+        }
+
         $character = [',','.'];
         $input['harga'] = str_replace($character, "", $input['harga']);
 
@@ -317,17 +345,18 @@ class ProductController extends Controller
         $kategori = Assets::orderBy('name','ASC')
         ->where('id', $input["assets_id"])->first();
 
-        $room = Ruangan::orderBy('name','ASC')
-            ->where('id',$input["room_id"])->first();
-
         $divisi = Divisi::orderBy('name','ASC')
         ->where('id',Auth::user()->divisi_id)->first();
 
+
+
+
+        if(empty($input["room_id"])){
+
+        }else{
         $room = Ruangan::orderBy('name','ASC')
         ->where('id',$input["room_id"])->first();
-
-
-
+        }
         if(empty($input["rack_id"])){
 
         }else{
@@ -340,9 +369,9 @@ class ProductController extends Controller
             if(empty($room)){
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($divisi->name).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper($divisi->name).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }else{
 
@@ -359,9 +388,9 @@ class ProductController extends Controller
             if(empty($room)){
 
                 if(empty($rack)){
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($divisi->name).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($divisi->name,0,2)).strtoupper($test);
                 }else {
-                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                    $input['qrcode'] = strtoupper($get_category->name).strtoupper(substr($rack->name,0,2)).strtoupper($test);
                 }
             }else{
 
@@ -374,7 +403,12 @@ class ProductController extends Controller
 
         }
 
-        $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$room->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
+        if(empty($room)){
+            $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : -")."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
+        }else{
+            $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$room->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
+        }
+
 
         $input['image'] = $produk->image;
         if ($request->hasFile('image')){
@@ -396,6 +430,37 @@ class ProductController extends Controller
             // $input['image'] = '/upload/products/'.Str::slug($input['nama'], '-').strtotime('now').'.'.$request->image->getClientOriginalExtension();
             // $request->image->move(public_path('/upload/products/'), $input['image']);
         }
+
+        if($request->image_webcam != null){
+            if (!$produk->image == NULL){
+                if(file_exists(public_path($produk->image))){
+                    unlink(public_path($produk->image));
+                }
+                // unlink(public_path($produk->image));
+            }
+            $img = $request->image_webcam;
+            $folderPath = "upload/products/";
+            $image_parts = explode(";base64,", $img);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+
+            $image_base64 = base64_decode($image_parts[1]);
+            $input['image'] = 'upload/products/'. Str::slug($input['nama'], '-').strtotime('now'). '.png';
+            $image2 = Str::slug($input['nama'], '-').strtotime('now'). '.png';
+
+            $file = public_path($folderPath) . $image2;
+
+            $image = imagecreatefromstring($image_base64);
+            // Simpan file gambar ke direktori yang diinginkan
+            imagepng($image, $file);
+
+            // Hapus variable image dari memory
+            imagedestroy($image);
+
+        }
+
+
+
         if($request->qty != $produk->qty){
             ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 6, 'product_id'=> $id]);
         }else{

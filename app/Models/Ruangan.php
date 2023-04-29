@@ -10,6 +10,11 @@ class Ruangan extends Model
     use HasFactory;
     protected $table = 'ruangan';
     protected $fillable = [
-        'name'
+        'region_id','name'
     ];
+
+    public function region()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

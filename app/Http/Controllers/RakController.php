@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rak;
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,10 @@ class RakController extends Controller
     public function create()
     {
         if(Auth::user()->role == 'admin'){
-        return view('rak.create');
+
+        $room = Ruangan::all();
+        return view('rak.create')
+        ->with('room',$room);
         }
     }
 
@@ -50,6 +54,7 @@ class RakController extends Controller
 		]);
 
         Rak::create([
+            'room_id' => $request->room_id,
             'name' => $request->name,
         ]);
 
@@ -77,8 +82,10 @@ class RakController extends Controller
     {
         if(Auth::user()->role == 'admin'){
         $rak = Rak::find($id);
+        $room = Ruangan::all();
         return view('rak.edit')
-        ->with('rak',$rak);
+        ->with('rak',$rak)
+        ->with('room',$room);
         }
     }
 
@@ -95,6 +102,7 @@ class RakController extends Controller
 			'name' => 'required|string'
 		]);
         Rak::where('id',$id)->update([
+            'room_id' => $request->room_id,
             'name' => $request->name
         ]);
         return redirect()->route('rak.index');

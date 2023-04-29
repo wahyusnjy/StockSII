@@ -73,16 +73,13 @@
                                     ->orderBy('id_activity', 'desc')
                                     ->first();
                                 $date = Carbon\Carbon::parse($p->created_at)->format('d-m-Y');
-                                // use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
-                                // $qr = FacadesQrCode::size(300)->
+
                             @endphp
                             <tr>
                                 <td><input type="checkbox" class="child-cb" value="{{ $p->id }}"></td>
                                 <td> {{ $i++ }}</td>
-                                <td>
-                                    {!! DNS1D::getBarcodeSVG($p->qrcode, 'C128',1) !!}
-                                    {{-- {!! QrCode::size(70)->generate($p->product_code) !!} <br>
-                                    <p>{{ $p->qrcode }}</p> --}}
+                                <td >
+                                    <span style="width: 5px;">{!! DNS1D::getBarcodeSVG($p->qrcode, 'C128',1,50) !!}</span><br>
                                 </td>
                                 <td>{{ $p->nama }}</td>
                                 <td>{{ number_format($p->harga) }}</td>
@@ -97,7 +94,12 @@
                                 <td>
                                     <ul style="white-space: nowrap; list-style-type:none;">
                                         <li>Region&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:  {{ $p->category->name }} - {{ $p->category->desc }}</li>
-                                        <li>Location&nbsp;&nbsp;: {{ $p->room->name }}</li>
+                                        <li>Location&nbsp;&nbsp;:
+                                        @if(empty($p->room->name))
+                                            -
+                                        @else
+                                        {{ $p->room->name }}
+                                        @endif</li>
                                         <li>Category&nbsp;&nbsp;: {{ $p->assets->name }}</li>
                                     </ul>
                                 </td>

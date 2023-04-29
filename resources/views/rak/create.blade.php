@@ -13,6 +13,21 @@
 
             <div class="box-body">
                 <div class="form-group">
+                    <label >Room</label>
+                    <select class="form-control  selectpicker" name="room_id" required data-live-search="true">
+                        <option selected="selected" value="">-- Choose Room --</option>
+                        @foreach ($room as $r)
+                            @if(empty($r->region))
+                            <option value="{{$r->id}}"> {{$r->name}}</option>
+                            @else
+                            <option value="{{$r->id}}"> {{ $r->region->name }} - {{$r->name}}</option>
+                            @endif
+
+                        @endforeach
+                    </select>
+                    <span class="help-block with-errors"></span>
+                </div>
+                <div class="form-group">
                     <label >Rak</label>
                     <input type="text" class="form-control" id="name" name="name"  autofocus required>
                     <span class="help-block with-errors"></span>

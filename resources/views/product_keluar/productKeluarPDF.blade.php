@@ -68,7 +68,7 @@
             <td><br><br><br></td>
         </tr>
         <tr>
-            <td class="text-center">{{ $product_keluar->customer->nama }}</td>
+            <td class="text-center">{{ $product_keluar->nama_peminjam }}</td>
             <td class="text-center">Sindu Irawan</td>
         </tr>
     </table>

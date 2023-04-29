@@ -13,12 +13,20 @@
 
             <div class="box-body">
                 <div class="form-group">
+                    <label >Region</label>
+                    <select class="form-control  selectpicker" name="region_id" required data-live-search="true">
+                        <option selected="selected" value="">-- Choose Region --</option>
+                        @foreach ($wilayah as $w)
+                            <option value="{{$w->id}}">{{$w->name}} - {{ $w->desc }}</option>
+                        @endforeach
+                    </select>
+                    <span class="help-block with-errors"></span>
+                </div>
+                <div class="form-group">
                     <label >Room</label>
                     <input type="text" class="form-control" id="name" name="name"  autofocus required>
                     <span class="help-block with-errors"></span>
                 </div>
-
-
             </div>
             <!-- /.box-body -->
 

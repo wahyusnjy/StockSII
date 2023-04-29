@@ -1,6 +1,10 @@
 @extends('layouts.master')
 @section('content')
-<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+{{-- <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"> --}}
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />   --}}
+    <style type="text/css">
+        #results { padding:20px; border:1px solid; background:#ccc; }
+    </style>
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Add Products</h3>
@@ -58,7 +62,7 @@
                                     @enderror" name="category_id" id="category_id" required>
                                         <option selected="selected" value="{{ old('category_id') }}" disabled>-- Choose Region --</option>
                                         @foreach ($region as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->desc }}</option>
                                         @endforeach
                                     </select>
 
@@ -138,7 +142,7 @@
                                     <input type="text" class="form-control
                                     @error('user')
                                     is-invalid
-                                    @enderror" id="user" name="user" value="{{ old('user') }}" required>
+                                    @enderror" id="user" name="user" value="{{ old('user') }}">
                                     <span class="help-block with-errors"></span>
                                     @error('user')
                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -157,6 +161,15 @@
                                     @error('image')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="my_camera"></div>
+                                <br/>
+                                <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                <input type="hidden" name="image_webcam" class="image-tag" style="opacity: 0;">
+                                <div class="col-md-6">
+                                    <div id="results">Your captured image will appear here...</div>
                                 </div>
                             </div>
                         </div>
@@ -178,10 +191,12 @@
         </form>
     </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
     <script>
         $('.js-example-basic-single').select2();
     </script>
@@ -224,6 +239,26 @@
             output.src = URL.createObjectURL(event.target.files[0]);
         }
     };
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+
+<script language="JavaScript">
+    Webcam.set({
+        width: 490,
+        height: 350,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+
+    Webcam.attach( '#my_camera' );
+
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+        } );
+    }
 </script>
 
 @endsection

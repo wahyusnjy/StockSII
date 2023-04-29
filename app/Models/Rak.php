@@ -9,6 +9,10 @@ class Rak extends Model
 {
     use HasFactory;
     protected $table = 'rak';
-    protected $fillable = ['name'];
+    protected $fillable = ['room_id','name'];
 
+    public function room()
+    {
+        return $this->belongsTo(Ruangan::class);
+    }
 }

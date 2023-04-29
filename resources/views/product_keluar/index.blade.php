@@ -43,8 +43,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Products</th>
-                    <th>Product Users</th>
                     <th>QTY</th>
+                    <th>Users</th>
+                    <th>Division</th>
                     <th>Out Date</th>
                     <th>Information</th>
                     <th>Action</th>
@@ -58,13 +59,14 @@
                     <tr>
                         <td>{{ $id++ }}</td>
                         <td>{{ $i->product->nama }}</td>
-                        <td>{{ $i->customer->nama }}</td>
                         <td>{{ $i->qty }}</td>
+                        <td>{{ $i->nama_peminjam }}</td>
+                        <td>{{ $i->divisi->name }}</td>
                         <td>{{ $i->tanggal }}</td>
                         <td>{{ $i->keterangan }}</td>
                         <td>
                             <div style="display:inline-block">
-                            <a href="{{ route('exportPDF.productKeluar', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning">Export Invoice</a>
+                            <a href="{{ route('exportPDF.productKeluar', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning" target="_blank">Export Invoice</a>
                             <a href="{{ url('productsOut/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
                             <form id="myForm" action="{{ route('productsOut.destroy', $i->id) }}" method="post" style="display: inline">
                             @csrf

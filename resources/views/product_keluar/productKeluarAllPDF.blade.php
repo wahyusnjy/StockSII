@@ -41,7 +41,7 @@
     <tr>
         <td>ID</td>
         <td>Product</td>
-        <td>Customer</td>
+        <td>Users</td>
         <td>Quantity</td>
         <td>Date</td>
         <td>Keterangan</td>
@@ -55,7 +55,7 @@
         <tr>
             <td>{{ $id++ }}</td>
             <td>{{ $p->product->nama }}</td>
-            <td>{{ $p->customer->nama }}</td>
+            <td>{{ $p->nama_peminjam }}</td>
             <td>{{ $p->qty }}</td>
             <td>{{ $p->tanggal }}</td>
             <td>{{ $p->keterangan }}</td>

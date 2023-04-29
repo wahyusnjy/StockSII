@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Exports\ExportProdukKeluar;
 use App\Imports\ProductsImportOut;
 use App\Models\ActivityLog;
+use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Divisi;
 use App\Models\Product;
 use App\Models\Product_Keluar;
+use App\Models\Rak;
+use App\Models\Ruangan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,9 +76,22 @@ class ProductKeluarController extends Controller
         $products = Product::orderBy('id','ASC')
         ->get(['nama','id', 'qrcode']);
 
+        $divisi = Divisi::orderBy('name','ASC')
+        ->get(['name','id']);
+
         $customers = Customer::orderBy('nama','ASC')
         ->get(['nama','id']);
-        return view('product_keluar.create',compact('products','customers'));
+
+        $region = Category::orderBy('name','ASC')
+        ->get(['name','id']);
+
+        $room = Ruangan::orderBy('name','ASC')
+        ->get(['name','id']);
+
+        $rack = Rak::orderBy('name','ASC')
+        ->get(['name','id']);
+
+        return view('product_keluar.create',compact('products','customers','divisi','region','room','rack'));
     }
 
     /**
@@ -87,7 +104,6 @@ class ProductKeluarController extends Controller
     {
         $this->validate($request, [
            'product_id'     => 'required',
-           'customer_id'    => 'required',
            'qty'            => 'required',
            'tanggal'        => 'required',
            'keterangan'     => 'required',
@@ -126,8 +142,20 @@ class ProductKeluarController extends Controller
     ->get(['nama','id', 'qrcode']);
     $customers = Customer::orderBy('nama','ASC')
     ->get(['nama','id']);
+    $divisi = Divisi::orderBy('name','ASC')
+    ->get(['name','id']);
+
+    $region = Category::orderBy('name','ASC')
+        ->get(['name','id']);
+
+    $room = Ruangan::orderBy('name','ASC')
+    ->get(['name','id']);
+
+    $rack = Rak::orderBy('name','ASC')
+    ->get(['name','id']);
+
         $product_keluar = Product_Keluar::find($id);
-        return view('product_keluar.edit', compact('product_keluar', 'products', 'customers'));
+        return view('product_keluar.edit', compact('product_keluar', 'products', 'customers','divisi','region','room','rack'));
     }
 
     /**
@@ -141,7 +169,6 @@ class ProductKeluarController extends Controller
     {
         $this->validate($request, [
             'product_id'     => 'required',
-            'customer_id'    => 'required',
             'qty'            => 'required',
             'tanggal'        => 'required',
             'keterangan'     => 'required'

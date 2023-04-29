@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Imports\RoomImport;
+use App\Models\Category;
 use App\Models\Ruangan;
+use App\Models\Wilayah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -39,7 +41,10 @@ class RuanganController extends Controller
     public function create()
     {
         if(Auth::user()->role == 'admin'){
-        return view('ruangan.create');
+
+        $wilayah = Category::all();
+        return view('ruangan.create')
+        ->with('wilayah',$wilayah);
         }
     }
 
@@ -56,6 +61,7 @@ class RuanganController extends Controller
 		]);
 
         Ruangan::create([
+            'region_id' => $request->region_id,
             'name' => $request->name,
         ]);
 
@@ -83,8 +89,10 @@ class RuanganController extends Controller
     {
         if(Auth::user()->role == 'admin'){
         $ruangan =  Ruangan::find($id);
+        $wilayah = Category::all();
         return view('ruangan.edit')
-        ->with('ruangan',$ruangan);
+        ->with('ruangan',$ruangan)
+        ->with('wilayah',$wilayah);
         }
     }
 
@@ -102,6 +110,7 @@ class RuanganController extends Controller
 		]);
 
         Ruangan::where('id',$id)->update([
+            'region_id' => $request->region_id,
             'name' => $request->name,
         ]);
 

@@ -35,6 +35,7 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Region</th>
                     <th>Room</th>
                     @if(Auth::user()->role == 'admin')
                     <th>Action</th>
@@ -48,6 +49,13 @@
                     @foreach ($ruangan as $l)
                     <tr>
                         <td>{{ $i++ }}</td>
+                        <td>
+                            @if(empty($l->region->name) )
+                            -
+                            @else
+                            {{ $l->region->name }}
+                            @endif
+                        </td>
                         <td>{{ $l->name }}</td>
                         @if(Auth::user()->role == 'admin')
                         <td>
