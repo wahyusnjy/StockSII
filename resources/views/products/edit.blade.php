@@ -3,6 +3,7 @@
 
 <style type="text/css">
     #results { padding:20px; border:1px solid; background:#ccc; }
+    .hide-div    {width: 0;height: 0;opacity: 0;display: none;}
 </style>
 <div class="box">
     <div class="box-header">
@@ -170,33 +171,49 @@
                             </div>
                         </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label >Image</label>
-                            <input type="file" class="form-control
-                            @error('image')
-                            is-invalid
-                            @enderror" value="{{ $producs->image }}" id="image" name="image" onchange="loadFile(event)">
-                            <span class="help-block with-errors"></span>
-                            @if(empty($producs->image))
-                            <img src="{{ asset('notfoundimage.png') }}" id="output" class="img-circle" style="max-width: 150px; " alt="">
-                            @else
-                            <img src="{{ url($producs->image) }}" id="output" style="max-width: 150px;" />
-                            @endif
-                            <img id="output" style="max-width: 200px;" />
-                            @error('image')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Select Method Upload Image</label>
+                                <select class="form-control" id="method">
+                                    <option value="" selected >Choose Method Upload Image</option>
+                                    <option value="normal">Upload Normal</option>
+                                    <option value="webcam">Use Webcam</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    <div class=" hide-div normalimage" >
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label >Image</label>
+                                <input type="file" class="form-control
+                                @error('image')
+                                is-invalid
+                                @enderror" value="{{ $producs->image }}" id="image" name="image" onchange="loadFile(event)">
+                                <span class="help-block with-errors"></span>
+                                @error('image')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-12">
-                        <div id="my_camera"></div>
-                        <br/>
-                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                        <input type="hidden" name="image_webcam" class="image-tag" style="opacity: 0;">
-                        <div class="col-md-6">
-                            <div id="results">Your captured image will appear here...</div>
+                        <div class="form-group">
+                            @if(empty($producs->image))
+                            <img src="{{ asset('notfoundimage.png') }}" class="result" id="output" class="img-circle" style="max-width: 200px; " alt="">
+                            @else
+                            <img src="{{ url($producs->image) }}" class="result" id="output" style="max-width: 200px;" />
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="hide-div webcam_image" id="">
+                        <div class="col-md-12">
+                            <div id="my_camera"></div>
+                            <br/>
+                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                            <input type="hidden" name="image_webcam" class="image-tag" style="opacity: 0;">
                         </div>
                     </div>
 
@@ -264,23 +281,69 @@
     $('.js-example-basic-single').select2();
 </script>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 <script language="JavaScript">
     Webcam.set({
-        width: 490,
-        height: 350,
-        image_format: 'jpeg',
-        jpeg_quality: 90
-    });
+    width: 300,
+    height: 300,
+    image_format: 'jpeg',
+    jpeg_quality: 90,
+    facingMode: 'environment' //untuk mengatur kamera belakang
+});
 
-    Webcam.attach( '#my_camera' );
+Webcam.attach('#my_camera');
+
+function switch_camera() {
+    console.log(Webcam.params);
+    var facingMode = Webcam.params.facingMode;
+    if (facingMode == 'environment') {
+        facingMode = 'user'; //switch ke kamera depan
+    } else {
+        facingMode = 'environment'; //switch ke kamera belakang
+    }
+    Webcam.reset();
+    Webcam.set({
+        width: 300,
+        height: 300,
+        image_format: 'jpeg',
+        jpeg_quality: 90,
+        facingMode: facingMode
+    });
+    Webcam.attach('#my_camera');
+}
 
     function take_snapshot() {
         Webcam.snap( function(data_uri) {
             $(".image-tag").val(data_uri);
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            document.querySelector('.result').src = data_uri;
+            Webcam.reset();
         } );
     }
+</script>
+
+<script type="text/javascript">
+    var methodimage = document.getElementById('method');
+
+    var normalimage = document.querySelector('.normalimage');
+    var webcam_image = document.querySelector('.webcam_image');
+
+    methodimage.addEventListener('change', function() {
+        if (this.value == "normal") {
+            normalimage.classList.remove('hide-div');
+        } else {
+            normalimage.classList.add('hide-div');
+        }
+    })
+
+    // Office
+    methodimage.addEventListener('change', function() {
+        if (this.value == "webcam") {
+            webcam_image.classList.remove('hide-div');
+        } else {
+            webcam_image.classList.add('hide-div');
+        }
+    })
 </script>
 @endsection

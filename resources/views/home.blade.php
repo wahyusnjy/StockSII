@@ -1,8 +1,5 @@
 @extends('layouts.master')
 
-@section('top')
-@endsection
-
 @section('content')
 <!-- Small boxes (Stat box) -->
 <div class="row">
@@ -135,5 +132,3 @@
 
 @endsection
 
-@section('top')
-@endsection
