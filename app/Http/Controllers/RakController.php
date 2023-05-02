@@ -56,6 +56,7 @@ class RakController extends Controller
         Rak::create([
             'room_id' => $request->room_id,
             'name' => $request->name,
+            'desc'  => $request->desc,
         ]);
 
         return redirect()->route('rak.index');
@@ -103,7 +104,8 @@ class RakController extends Controller
 		]);
         Rak::where('id',$id)->update([
             'room_id' => $request->room_id,
-            'name' => $request->name
+            'name' => $request->name,
+            'desc'  => $request->desc,
         ]);
         return redirect()->route('rak.index');
     }

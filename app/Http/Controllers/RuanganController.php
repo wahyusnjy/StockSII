@@ -63,6 +63,7 @@ class RuanganController extends Controller
         Ruangan::create([
             'region_id' => $request->region_id,
             'name' => $request->name,
+            'desc'  => $request->desc,
         ]);
 
         return redirect()->route('ruangan.index');
@@ -112,6 +113,7 @@ class RuanganController extends Controller
         Ruangan::where('id',$id)->update([
             'region_id' => $request->region_id,
             'name' => $request->name,
+            'desc'  => $request->desc,
         ]);
 
         return redirect()->route('ruangan.index');

@@ -10,7 +10,7 @@ class Ruangan extends Model
     use HasFactory;
     protected $table = 'ruangan';
     protected $fillable = [
-        'region_id','name'
+        'region_id','name','desc'
     ];
 
     public function region()

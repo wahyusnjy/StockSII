@@ -38,6 +38,7 @@
                     <th>Region</th>
                     <th>Room</th>
                     <th>Rak</th>
+                    <th>Desc</th>
                     @if(Auth::user()->role == 'admin')
                     <th>Action</th>
                     @endif
@@ -58,13 +59,20 @@
                             @endif
                         </td>
                         <td>
-                            @if(empty($r->room->region->name))
+                            @if(empty($r->room->name))
                             -
                             @else
                             {{ $r->room->name }}
                             @endif
                         </td>
                         <td>{{ $r->name }}</td>
+                        <td>
+                            @if(empty($r->desc))
+                            -
+                            @else
+                            {{ $r->desc }}
+                            @endif
+                        </td>
                         @if(Auth::user()->role == 'admin')
                         <td>
                          <a href="{{ url('rak/'.$r->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>

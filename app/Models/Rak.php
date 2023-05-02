@@ -9,7 +9,7 @@ class Rak extends Model
 {
     use HasFactory;
     protected $table = 'rak';
-    protected $fillable = ['room_id','name'];
+    protected $fillable = ['room_id','name','desc'];
 
     public function room()
     {

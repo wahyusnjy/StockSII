@@ -27,6 +27,11 @@
                     <input type="text" class="form-control" id="name" name="name"  autofocus required>
                     <span class="help-block with-errors"></span>
                 </div>
+                <div class="form-group">
+                    <label >Description</label>
+                    <input type="text" class="form-control" id="desc" name="desc"  autofocus>
+                    <span class="help-block with-errors"></span>
+                </div>
             </div>
             <!-- /.box-body -->
 

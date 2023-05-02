@@ -37,6 +37,7 @@
                     <th>ID</th>
                     <th>Region</th>
                     <th>Room</th>
+                    <th>Desc</th>
                     @if(Auth::user()->role == 'admin')
                     <th>Action</th>
                     @endif
@@ -57,6 +58,13 @@
                             @endif
                         </td>
                         <td>{{ $l->name }}</td>
+                        <td>
+                            @if(empty($l->desc) )
+                            -
+                            @else
+                            {{ $l->desc }}
+                            @endif
+                        </td>
                         @if(Auth::user()->role == 'admin')
                         <td>
                          <a href="{{ url('ruangan/'.$l->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
