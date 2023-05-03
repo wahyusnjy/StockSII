@@ -96,6 +96,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Rack</label>
@@ -298,9 +299,9 @@ Webcam.attach('#my_camera');
                 facingMode: facingModes2
             }
         });
-        // Webcam.reset();
+        Webcam.reset();
         console.log(Webcam);
-        console.log(Webcam.params.facingMode);
+        console.log(Webcam.params.constraints.facingMode);
         Webcam.attach('#my_camera');
     }
 
