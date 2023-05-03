@@ -210,8 +210,9 @@
 
                     <div class="hide-div webcam_image" id="">
                         <div class="col-md-12">
+                            <label>Webcam Image</label>
+                            <input type="button" value="Switch" onClick="switch_camera()">
                             <div id="my_camera"></div>
-                            <br/>
                             <input type=button value="Take Snapshot" onClick="take_snapshot()">
                             <input type="hidden" name="image_webcam" class="image-tag" style="opacity: 0;">
                         </div>
@@ -306,7 +307,7 @@ function switch_camera() {
         facingModes2 = 'environment'; //switch ke kamera belakang
     }
 
-    
+
     Webcam.set({
         width: 300,
         height: 300,
