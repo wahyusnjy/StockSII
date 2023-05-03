@@ -96,6 +96,7 @@
     </div>
 
     @include('rak.form')
+    @include('rak.form_import')
 
 @endsection
 

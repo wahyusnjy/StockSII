@@ -88,11 +88,11 @@ class ApiProductController extends Controller
         //dd($producs);
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
-        return view('products.detail')
-        ->with('category',$category)
-        ->with('lokasi',$lokasi)
-        ->with('asset',$asset)
-        ->with('producs', $producs);
+        return response()->json([
+            "Success" => true,
+            "message" => "Product Detail",
+            "data" => $producs
+        ]);
     }
 
     /**
@@ -103,20 +103,16 @@ class ApiProductController extends Controller
     public function create()
     {
         $region = Category::all();
-        //dd($region);
         $producs = Product::all();
-        //dd($producs);
         $lokasi  = Lokasi::all();
         $asset   = Assets::all();
         $room    = Ruangan::all();
         $rack    = Rak::all();
-        return view('products.create')
-        ->with('room',$room)
-        ->with('rack',$rack)
-        ->with('region',$region)
-        ->with('lokasi',$lokasi)
-        ->with('asset',$asset)
-        ->with('producs', $producs);
+        return response()->json([
+            "Success" => true,
+            "message" => "Product Create",
+            "data" => $producs
+        ]);
     }
 
     /**
@@ -259,27 +255,16 @@ class ApiProductController extends Controller
         // dd($input);
         $product_eks = Product::create($input);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 1, 'product_id'=> $product_eks->id]);
-        return redirect()->route('products.index');
+
+        return response()->json([
+            "Success" => true,
+            "message" => "Create Product Success",
+            "data" => $product_eks
+        ]);
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $category = Category::all();
@@ -290,13 +275,11 @@ class ApiProductController extends Controller
         $asset   = Assets::all();
         $room    = Ruangan::all();
         $rack    = Rak::all();
-        return view('products.edit')
-        ->with('category',$category)
-        ->with('lokasi',$lokasi)
-        ->with('rack',$rack)
-        ->with('room',$room)
-        ->with('asset',$asset)
-        ->with('producs', $producs);
+        return response()->json([
+            "Success" => true,
+            "message" => "Product Edit",
+            "data" => $producs
+        ]);
     }
 
     /**
@@ -316,8 +299,6 @@ class ApiProductController extends Controller
             'qty'           => 'required',
             'category_id'   => 'required',
             'assets_id'     => 'required',
-            'user'          => 'required',
-            'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
 
@@ -456,9 +437,11 @@ class ApiProductController extends Controller
 
         $produk->update($input);
 
-        // $url = $request->input('url');
-
-       return redirect()->route('products.index');
+         return response()->json([
+            "Success" => true,
+            "message" => "Update Product Success",
+            "data"    => $produk
+        ]);
 
     }
 
@@ -481,7 +464,11 @@ class ApiProductController extends Controller
 
         Product::destroy($id);
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 3, 'product_id'=> $id]);
-        return redirect()->back();
+        return response()->json([
+            "Success" => true,
+            "message" => "Delete Product Success",
+            "data"    => $product
+        ]);
     }
 
     public function apiProducts(){

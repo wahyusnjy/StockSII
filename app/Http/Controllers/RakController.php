@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\RackImport;
 use App\Models\Rak;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RakController extends Controller
 {
@@ -41,6 +43,13 @@ class RakController extends Controller
     {
     $cari = $request->cari;
     $rak = Rak::where('name','like',"%".$cari."%")
+    ->orWhere('desc','like',"%".$cari."%")
+    ->orWhereHas('room', function($i) use($cari){
+        $i->where('name','like',"%". $cari . "%")
+            ->orWhereHas('region',function($rg) use($cari){
+                $rg->where('name','like',"%" . $cari . "%");
+            });
+    })
     ->paginate(10);
 
     return view('rak.index',compact('rak'));
@@ -121,5 +130,23 @@ class RakController extends Controller
         Rak::destroy($id);
 
         return redirect()->back();
+    }
+
+    public function ImportExcel(Request $request)
+    {
+        //Validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        if ($request->hasFile('file')) {
+            //UPLOAD FILE
+            $file = $request->file('file'); //GET FILE
+            //dd($file);
+            Excel::import(new RackImport, $file); //IMPORT FILE
+            return redirect()->back()->with(['success' => 'Upload file data !']);
+        }
+
+        return redirect()->back()->with(['error' => 'Please choose file before!']);
     }
 }

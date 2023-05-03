@@ -37,6 +37,16 @@ class ApiDivisiController extends Controller
         }
     }
 
+    public function detail($id)
+    {
+        $divisi = Divisi::find($id);
+        return response()->json([
+            "Success" => true,
+            "message" => "Divisi Detail",
+            "data" => $divisi
+        ]);
+    }
+
     public function CariDivisi(Request $request)
     {
     $cari = $request->cari;
@@ -59,11 +69,15 @@ class ApiDivisiController extends Controller
 		]);
         // dd($request->all());
 
-        Divisi::create([
+        $divisi = Divisi::create([
             'name' => $request->name,
         ]);
 
-        return redirect()->route('divisi.index');
+        return response()->json([
+            "Success" => true,
+            "message" => "Create Divisi Success",
+            "data" => $divisi
+        ]);
     }
 
     /**
@@ -93,22 +107,21 @@ class ApiDivisiController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Divisi  $divisi
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
 			'name' => 'required|string'
 		]);
-        Divisi::where('id',$id)->update([
+         Divisi::where('id',$id)->update([
             'name' => $request->name
         ]);
-        return redirect()->route('divisi.index');
+        $divisi = Divisi::find($id);
+        return response()->json([
+            "Success" => true,
+            "message" => "Update Divisi Success",
+            "data" => $divisi
+        ]);
     }
 
     /**
@@ -119,8 +132,12 @@ class ApiDivisiController extends Controller
      */
     public function destroy($id)
     {
-         Divisi::destroy($id);
+         $divisi = Divisi::destroy($id);
 
-        return redirect()->back();
+         return response()->json([
+            "Success" => true,
+            "message" => "Delete Divisi Success",
+            "data" => $divisi
+        ]);
     }
 }

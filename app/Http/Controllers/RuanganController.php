@@ -29,6 +29,10 @@ class RuanganController extends Controller
     {
     $cari = $request->cari;
     $ruangan = Ruangan::where('name','like',"%".$cari."%")
+    ->orWhere('desc','like',"%".$cari."%")
+    ->orWhereHas('region', function($r) use($cari){
+        $r->where('name','like',"%".$cari."%");
+    })
     ->paginate(10);
 
     return view('ruangan.index',compact('ruangan'));

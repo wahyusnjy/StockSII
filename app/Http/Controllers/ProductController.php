@@ -404,9 +404,9 @@ class ProductController extends Controller
         }
 
         if(empty($room)){
-            $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : -")."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
+            $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Location : -")."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
         }else{
-            $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Lokasi : ".$room->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
+            $input['product_code'] = strtoupper("Product :".$request->nama)."\n".strtoupper("Location : ".$room->name)."\n".strtoupper("Category : ".$kategori->name)."\n".strtoupper("User : ".$produk->user);
         }
 
 

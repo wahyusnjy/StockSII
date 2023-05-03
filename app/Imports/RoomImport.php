@@ -16,9 +16,20 @@ class RoomImport implements ToModel,WithHeadingRow
     */
     public function model(array $row)
     {
-       
+        if($row['region'] == 'TB1'){
+            $region = 1;
+        } elseif($row['region'] == 'CI1'){
+            $region = 2;
+        } elseif($row['region'] == 'CI2'){
+            $region = 3;
+        } elseif($row['region'] == 'CI3'){
+            $region = 4;
+        }
+
         return new Ruangan([
+            'region_id'     => $region,
             'name'          => $row['lokasi'],
+            'desc'          => $row['desc'],
         ]);
     }
 }
