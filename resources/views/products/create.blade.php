@@ -274,14 +274,14 @@
     height: 300,
     image_format: 'jpeg',
     jpeg_quality: 90,
-    facingMode: 'user' //untuk mengatur kamera belakang
+    constraints: {
+    facingMode: "user"
+    }
 });
 
 Webcam.attach('#my_camera');
 
     function switch_camera() {
-        console.log(Webcam.params.facingMode);
-
         var facingModes = Webcam.params.facingMode;
         if (facingModes == 'environment') {
             facingModes = 'user'; //switch ke kamera depan
@@ -295,7 +295,8 @@ Webcam.attach('#my_camera');
             jpeg_quality: 90,
             facingMode: facingModes
         });
-        // Webcam.reset();
+        console.log(Webcam);
+        Webcam.reset();
         Webcam.attach('#my_camera');
     }
 
