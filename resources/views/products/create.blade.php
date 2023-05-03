@@ -266,7 +266,7 @@
     };
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
 
 <script language="JavaScript">
     Webcam.set({
@@ -274,29 +274,30 @@
     height: 300,
     image_format: 'jpeg',
     jpeg_quality: 90,
-    facingMode: 'environment' //untuk mengatur kamera belakang
+    facingMode: 'user' //untuk mengatur kamera belakang
 });
 
 Webcam.attach('#my_camera');
 
-function switch_camera() {
-    console.log(Webcam.params);
-    var facingMode = Webcam.params.facingMode;
-    if (facingMode == 'environment') {
-        facingMode = 'user'; //switch ke kamera depan
-    } else {
-        facingMode = 'environment'; //switch ke kamera belakang
+    function switch_camera() {
+        console.log(Webcam.params.facingMode);
+
+        var facingModes = Webcam.params.facingMode;
+        if (facingModes == 'environment') {
+            facingModes = 'user'; //switch ke kamera depan
+        } else {
+            facingModes = 'environment'; //switch ke kamera belakang
+        }
+        Webcam.set({
+            width: 300,
+            height: 300,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            facingMode: facingModes
+        });
+        // Webcam.reset();
+        Webcam.attach('#my_camera');
     }
-    Webcam.reset();
-    Webcam.set({
-        width: 300,
-        height: 300,
-        image_format: 'jpeg',
-        jpeg_quality: 90,
-        facingMode: facingMode
-    });
-    Webcam.attach('#my_camera');
-}
 
     function take_snapshot() {
         Webcam.snap( function(data_uri) {
