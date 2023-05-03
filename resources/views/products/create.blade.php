@@ -282,14 +282,7 @@
 Webcam.attach('#my_camera');
 
     function switch_camera() {
-        var facingModes = Webcam.params.facingMode;
         var facingModes2 = Webcam.params.constraints.facingMode;
-
-        if (facingModes == 'environment') {
-            facingModes = 'user'; //switch ke kamera depan
-        } else {
-            facingModes = 'environment'; //switch ke kamera belakang
-        }
 
         if (facingModes2 == 'environment') {
             facingModes2 = 'user'; //switch ke kamera depan
