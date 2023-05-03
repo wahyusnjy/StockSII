@@ -274,8 +274,11 @@
     height: 300,
     image_format: 'jpeg',
     jpeg_quality: 90,
+    facingMode : 'user',
     constraints: {
-    facingMode: "user"
+        width: { min: 640, ideal: 1280, max: 1920 },
+        height: { min: 480, ideal: 720, max: 1080 },
+        facingMode: { exact: "user" }
     }
 });
 
@@ -283,20 +286,34 @@ Webcam.attach('#my_camera');
 
     function switch_camera() {
         var facingModes = Webcam.params.facingMode;
+        var facingModes2 = Webcam.params.constraints.facingMode.exact;
+
         if (facingModes == 'environment') {
             facingModes = 'user'; //switch ke kamera depan
         } else {
             facingModes = 'environment'; //switch ke kamera belakang
+        }
+
+        if (facingModes2 == 'environment') {
+            facingModes2 = 'user'; //switch ke kamera depan
+        } else {
+            facingModes2 = 'environment'; //switch ke kamera belakang
         }
         Webcam.set({
             width: 300,
             height: 300,
             image_format: 'jpeg',
             jpeg_quality: 90,
-            facingMode: facingModes
+            facingMode: facingModes,
+            constraints: {
+                width: { min: 640, ideal: 1280, max: 1920 },
+                height: { min: 480, ideal: 720, max: 1080 },
+                facingMode: { exact: facingModes2 }
+            }
         });
+        // Webcam.reset();
         console.log(Webcam);
-        Webcam.reset();
+        console.log(Webcam.params.facingMode);
         Webcam.attach('#my_camera');
     }
 
