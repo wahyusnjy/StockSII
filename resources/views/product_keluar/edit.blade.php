@@ -38,9 +38,9 @@
                         <div class="form-group">
                             <label >Products</label>
                             <select class="form-control select selectpicker" name="product_id" id="product_id" required data-live-search="true">
-                                <option selected="selected" value="{{ $product_keluar->product->id }}">{{ $product_keluar->product->qrcode }}</option>
+                                <option selected="selected" value="{{ $product_keluar->product->id }}">{{ $product_keluar->product->nama }}</option>
                                 @foreach ($products as $item)
-                                    <option value="{{$item->id}}">{{$item->qrcode}}</option>
+                                    <option value="{{$item->id}}">{{$item->nama}}</option>
                                 @endforeach
                             </select>
                             <span class="help-block with-errors"></span>

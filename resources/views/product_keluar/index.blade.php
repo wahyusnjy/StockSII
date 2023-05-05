@@ -67,7 +67,7 @@
                         <td>
                             <div style="display:inline-block">
                             <a href="{{ route('exportPDF.productKeluar', [ 'id' => $i->id ]) }}" class="btn btn-xs btn-warning" target="_blank">Export Invoice</a>
-                            <a href="{{ url('productsOut/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                            {{-- <a href="{{ url('productsOut/'.$i->id.'/edit') }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> --}}
                             <form id="myForm" action="{{ route('productsOut.destroy', $i->id) }}" method="post" style="display: inline">
                             @csrf
                             @method('DELETE')

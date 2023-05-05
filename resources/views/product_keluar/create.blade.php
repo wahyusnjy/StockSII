@@ -12,13 +12,13 @@
 
                     <div class="box-body">
 
-
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                             <div class="form-group">
                                 <label >Products</label>
                                 <select class="form-control  selectpicker" name="product_id" required data-live-search="true">
                                     <option selected="selected" value="">-- Choose Product --</option>
                                     @foreach ($products as $item)
-                                        <option value="{{$item->id}}">{{$item->nama}}</option>
+                                        <option value="{{$item->id}}">{{$item->nama}} - {{ $item->qty }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block with-errors"></span>

@@ -8,7 +8,7 @@ class Product_Keluar extends Model
 {
     protected $table = 'product_keluar';
 
-    protected $fillable = ['product_id','customer_id','qty','tanggal','keterangan','divisi_id','nama_peminjam','region_id','room_id','rack_id'];
+    protected $fillable = ['product_id','customer_id','qty','tanggal','keterangan','divisi_id','nama_peminjam','region_id','room_id','rack_id','user_id'];
 
     protected $hidden = ['created_at','updated_at'];
 
