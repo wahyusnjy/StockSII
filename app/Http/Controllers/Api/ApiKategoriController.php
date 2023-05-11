@@ -76,7 +76,11 @@ class ApiKategoriController extends Controller
         }
 
 
-		return redirect()->route('kategori.index');
+		return response()->json([
+            "Success" => true,
+            "message" => "Success Add Kategori",
+            "data" => $parent
+        ]);
     }
 
     /**
@@ -99,9 +103,13 @@ class ApiKategoriController extends Controller
     public function edit(Assets $assets,$id)
     {
         if(Auth::user()->role == 'admin'){
-        $allkategori = Assets::all();
-        $parent_id = Assets::find($id);
-		return view('kategori.edit', compact('parent_id','allkategori'));
+            $allkategori = Assets::all();
+            $parent_id = Assets::find($id);
+            return response()->json([
+                "Success" => true,
+                "message" => "Kategori Detail Edit",
+                "data"    => $parent_id
+            ]);
         }
     }
 
@@ -132,7 +140,11 @@ class ApiKategoriController extends Controller
         }
 
 
-		return redirect()->route('kategori.index');
+		return response()->json([
+            "Success" => true,
+            "message" => "Success Edit Kategori",
+            "data" => $parent
+        ]);
     }
 
     /**
@@ -143,9 +155,13 @@ class ApiKategoriController extends Controller
      */
     public function destroy($id)
     {
-        Assets::destroy($id);
+        $kategori = Assets::destroy($id);
 
-		return redirect()->back();
+		return redirect()->response()->json([
+            "Success" => true,
+            "message" => "Success Delete Kategori",
+            "data"    => $kategori
+        ]);
     }
 
     public function apiAssetInventory() {

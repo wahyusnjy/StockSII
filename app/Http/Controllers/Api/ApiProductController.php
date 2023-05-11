@@ -277,7 +277,7 @@ class ApiProductController extends Controller
         $rack    = Rak::all();
         return response()->json([
             "Success" => true,
-            "message" => "Product Edit",
+            "message" => "Product Detail Edit",
             "data" => $producs
         ]);
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiDivisiController;
+use App\Http\Controllers\Api\ApiKategoriController;
 use App\Http\Controllers\Api\ApiProductController ;
 use App\Http\Controllers\Api\AuthAPIController ;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/products/detail/{id}',[ApiProductController::class,'detail']);
     Route::get('/products/create',[ApiProductController::class,'create']);
     Route::post('/products/store',[ApiProductController::class,'store']);
+    Route::get('/products/edit/{id}',[ApiProductController::class,'edit']);
     Route::post('/products/update/{id}',[ApiProductController::class,'update']);
     Route::delete('/products/delete/{id}',[ApiProductController::class,'destroy']);
 
@@ -40,6 +42,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/divisi/detail/{id}',[ApiDivisiController::class,'detail']);
     Route::get('/divisi/create',[ApiDivisiController::class,'create']);
     Route::post('/divisi/store',[ApiDivisiController::class,'store']);
+    Route::get('/divisi/edit/{id}',[ApiDivisiController::class,'edit']);
     Route::post('/divisi/update/{id}',[ApiDivisiController::class,'update']);
     Route::delete('/divisi/delete/{id}',[ApiDivisiController::class,'destroy']);
+
+    //Api Kategori
+    Route::get('/kategori',[ApiKategoriController::class,'index']);
+    Route::get('/kategori/create',[ApiKategoriController::class,'create']);
+    Route::post('/kategori/store',[ApiKategoriController::class,'store']);
+    Route::get('/kategori/edit/{id}',[ApiKategoriController::class,'edit']);
+    Route::post('/kategori/update/{id}',[ApiKategoriController::class,'update']);
+    Route::delete('/kategori/delete/{id}',[ApiKategoriController::class,'destroy']);
+
+     //Api Kategori
+     Route::get('/kategori',[ApiKategoriController::class,'index']);
+     Route::get('/kategori/create',[ApiKategoriController::class,'create']);
+     Route::post('/kategori/store',[ApiKategoriController::class,'store']);
+     Route::post('/kategori/update/{id}',[ApiKategoriController::class,'update']);
+     Route::delete('/kategori/delete/{id}',[ApiKategoriController::class,'destroy']);
 });

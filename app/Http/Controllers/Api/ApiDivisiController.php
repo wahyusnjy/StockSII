@@ -102,8 +102,11 @@ class ApiDivisiController extends Controller
         if(Auth::user()->role == 'admin'){
         $divisi = Divisi::find($id);
 
-        return view('divisi.edit')
-        ->with('divisi',$divisi);
+        return response()->json([
+            "Success" => true,
+            "message" => "Product Edit Detail",
+            "data" => $divisi
+        ]);
         }
     }
 
