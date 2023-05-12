@@ -116,8 +116,9 @@ class ProductKeluarController extends Controller
         $product->qty -= $request->qty;
         $product->save();
 
-        $new = Product::where('divisi_id',$request->divisi_id)->where('nama',$product->nama)->get();
-
+        $new = Product::where('divisi_id',$request->divisi_id)
+        ->where('nama',$product->nama)->get(); // <- Nyari produk yang memiliki divisi sesuai yang di request
+                                               // Dan Nyari product yang sesuai dengan dipilih untuk dikeluarkan
         foreach($new as $n){
             $np = $n;
         }
@@ -208,97 +209,97 @@ class ProductKeluarController extends Controller
                  'divisi_id'      => $request->divisi_id,
              ]);
         }else{
-        if($np->nama == $product->nama){
-            $pn = product::where('divisi_id',$request->divisi_id)->where('nama', $product->nama)->first();
+            if($np->nama == $product->nama){
+                $pn = product::where('divisi_id',$request->divisi_id)->where('nama', $product->nama)->first();
 
-            $pn->qty +=  $request->qty;
-            $pn->save();
-        }else {
-            //product_code,qrcode,user_id,divisi_id
-            $get_category = Category::orderBy('name','ASC')
-            ->where('id', $request->region_id)->first();
-            $kategori = Assets::orderBy('name','ASC')
-            ->where('id', $product->assets_id)->first();
-            $divisi = Divisi::orderBy('name','ASC')
-            ->where('id', $request->divisi_id)->first();
-            // dd($kategori);
-            if(empty($request->room_id)){
+                $pn->qty +=  $request->qty;
+                $pn->save();
+            }else {
+                //product_code,qrcode,user_id,divisi_id
+                $get_category = Category::orderBy('name','ASC')
+                ->where('id', $request->region_id)->first();
+                $kategori = Assets::orderBy('name','ASC')
+                ->where('id', $product->assets_id)->first();
+                $divisi = Divisi::orderBy('name','ASC')
+                ->where('id', $request->divisi_id)->first();
+                // dd($kategori);
+                if(empty($request->room_id)){
 
-            }else{
-                $room = Ruangan::orderBy('name','ASC')
-                ->where('id',$request->room_id)->first();
-            }
-
-            if(empty($request->rack_id)){
-
-            } else{
-                $rack = Rak::orderBy('name','ASC')
-                ->where('id',$request->rack_id)->first();
-            }
-
-
-            if(empty($room)){
-                $product_code = strtoupper("Product :".$product->nama)."\n".strtoupper("Location : -")."\n".strtoupper("Category : ".$kategori->name);
-            }else{
-            $product_code = strtoupper("Product :".$product->nama)."\n".strtoupper("Location : ".$room->name)."\n".strtoupper("Category : ".$kategori->name);
-            }
-
-            if(empty($product->id)){
-                $id = 1;
-                $test = str_pad($id,3,'0', STR_PAD_LEFT);
-                if(empty($room)){
-
-                    if(empty($rack)){
-                        $qrcode = strtoupper($get_category->name).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
-                    }else {
-                        $qrcode = strtoupper($get_category->name).strtoupper(substr($rack->name,0,2)).strtoupper($test);
-                    }
                 }else{
-
-                    if(empty($rack)){
-                        $qrcode = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($test);
-                    }else {
-                        $qrcode = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
-                    }
+                    $room = Ruangan::orderBy('name','ASC')
+                    ->where('id',$request->room_id)->first();
                 }
 
-            }else{
-                $id = $product->id;
-                $id++;
-                $test = str_pad($id,3,'0', STR_PAD_LEFT);
+                if(empty($request->rack_id)){
 
-                if(empty($room)){
-
-                    if(empty($rack)){
-                        $qrcode = strtoupper($get_category->name).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
-                    }else {
-                        $qrcode = strtoupper($get_category->name).strtoupper(substr($rack->name,0,2)).strtoupper($test);
-                    }
-                }else{
-
-                    if(empty($rack)){
-                        $qrcode = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($test);
-                    }else {
-                        $qrcode = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
-                    }
+                } else{
+                    $rack = Rak::orderBy('name','ASC')
+                    ->where('id',$request->rack_id)->first();
                 }
 
-            }
 
-            product::create([
-                'category_id'    => $request->region_id ?? null,
-                'room_id'        => $request->room_id ?? null,
-                'rack_id'        => $request->rack_id ?? null,
-                'assets_id'      => $product->assets_id,
-                'nama'           => $product->nama,
-                'harga'          => $product->harga,
-                'qty'            => $request->qty,
-                'product_code'   => $product_code,
-                'qrcode'         => $qrcode,
-                'divisi_id'      => $request->divisi_id,
-            ]);
+                if(empty($room)){
+                    $product_code = strtoupper("Product :".$product->nama)."\n".strtoupper("Location : -")."\n".strtoupper("Category : ".$kategori->name);
+                }else{
+                $product_code = strtoupper("Product :".$product->nama)."\n".strtoupper("Location : ".$room->name)."\n".strtoupper("Category : ".$kategori->name);
+                }
+
+                if(empty($product->id)){
+                    $id = 1;
+                    $test = str_pad($id,3,'0', STR_PAD_LEFT);
+                    if(empty($room)){
+
+                        if(empty($rack)){
+                            $qrcode = strtoupper($get_category->name).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
+                        }else {
+                            $qrcode = strtoupper($get_category->name).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                        }
+                    }else{
+
+                        if(empty($rack)){
+                            $qrcode = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($test);
+                        }else {
+                            $qrcode = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                        }
+                    }
+
+                }else{
+                    $id = $product->id;
+                    $id++;
+                    $test = str_pad($id,3,'0', STR_PAD_LEFT);
+
+                    if(empty($room)){
+
+                        if(empty($rack)){
+                            $qrcode = strtoupper($get_category->name).strtoupper(substr($divisi->name, 0,2)).strtoupper($test);
+                        }else {
+                            $qrcode = strtoupper($get_category->name).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                        }
+                    }else{
+
+                        if(empty($rack)){
+                            $qrcode = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper($test);
+                        }else {
+                            $qrcode = strtoupper($get_category->name).strtoupper(substr($room->name, 0, 2)).strtoupper(substr($rack->name,0,2)).strtoupper($test);
+                        }
+                    }
+
+                }
+
+                product::create([
+                    'category_id'    => $request->region_id ?? null,
+                    'room_id'        => $request->room_id ?? null,
+                    'rack_id'        => $request->rack_id ?? null,
+                    'assets_id'      => $product->assets_id,
+                    'nama'           => $product->nama,
+                    'harga'          => $product->harga,
+                    'qty'            => $request->qty,
+                    'product_code'   => $product_code,
+                    'qrcode'         => $qrcode,
+                    'divisi_id'      => $request->divisi_id,
+                ]);
+            }
         }
-    }
         ActivityLog::create(['user_id'=> Auth::user()->id, 'activity_status'=> 7, 'product_id'=> $product->id]);
         return redirect()->route('productsOut.index');
 

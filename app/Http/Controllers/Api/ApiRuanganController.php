@@ -26,7 +26,7 @@ class ApiRuanganController extends Controller
         "Success" => true,
         "message" => "Room List",
         "data" => $ruangan
-    ]);
+        ]);
     }
 
     public function CariRuangan(Request $request)
@@ -64,13 +64,17 @@ class ApiRuanganController extends Controller
 			'name' => 'required|string'
 		]);
 
-        Ruangan::create([
+        $ruangan = Ruangan::create([
             'region_id' => $request->region_id,
             'name' => $request->name,
             'desc'  => $request->desc,
         ]);
 
-        return redirect()->route('ruangan.index');
+        return response()->json([
+            "Success" => true,
+            "message" => "Success Create Room",
+            "data" => $ruangan
+        ]);
     }
 
     /**
@@ -95,9 +99,12 @@ class ApiRuanganController extends Controller
         if(Auth::user()->role == 'admin'){
         $ruangan =  Ruangan::find($id);
         $wilayah = Category::all();
-        return view('ruangan.edit')
-        ->with('ruangan',$ruangan)
-        ->with('wilayah',$wilayah);
+        return response()->json([
+            "Success" => true,
+            "message" => "Data $ruangan->name ",
+            "data" => $ruangan,
+            "regionAll" => $wilayah,
+        ]);
         }
     }
 
@@ -113,14 +120,19 @@ class ApiRuanganController extends Controller
         $this->validate($request, [
 			'name' => 'required|string'
 		]);
+        $room = Ruangan::find($id);
 
-        Ruangan::where('id',$id)->update([
+        $ruangan = Ruangan::where('id',$id)->update([
             'region_id' => $request->region_id,
             'name' => $request->name,
-            'desc'  => $request->desc,
+            'desc'  => $request->desc ?? $room->desc,
         ]);
 
-        return redirect()->route('ruangan.index');
+        return response()->json([
+            "Success" => true,
+            "message" => "Success Update Room",
+            "data" => $ruangan,
+        ]);
     }
 
     /**
@@ -131,9 +143,13 @@ class ApiRuanganController extends Controller
      */
     public function destroy($id)
     {
-        Ruangan::destroy($id);
+        $ruangan = Ruangan::destroy($id);
 
-        return redirect()->back();
+        return response()->json([
+            "Success" => true,
+            "message" => "Success Delete Room, Bye!",
+            "data" => $ruangan,
+        ]);
     }
 
     public function ImportExcel(Request $request)
